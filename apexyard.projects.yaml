@@ -79,6 +79,22 @@ projects:
       - revenue
     ticket_prefix: GH
 
+  - name: pgm-export-website
+    repo: Dr-kersho/pgm-export-website
+    workspace: workspace/pgm-export-website
+    docs: projects/pgm-export-website
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - frontend-engineer
+      - qa-engineer
+    tags:
+      - customer-facing
+      - marketing-site
+      - export
+    ticket_prefix: GH
+
 defaults:
   status: active
   tier: P1

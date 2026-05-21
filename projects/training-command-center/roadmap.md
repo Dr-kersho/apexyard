@@ -18,7 +18,7 @@
 | #29 healthcheck | #30 |
 | #31 e2e assertion | #32 |
 
-## In flight
+## Done (recent)
 
 | Issue | Title |
 |-------|-------|

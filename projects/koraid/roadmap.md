@@ -19,6 +19,7 @@ Living summary — detail and acceptance criteria are in [docs/koraid-full-prd.m
 | RTL polish | Open | #33 |
 | PWA install/offline polish | Open | #34 |
 | Pre-launch checklist | Open | #35 |
+| **Pitch IQ CV (software)** | Shipped on `main` (#85) | #48 epic open, **#83** deploy |
 
 ## Phase 2+
 
