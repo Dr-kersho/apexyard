@@ -1,6 +1,6 @@
 # PGM Export Website
 
-**Source repo:** [github.com/Dr-kersho/pgm-export-website](https://github.com/Dr-kersho/pgm-export-website) *(create when ready)*
+**Source repo:** [github.com/Dr-kersho/pgm-export-website](https://github.com/Dr-kersho/pgm-export-website)
 
 Public marketing / export presence site — **separate from** [XPORT-CRM](../xport-crm/README.md) (the sales CRM app).
 
@@ -11,9 +11,10 @@ Public marketing / export presence site — **separate from** [XPORT-CRM](../xpo
 | **pgm-export-website** | Brand site, product story, lead capture, SEO |
 | **xport-crm** | Internal CRM — pipeline, calls, WhatsApp outreach |
 
-## Stack (planned)
+## Stack
 
-TBD at kickoff — likely Next.js + TypeScript + Tailwind (align with portfolio). Record the choice in the app repo `CLAUDE.md` and an AgDR if it diverges.
+- Next.js 14 App Router, TypeScript, Tailwind CSS
+- Local dev: **http://localhost:3020**
 
 ## Canonical docs (in app repo)
 
@@ -47,4 +48,4 @@ GitHub Issues — **#N**. Branches: `feature/#N-short-description`.
 
 ## Status (2026-05-21)
 
-Greenfield — registry + local folder wired; GitHub repo and app scaffold not created yet.
+Scaffold shipped — home, products, markets, process, contact sections. Next: real brand assets + Vercel staging.

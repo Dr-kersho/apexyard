@@ -4,10 +4,10 @@
 
 ## Now (P0)
 
-1. Create GitHub repo `Dr-kersho/pgm-export-website` and push local scaffold
-2. Agree scope: pages (home, products, contact), languages, brand assets
-3. Scaffold app (stack TBD — default candidate: Next.js 14 App Router)
-4. Staging deploy (Vercel or existing host pattern)
+1. ~~Scaffold Next.js 14 marketing site (port 3020)~~ — done 2026-05-21
+2. Replace placeholder copy, logo, and `export@pgm.example` contact
+3. Staging deploy (Vercel)
+4. Lead capture form (optional CRM handoff — AgDR first)
 
 ## Next (P1)
 
