@@ -97,6 +97,7 @@ projects:
 
   - name: elite-telegram
     repo: Dr-kersho/elite-telegram
+    workspace: workspace/elite-telegram
     docs: projects/elite-telegram
     status: active
     tier: P1

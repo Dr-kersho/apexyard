@@ -1,31 +1,24 @@
 # Elite Telegram
 
-**Status:** Planning (new product)  
-**Source PRD:** `Elite_Telegram_PRD.md` in this folder (sync from your Mac — see below)  
-**Normalized PRD:** `prd.md` (ApexYard template; fill after source import)
+**Status:** Phase 1 scaffold shipped — needs Airtable + deploy  
+**App repo:** [github.com/Dr-kersho/elite-telegram](https://github.com/Dr-kersho/elite-telegram)  
+**Workspace:** `workspace/elite-telegram`
 
-Telegram-based product — separate from TCC, KoraID, XPORT, and QPPV. App repo **not created yet**.
+## Quick links
 
-## Sync PRD from your Mac (local)
+| Doc | Purpose |
+|-----|---------|
+| `Elite_Telegram_PRD.md` | Founder source PRD (confidential) |
+| `prd.md` | ApexYard-normalized PRD + MVP cut |
+| `roadmap.md` | Phase 1–3 build sequence |
 
-From the **apexyard** repo root on your machine:
+## MVP summary (P0 — Weeks 1–3)
 
-```bash
-./scripts/sync-elite-prd-from-downloads.sh
-```
-
-Or manually:
-
-```bash
-cp ~/Downloads/Elite_Telegram_PRD.md projects/elite-telegram/Elite_Telegram_PRD.md
-```
-
-Then in **local** Cursor Agent:
-
-```text
-@projects/elite-telegram/Elite_Telegram_PRD.md
-Normalize into projects/elite-telegram/prd.md (templates/prd.md). MVP cut P0/P1/Later.
-```
+1. Airtable CRM (clients + transactions, auto profit calc)
+2. Telegram bot + Make.com orchestration
+3. OKX live rate calculator (+ Mazen manual override)
+4. Claude AI agent — Franco Arabic Elite voice + escalation to Mazen
+5. New-client onboarding (9 questions, +0.25 EGP welcome bonus)
 
 ## Repo (when ready)
 
