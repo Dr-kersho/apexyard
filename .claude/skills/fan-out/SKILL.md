@@ -1,7 +1,7 @@
 ---
 name: fan-out
 description: Spawn N parallel Agent calls in one message (per-task agent type, worktree isolation, background mode).
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: "<task1, task2, ...> | <path/to/tasks.md> | --from-tickets <ref1,ref2,...>"
 effort: medium
 ---

@@ -2,7 +2,8 @@
 
 **Status:** Phase 1 scaffold shipped — needs Airtable + deploy  
 **App repo:** [github.com/Dr-kersho/elite-telegram](https://github.com/Dr-kersho/elite-telegram)  
-**Workspace:** `workspace/elite-telegram`
+**Workspace:** `workspace/elite-telegram`  
+**B2B product (Sarraf OS):** [../sarraf-os/](../sarraf-os/) — multi-tenant SaaS for operators like Mazen
 
 ## Quick links
 

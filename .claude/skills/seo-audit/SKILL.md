@@ -1,7 +1,7 @@
 ---
 name: seo-audit
 description: Technical SEO audit — meta, OG, sitemap, robots.txt, structured data, mobile, CWV readiness. Deep-dive for /launch-check SEO.
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: "[project-path]"
 effort: medium
 ---

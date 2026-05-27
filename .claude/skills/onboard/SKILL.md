@@ -1,7 +1,7 @@
 ---
 name: onboard
 description: "DEPRECATED — use /setup (framework config) or /handover (adopt a project). This skill redirects."
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: ""
 effort: low
 ---

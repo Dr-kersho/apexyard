@@ -1,7 +1,7 @@
 ---
 name: accessibility-audit
 description: WCAG 2.1 AA audit — perceivable, operable, understandable, robust criteria. Deep-dive for /launch-check accessibility.
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: "[project-path]"
 effort: high
 ---

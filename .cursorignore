@@ -1,0 +1,4 @@
+# Cursor indexing — keep agent context focused on the ops framework, not clones or test harness noise.
+workspace/
+.claude/hooks/tests/
+site/llms-full.txt

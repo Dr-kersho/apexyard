@@ -1,7 +1,7 @@
 ---
 name: journey
 description: Self-contained HTML user-journey map (boxes/arrows with per-page modals) — preview between PRD and tech-design.
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: "[<feature-slug>] [--from-prd <path>] [--from-yaml <path>] [--update] [--wireframe]"
 allowed-tools: Bash, Read, Grep, Glob, Write
 effort: medium

@@ -1,7 +1,7 @@
 ---
 name: analytics-audit
 description: Analytics audit — SDK config, event naming, funnel completeness, dashboards. Deep-dive for /launch-check analytics.
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: "[project-path]"
 effort: medium
 ---

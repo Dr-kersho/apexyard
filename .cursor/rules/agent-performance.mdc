@@ -1,0 +1,16 @@
+---
+description: Faster agent switches — avoid cold spawns and redundant subagents in this ops repo
+alwaysApply: true
+---
+
+# Agent performance (Cursor)
+
+This repo is markdown + shell (ApexYard ops). Prefer speed over parallelism.
+
+- Stay in the **current agent** unless the user asks for a different mode or model.
+- Do **not** spawn subagents (`Task`, `/fan-out`, role-trigger spawns) for work you can do in-thread in under ~5 tool calls.
+- Do **not** enable or call MCP tools unless the task needs them (this project ships with an empty `.cursor/mcp.json`).
+- Read skills **on demand** via `.claude/skills/<name>/SKILL.md` — do not preload or summarize the full skill catalog.
+- For portfolio code, edit under `workspace/<project>/` only when that project is the active target; otherwise stay in `projects/` and framework paths.
+
+Operator tuning (plugins, global gstack skills, multitask tabs): `docs/cursor-agent-performance.md`.

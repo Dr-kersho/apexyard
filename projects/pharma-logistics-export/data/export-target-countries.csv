@@ -1,0 +1,3 @@
+country,wave,priority_rule,currency,regulator_primary,import_pre_clearance,primary_ports_or_corridors,payment_risk,dossier_path
+Libya,1,first_qualified_buyer,USD,NMPB (+ FDCC import),ACI 48h before load + COO embassy legalisation,Misrata Tripoli Khoms sea; Salloum land; Benghazi east,CBL LC often required,export-dossiers/export-dossier-libya.md
+Sudan,1,first_qualified_buyer,USD,NMPB / NGDOP,Port sampling and testing,Port Sudan sea; Argeen Qustul land from Egypt,High FX and payment risk,export-dossiers/export-dossier-sudan.md

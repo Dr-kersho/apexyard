@@ -1,7 +1,7 @@
 ---
 name: geo-audit
 description: GEO + AEO audit — `llms.txt`, `AGENTS.md`, AI-crawler robots, JSON-LD citation grounding. Sibling to /seo-audit.
-disable-model-invocation: false
+disable-model-invocation: true
 argument-hint: "[project-path]"
 effort: medium
 ---

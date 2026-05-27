@@ -70,14 +70,9 @@ This file is **distinct from `CLAUDE.md`** — `CLAUDE.md` is the framework-leve
 
 ## Quick orientation for visiting agents
 
-If you're an AI agent landing in this repo for the first time:
-
-1. Read `CLAUDE.md` (framework spec — even if you're not Claude Code, the rules transfer)
-2. Skim `docs/multi-project.md` (full setup guide, directory layout, daily workflow)
-3. Browse `.claude/skills/` for the 53 slash commands (each `SKILL.md` is one capability)
-4. Browse `roles/` to understand the role-activation model
-5. Browse `templates/` for the standard document shapes
-6. Check `.claude/rules/` for the mechanical rules (ticket vocabulary, PR workflow, plan mode, parallel work, leak protection, etc.)
+1. Read `CLAUDE.md` for the full framework spec (SDLC, gates, skills index).
+2. Use `.claude/skills/<name>/SKILL.md` on demand — do not preload the whole catalog.
+3. **Cursor operators:** see `docs/cursor-agent-performance.md` for switch-latency tuning (MCP plugins, global skills, multitask).
 
 The framework is plain markdown + shell — no build step, no SaaS, no lock-in. MIT licensed.
 
