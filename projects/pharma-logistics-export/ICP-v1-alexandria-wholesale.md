@@ -30,7 +30,7 @@
 | **Payment** | **Cash on delivery (COD) only** — no credit in v1 | No receivables risk at launch |
 | **Delivery waves** | **1:00 PM · 4:00 PM · 9:00 PM** daily | Batch pick/pack; cut-off before each wave (ops to confirm) |
 | **Brand** | Premium app | Better UX, reliable waves, trust, assortment — not “cheapest wholesaler” |
-| **Delivery pricing** | **Delivery charge as a line on the invoice** (included in order total; not free) | Shown at checkout and on COD collection |
+| **Delivery pricing** | **50 EGP per order** on invoice (locked for feasibility; **verify at launch**) | Included in COD total; not free delivery |
 
 Checkout **blocks below 1,000 EGP** (GH-0004). Payment method: **COD only**.
 
@@ -116,7 +116,7 @@ Checkout **blocks below 1,000 EGP** (GH-0004). Payment method: **COD only**.
 | Fill rate | ≥95% on heroes before deepening subsidy |
 | Discount | Targeted heroes only; not basket-wide 5% |
 | Basket | Subsidy only if **≥3 non-hero lines** + order ≥1,000 EGP · COD |
-| Budget | Fixed monthly EGP cap; weekly burn review |
+| Budget | **100,000 EGP/mo max margin give-up** on heroes (not opex); weekly burn review |
 | Taper | Month 13+ reduce hero subsidy; retain on service + fill |
 
 ---
@@ -182,6 +182,8 @@ Checkout **blocks below 1,000 EGP** (GH-0004). Payment method: **COD only**.
 | 2026-05-26 | **Premium app** · **no Marketplace / FBA** · **no free delivery** |
 | 2026-05-27 | **1,000 EGP min · COD only · waves 1pm / 4pm / 9pm** |
 | 2026-05-27 | **Delivery fee included on invoice** (in COD total) |
+| 2026-05-27 | **Hero margin cap 100k EGP/mo** (grill Q9 — B) |
+| 2026-05-27 | **Delivery fee 50 EGP/order** (grill Q10 — B; verify at launch) |
 | 2026-05-27 | **Export: Libya + Sudan parallel — first qualified buyer first shipment** |
 | 2026-05-27 | No pharmacy counts from commercial directories |
 

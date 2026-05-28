@@ -4,7 +4,7 @@
 
 Dual-revenue pharmaceutical logistics: GDP-compliant warehouse, domestic B2B pharmacy ordering (EGP), and African generic export registration/commercialization (USD).
 
-**v1:** Alexandria only · **1,000 EGP min** · **COD only** · waves **1pm / 4pm / 9pm** · **delivery fee on invoice** · owned warehouse · **no marketplace/FBA**  
+**v1:** Alexandria only · **1,000 EGP min** · **COD only** · waves **1pm / 4pm / 9pm** · **50 EGP delivery fee** (verify at launch) · owned warehouse  
 **Export Wave 1:** **Libya + Sudan** — parallel; **first qualified buyer** gets first shipment  
 **Dossiers:** [export-dossiers/README.md](./export-dossiers/README.md) · [Libya](./export-dossiers/export-dossier-libya.md) · [Sudan](./export-dossiers/export-dossier-sudan.md)
 

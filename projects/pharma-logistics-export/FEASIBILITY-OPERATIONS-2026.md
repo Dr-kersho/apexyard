@@ -33,7 +33,7 @@
 
 If hero lines sell **500,000 EGP/month** and average extra discount is **2% of sales** → margin give-up ≈ **10,000 EGP/month** — booked under **gross margin**, not opex.
 
-**Cap in the plan:** Set a **maximum monthly margin give-up** (e.g. 80–150k EGP) reviewed weekly — same discipline as inventory budget.
+**Cap in the plan (locked — grill Q9, option B):** Maximum **100,000 EGP/month** total margin give-up across all 50 hero SKUs · weekly review · stop deepening discounts if cap hit.
 
 **Later:** Manufacturers may pay **trade marketing rebates** → net subsidy **falls** (reduces effective COGS).
 
@@ -189,7 +189,7 @@ Conservative:  85,000 EGP / month imputed (for break-even stress test)
 | Opening inventory | 3–5 **million** (one-time + replenishment) |
 | Monthly stock purchases | Depends on GMV turnover (often **2–4M/mo** at scale) |
 | Hero margin give-up | Variable — model as **% of hero GMV**, not payroll |
-| Delivery fee revenue | **Reduces net cost to pharmacy** — can contribute **~30–80 EGP/order** toward delivery opex |
+| Delivery fee revenue | **50 EGP/order** (planning; verify at launch) — mostly offsets moto courier opex (~22k/mo); at 600 orders/mo ≈ **30k** fee revenue |
 
 ---
 
@@ -242,8 +242,8 @@ Assume **12% blended product gross margin** (after hero give-up), **AOV 1,100 EG
 | Variable | Status |
 |----------|--------|
 | Telesales: 2 or 4 people? | Confirm |
-| Hero max monthly margin give-up (EGP) | Investor to approve cap |
-| Delivery fee per order (EGP) | Set in ops |
+| Hero max monthly margin give-up (EGP) | **100,000 (locked — B)** |
+| Delivery fee per order (EGP) | **50 (B — verify at launch)** |
 | Social insurance exact % | Accountant |
 | Monthly stock purchase target | Purchase manager |
 
@@ -261,6 +261,8 @@ Assume **12% blended product gross margin** (after hero give-up), **AOV 1,100 EG
 | 6 | CEO = pharmacist + export + online oversight |
 | 7 | **Founder cash salary 55,000 EGP/mo from month 1 (option C)** |
 | 8 | **55k is gross (A)** — employer ~26% included in ~523k opex; not net take-home |
+| 9 | **Hero margin cap 100,000 EGP/mo (B)** — gross profit, not opex |
+| 10 | **Delivery fee 50 EGP/order (B)** — verify at launch |
 
 ---
 
