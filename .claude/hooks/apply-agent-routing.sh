@@ -100,6 +100,22 @@ if [ -z "$ROUTING_PATH" ] || [ ! -f "$ROUTING_PATH" ]; then
   exit 0
 fi
 
+# Skip rewrites when routing YAML is unchanged since the last SessionStart run.
+# Idempotent applies are cheap individually but add up across rapid session
+# restarts (IDE reloads, agent tab switches that spawn new Claude sessions).
+CACHE_DIR="$ROOT/.claude/session"
+mkdir -p "$CACHE_DIR"
+ROUTING_STAMP=""
+if stat -f %m "$ROUTING_PATH" >/dev/null 2>&1; then
+  ROUTING_STAMP=$(stat -f %m "$ROUTING_PATH")
+elif stat -c %Y "$ROUTING_PATH" >/dev/null 2>&1; then
+  ROUTING_STAMP=$(stat -c %Y "$ROUTING_PATH")
+fi
+if [ -n "$ROUTING_STAMP" ] && [ -f "$CACHE_DIR/last-routing-stamp" ] \
+  && [ "$(cat "$CACHE_DIR/last-routing-stamp" 2>/dev/null)" = "$ROUTING_STAMP" ]; then
+  exit 0
+fi
+
 AGENTS_DIR="$ROOT/.claude/agents"
 if [ ! -d "$AGENTS_DIR" ]; then
   exit 0
@@ -407,6 +423,10 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$applied" -gt 0 ]; then
   echo "ApexYard: applied $applied agent-routing override(s) from agent-routing.yaml" >&2
+fi
+
+if [ -n "$ROUTING_STAMP" ]; then
+  printf '%s' "$ROUTING_STAMP" > "$CACHE_DIR/last-routing-stamp"
 fi
 
 exit 0

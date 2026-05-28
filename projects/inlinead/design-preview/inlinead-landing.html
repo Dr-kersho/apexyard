@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>INLINE AD — In-gym advertising, performance tracked</title>
+  <meta name="description" content="Egypt's first performance-tracked in-gym ad network. Alexandria premium gyms. QR and redemption tracking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0e10;
+      --bg-elevated: #14181c;
+      --bg-card: #1a1f24;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f4f2ef;
+      --text-muted: #9aa3ad;
+      --accent: #c8f542;
+      --accent-dim: rgba(200, 245, 66, 0.12);
+      --accent-gym: #5ee4d4;
+      --accent-gym-dim: rgba(94, 228, 212, 0.12);
+      --danger: #ff6b6b;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font-display: 'Syne', system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+      --nav-h: 64px;
+    }
+
+    [dir="rtl"] { --font-body: 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 20px;
+      background: rgba(12, 14, 16, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg-card); text-decoration: none; }
+    .lang-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--text); border-color: var(--text-muted); }
+
+    /* Hero */
+    .hero {
+      padding: 56px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -40% -20% auto;
+      height: 80%;
+      background: radial-gradient(ellipse 60% 50% at 70% 0%, var(--accent-dim), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      gap: 40px;
+      position: relative;
+    }
+    @media (min-width: 900px) {
+      .hero-grid { grid-template-columns: 1.1fr 0.9fr; align-items: center; }
+    }
+    .kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .hero-lede {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 42ch;
+      margin-bottom: 28px;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-brand {
+      background: var(--accent);
+      color: #0c0e10;
+    }
+    .btn-brand:hover { box-shadow: 0 0 32px var(--accent-dim); text-decoration: none; }
+    .btn-gym {
+      background: transparent;
+      color: var(--accent-gym);
+      border: 1px solid rgba(94, 228, 212, 0.4);
+    }
+    .btn-gym:hover { background: var(--accent-gym-dim); text-decoration: none; }
+
+    .hero-visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .screen-mock {
+      aspect-ratio: 16/10;
+      background: linear-gradient(145deg, #252b32 0%, #0f1215 100%);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .screen-mock::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6));
+    }
+    .screen-label {
+      position: relative;
+      z-index: 1;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .metric {
+      text-align: center;
+      padding: 12px 8px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-sm);
+    }
+    .metric strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--accent);
+    }
+    .metric span { font-size: 11px; color: var(--text-muted); }
+
+    /* Trust band */
+    .trust {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+    .trust-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 40px;
+      justify-content: center;
+      align-items: center;
+    }
+    .trust-item {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .trust-item strong { color: var(--text); font-weight: 600; }
+
+    /* Sections */
+    section { padding: 72px 0; }
+    section[id] { scroll-margin-top: var(--nav-h); }
+    .section-head {
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .section-head .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .tag-brand { background: var(--accent-dim); color: var(--accent); }
+    .tag-gym { background: var(--accent-gym-dim); color: var(--accent-gym); }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-head p { color: var(--text-muted); }
+
+    .cards {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    @media (min-width: 640px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+    .card-brand .card-icon { background: var(--accent-dim); }
+    .card-gym .card-icon { background: var(--accent-gym-dim); }
+    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--text-muted); }
+
+    /* Steps */
+    .steps {
+      display: grid;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    @media (min-width: 720px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+    .step {
+      position: relative;
+      padding-left: 0;
+    }
+    [dir="ltr"] .step { padding-left: 0; }
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .step h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .step p { font-size: 13px; color: var(--text-muted); }
+
+    /* Forms */
+    .form-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      max-width: 640px;
+    }
+    @media (min-width: 640px) { .form-panel { padding: 40px; } }
+    .form-panel h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+    .form-panel .form-sub {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .form-grid {
+      display: grid;
+      gap: 16px;
+    }
+    @media (min-width: 520px) {
+      .form-grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    label .req { color: var(--accent); }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .form-gym input:focus, .form-gym select:focus, .form-gym textarea:focus {
+      border-color: var(--accent-gym);
+      box-shadow: 0 0 0 3px var(--accent-gym-dim);
+    }
+    textarea { min-height: 96px; resize: vertical; }
+    .checkbox-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .checkbox-row input { width: auto; margin-top: 3px; accent-color: var(--accent); }
+    .form-gym .checkbox-row input { accent-color: var(--accent-gym); }
+    .field-error {
+      font-size: 12px;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+    input.invalid, select.invalid { border-color: var(--danger); }
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+    }
+    .submit-row { margin-top: 8px; }
+    .form-gym .btn-submit { background: var(--accent-gym); color: #0c0e10; }
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      font-size: 15px;
+    }
+    .thanks {
+      display: none;
+      text-align: center;
+      padding: 32px 16px;
+    }
+    .thanks.show { display: block; }
+    .thanks form { display: none; }
+    .thanks-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .form-gym .thanks-icon { background: var(--accent-gym-dim); }
+    .thanks h3 { font-family: var(--font-display); margin-bottom: 8px; }
+    .thanks p { color: var(--text-muted); font-size: 14px; }
+
+    .brands-section { border-top: 1px solid var(--border); }
+    .gyms-section {
+      background: linear-gradient(180deg, var(--bg) 0%, #0a1214 100%);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0 48px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--text); }
+
+    .preview-banner {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+      max-width: 360px;
+      margin-left: auto;
+      font-size: 11px;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      z-index: 200;
+    }
+    [dir="rtl"] .preview-banner { right: auto; left: 12px; margin-left: 0; margin-right: auto; }
+
+    @media (max-width: 599px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding-top: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main">
+    <a class="logo" href="#">INLINE<span>AD</span></a>
+    <div class="nav-links">
+      <a href="#brands" data-i18n="nav_brands">For brands</a>
+      <a href="#gyms" data-i18n="nav_gyms">For gyms</a>
+      <a href="https://wa.me/201000000000" class="nav-cta" data-i18n="nav_whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" class="lang-btn" id="langToggle" aria-label="Toggle language">عربي</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker" data-i18n="hero_kicker">Alexandria · Premium gyms</p>
+        <h1 data-i18n="hero_title">In-gym ads you can actually measure</h1>
+        <p class="hero-lede" data-i18n="hero_lede">
+          Egypt's first performance-tracked in-gym network. Your brand on screens where members train — tracked by QR scans and redemptions, not guesses.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-brand" href="#brand-form" data-i18n="cta_brand">Advertise in gyms</a>
+          <a class="btn btn-gym" href="#gym-form" data-i18n="cta_gym">Partner your gym</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="screen-mock">
+          <span class="screen-label" data-i18n="screen_label">Peak hours · 4PM – 12AM</span>
+        </div>
+        <div class="metrics-row">
+          <div class="metric">
+            <strong>QR</strong>
+            <span data-i18n="m1">Scans tracked</span>
+          </div>
+          <div class="metric">
+            <strong>30s</strong>
+            <span data-i18n="m2">Video spots</span>
+          </div>
+          <div class="metric">
+            <strong>AI</strong>
+            <span data-i18n="m3">Rotation optimized</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="trust">
+    <div class="wrap trust-inner">
+      <div class="trust-item"><strong data-i18n="t1">369</strong> <span data-i18n="t1b">gyms in Alexandria market</span></div>
+      <div class="trust-item"><strong data-i18n="t2">Uphill</strong> <span data-i18n="t2b">2 branches live in network</span></div>
+      <div class="trust-item"><span data-i18n="t3">No pricing on site —</span> <strong data-i18n="t3b">talk to our team</strong></div>
+    </div>
+  </div>
+
+  <section class="brands-section" id="brands">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag tag-brand" data-i18n="brand_tag">For brands</span>
+        <h2 data-i18n="brand_h2">Reach members while they're on the floor</h2>
+        <p data-i18n="brand_p">Not billboards. Not feed scroll. Thirty-second spots in premium gyms during peak hours — with performance you can report.</p>
+      </div>
+      <div class="cards">
+        <article class="card card-brand">
+          <div class="card-icon">▶</div>
+          <h3 data-i18n="c1h">Premium placement</h3>
+          <p data-i18n="c1p">Screens inside high-membership gyms in Alexandria. Members see your message in workout mode.</p>
+        </article>
+        <article class="card card-brand">
+          <div class="card-icon">◎</div>
+          <h3 data-i18n="c2h">Tracked performance</h3>
+          <p data-i18n="c2p">QR scans and discount-code redemptions. Know what moved, not just what aired.</p>
+        </article>
+        <article class="card card-brand">
+          <div class="card-icon">✦</div>
+          <h3 data-i18n="c3h">We run activations</h3>
+          <p data-i18n="c3p">INLINE ops handles sampling, trainers, and verification — not gym front desk staff.</p>
+        </article>
+      </div>
+      <h3 style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 20px;" data-i18n="how_title">How it works</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4 data-i18n="s1h">Tell us your goals</h4>
+          <p data-i18n="s1p">Category, timing, and what success looks like on a call.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4 data-i18n="s2h">Creative &amp; placement</h4>
+          <p data-i18n="s2p">We align spots to peak gym traffic and your brand guidelines.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4 data-i18n="s3h">Go live on screens</h4>
+          <p data-i18n="s3p">Campaigns run evenings when the floor is full.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h4 data-i18n="s4h">Measure &amp; optimize</h4>
+          <p data-i18n="s4p">QR and code data feed reporting and rotation tuning.</p>
+        </div>
+      </div>
+
+      <div class="form-panel" id="brand-form">
+        <div class="thanks" id="brandThanks">
+          <div class="thanks-icon">✓</div>
+          <h3 data-i18n="thanks_brand_h">Request received</h3>
+          <p data-i18n="thanks_brand_p">Our team will reach out within two business days to discuss fit and next steps.</p>
+        </div>
+        <form id="brandForm" novalidate>
+          <h3 data-i18n="form_brand_h">Start a brand conversation</h3>
+          <p class="form-sub" data-i18n="form_brand_sub">No commitment. We'll share how campaigns work on a call.</p>
+          <div class="form-grid">
+            <div>
+              <label for="b_company"><span data-i18n="l_company">Company / brand</span> <span class="req">*</span></label>
+              <input id="b_company" name="company" required autocomplete="organization" />
+              <span class="field-error" data-i18n="err_required">Required</span>
+            </div>
+            <div>
+              <label for="b_name"><span data-i18n="l_name">Contact name</span> <span class="req">*</span></label>
+              <input id="b_name" name="name" required autocomplete="name" />
+              <span class="field-error" data-i18n="err_required">Required</span>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div>
+                <label for="b_email"><span data-i18n="l_email">Work email</span> <span class="req">*</span></label>
+                <input id="b_email" name="email" type="email" required autocomplete="email" />
+                <span class="field-error" data-i18n="err_email">Valid email required</span>
+              </div>
+              <div>
+                <label for="b_phone"><span data-i18n="l_phone">WhatsApp / phone</span> <span class="req">*</span></label>
+                <input id="b_phone" name="phone" type="tel" required placeholder="+20" />
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div>
+                <label for="b_category" data-i18n="l_category">Product category</label>
+                <select id="b_category" name="category" required>
+                  <option value="" data-i18n="opt_select">Select…</option>
+                  <option value="supplements" data-i18n="opt_supp">Supplements</option>
+                  <option value="sports-nutrition" data-i18n="opt_sn">Sports nutrition</option>
+                  <option value="apparel" data-i18n="opt_apparel">Fitness apparel</option>
+                  <option value="fnb" data-i18n="opt_fnb">F&amp;B</option>
+                  <option value="other" data-i18n="opt_other">Other</option>
+                </select>
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+              <div>
+                <label for="b_interest" data-i18n="l_interest">Interest level</label>
+                <select id="b_interest" name="interest">
+                  <option value="exploring" data-i18n="opt_exploring">Exploring</option>
+                  <option value="ready" data-i18n="opt_ready">Ready this quarter</option>
+                  <option value="unsure" data-i18n="opt_unsure">Not sure yet</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="b_message" data-i18n="l_message">Message (optional)</label>
+              <textarea id="b_message" name="message" maxlength="500"></textarea>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="b_consent" name="consent" required />
+              <label for="b_consent" style="margin:0;font-weight:400;" data-i18n="consent_brand">INLINE AD may contact me about advertising. This is not a binding contract.</label>
+            </div>
+            <div class="honeypot" aria-hidden="true">
+              <label for="b_hp">Leave blank</label>
+              <input id="b_hp" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <div class="submit-row">
+              <button type="submit" class="btn btn-brand btn-submit" data-i18n="submit_brand">Send request</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="gyms-section" id="gyms">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag tag-gym" data-i18n="gym_tag">For gyms</span>
+        <h2 data-i18n="gym_h2">Earn from your floor — zero hardware cost</h2>
+        <p data-i18n="gym_p">Partner with INLINE AD. We install and operate screens. You earn revenue share when campaigns run — payouts tied to verified uptime.</p>
+      </div>
+      <div class="cards">
+        <article class="card card-gym">
+          <div class="card-icon">◇</div>
+          <h3 data-i18n="g1h">No capex</h3>
+          <p data-i18n="g1p">We provide screens and ops. No upfront hardware spend for your gym.</p>
+        </article>
+        <article class="card card-gym">
+          <div class="card-icon">↻</div>
+          <h3 data-i18n="g2h">Revenue share</h3>
+          <p data-i18n="g2p">Earn when brands run in your venue. Terms discussed when you apply.</p>
+        </article>
+        <article class="card card-gym">
+          <div class="card-icon">✓</div>
+          <h3 data-i18n="g3h">Verified uptime</h3>
+          <p data-i18n="g3p">Payouts align with screen performance — transparency for both sides.</p>
+        </article>
+      </div>
+
+      <div class="form-panel form-gym" id="gym-form">
+        <div class="thanks" id="gymThanks">
+          <div class="thanks-icon">✓</div>
+          <h3 data-i18n="thanks_gym_h">Application received</h3>
+          <p data-i18n="thanks_gym_p">We review gym applications weekly. If you're a fit for the network, we'll contact you to schedule a visit.</p>
+        </div>
+        <form id="gymForm" class="form-gym" novalidate>
+          <h3 data-i18n="form_gym_h">Apply as a partner gym</h3>
+          <p class="form-sub" data-i18n="form_gym_sub">Alexandria premium gyms first. This form is an inquiry, not a contract.</p>
+          <div class="form-grid">
+            <div>
+              <label for="g_gym"><span data-i18n="l_gym">Gym name</span> <span class="req">*</span></label>
+              <input id="g_gym" name="gym" required />
+              <span class="field-error" data-i18n="err_required">Required</span>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div>
+                <label for="g_branches"><span data-i18n="l_branches">Branches in Alexandria</span> <span class="req">*</span></label>
+                <input id="g_branches" name="branches" type="number" min="1" required />
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+              <div>
+                <label for="g_area"><span data-i18n="l_area">Area / district</span> <span class="req">*</span></label>
+                <input id="g_area" name="area" required placeholder="Smouha, San Stefano…" data-i18n-placeholder="ph_area" />
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div>
+                <label for="g_contact"><span data-i18n="l_contact">Contact name &amp; role</span> <span class="req">*</span></label>
+                <input id="g_contact" name="contact" required />
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+              <div>
+                <label for="g_phone"><span data-i18n="l_phone">WhatsApp / phone</span> <span class="req">*</span></label>
+                <input id="g_phone" name="phone" type="tel" required placeholder="+20" />
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+            </div>
+            <div>
+              <label for="g_email"><span data-i18n="l_email">Email</span> <span class="req">*</span></label>
+              <input id="g_email" name="email" type="email" required />
+              <span class="field-error" data-i18n="err_email">Valid email required</span>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div>
+                <label for="g_members" data-i18n="l_members">Approx. monthly members</label>
+                <select id="g_members" name="members" required>
+                  <option value="" data-i18n="opt_select">Select…</option>
+                  <option value="under200">&lt;200</option>
+                  <option value="200-500">200–500</option>
+                  <option value="500plus">500+</option>
+                </select>
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+              <div>
+                <label for="g_tier" data-i18n="l_tier">Membership price band (EGP)</label>
+                <select id="g_tier" name="tier" required>
+                  <option value="" data-i18n="opt_select">Select…</option>
+                  <option value="under1k">&lt;1,000</option>
+                  <option value="1-2.5k">1,000 – 2,500</option>
+                  <option value="2.5kplus">2,500+</option>
+                </select>
+                <span class="field-error" data-i18n="err_required">Required</span>
+              </div>
+            </div>
+            <div>
+              <label for="g_message" data-i18n="l_message">Message (optional)</label>
+              <textarea id="g_message" name="message" maxlength="500"></textarea>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="g_consent" name="consent" required />
+              <label for="g_consent" style="margin:0;font-weight:400;" data-i18n="consent_gym">I agree to be contacted about a gym partnership inquiry.</label>
+            </div>
+            <div class="honeypot" aria-hidden="true">
+              <input id="g_hp" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <div class="submit-row">
+              <button type="submit" class="btn btn-submit" data-i18n="submit_gym">Submit application</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div>
+        <a class="logo" href="#">INLINE<span>AD</span></a>
+        <p style="margin-top:8px;" data-i18n="footer_loc">Alexandria, Egypt · Pre-launch</p>
+      </div>
+      <div class="footer-links">
+        <a href="#" data-i18n="footer_privacy">Privacy</a>
+        <a href="mailto:hello@inlinead.eg">hello@inlinead.eg</a>
+      </div>
+    </div>
+  </footer>
+
+  <p class="preview-banner" data-i18n="preview_note">Design preview — forms log to console only. Replace WhatsApp + email before launch.</p>
+
+  <script>
+    const STRINGS = {
+      en: {
+        nav_brands: 'For brands',
+        nav_gyms: 'For gyms',
+        nav_whatsapp: 'WhatsApp',
+        hero_kicker: 'Alexandria · Premium gyms',
+        hero_title: 'In-gym ads you can actually measure',
+        hero_lede: "Egypt's first performance-tracked in-gym network. Your brand on screens where members train — tracked by QR scans and redemptions, not guesses.",
+        cta_brand: 'Advertise in gyms',
+        cta_gym: 'Partner your gym',
+        screen_label: 'Peak hours · 4PM – 12AM',
+        m1: 'Scans tracked', m2: 'Video spots', m3: 'Rotation optimized',
+        t1: '369', t1b: 'gyms in Alexandria market',
+        t2: 'Uphill', t2b: '2 branches live in network',
+        t3: 'No pricing on site —', t3b: 'talk to our team',
+        brand_tag: 'For brands',
+        brand_h2: "Reach members while they're on the floor",
+        brand_p: 'Not billboards. Not feed scroll. Thirty-second spots in premium gyms during peak hours — with performance you can report.',
+        c1h: 'Premium placement', c1p: 'Screens inside high-membership gyms in Alexandria. Members see your message in workout mode.',
+        c2h: 'Tracked performance', c2p: 'QR scans and discount-code redemptions. Know what moved, not just what aired.',
+        c3h: 'We run activations', c3p: 'INLINE ops handles sampling, trainers, and verification — not gym front desk staff.',
+        how_title: 'How it works',
+        s1h: 'Tell us your goals', s1p: 'Category, timing, and what success looks like on a call.',
+        s2h: 'Creative & placement', s2p: 'We align spots to peak gym traffic and your brand guidelines.',
+        s3h: 'Go live on screens', s3p: 'Campaigns run evenings when the floor is full.',
+        s4h: 'Measure & optimize', s4p: 'QR and code data feed reporting and rotation tuning.',
+        form_brand_h: 'Start a brand conversation',
+        form_brand_sub: "No commitment. We'll share how campaigns work on a call.",
+        form_gym_h: 'Apply as a partner gym',
+        form_gym_sub: 'Alexandria premium gyms first. This form is an inquiry, not a contract.',
+        l_company: 'Company / brand', l_name: 'Contact name', l_email: 'Work email', l_phone: 'WhatsApp / phone',
+        l_category: 'Product category', l_interest: 'Interest level', l_message: 'Message (optional)',
+        l_gym: 'Gym name', l_branches: 'Branches in Alexandria', l_area: 'Area / district',
+        l_contact: 'Contact name & role', l_members: 'Approx. monthly members', l_tier: 'Membership price band (EGP)',
+        opt_select: 'Select…', opt_supp: 'Supplements', opt_sn: 'Sports nutrition', opt_apparel: 'Fitness apparel',
+        opt_fnb: 'F&B', opt_other: 'Other', opt_exploring: 'Exploring', opt_ready: 'Ready this quarter', opt_unsure: 'Not sure yet',
+        ph_area: 'Smouha, San Stefano…',
+        consent_brand: 'INLINE AD may contact me about advertising. This is not a binding contract.',
+        consent_gym: 'I agree to be contacted about a gym partnership inquiry.',
+        submit_brand: 'Send request', submit_gym: 'Submit application',
+        thanks_brand_h: 'Request received', thanks_brand_p: 'Our team will reach out within two business days to discuss fit and next steps.',
+        thanks_gym_h: 'Application received', thanks_gym_p: "We review gym applications weekly. If you're a fit for the network, we'll contact you to schedule a visit.",
+        err_required: 'Required', err_email: 'Valid email required',
+        gym_tag: 'For gyms', gym_h2: 'Earn from your floor — zero hardware cost',
+        gym_p: 'Partner with INLINE AD. We install and operate screens. You earn revenue share when campaigns run — payouts tied to verified uptime.',
+        g1h: 'No capex', g1p: 'We provide screens and ops. No upfront hardware spend for your gym.',
+        g2h: 'Revenue share', g2p: 'Earn when brands run in your venue. Terms discussed when you apply.',
+        g3h: 'Verified uptime', g3p: 'Payouts align with screen performance — transparency for both sides.',
+        footer_loc: 'Alexandria, Egypt · Pre-launch', footer_privacy: 'Privacy',
+        preview_note: 'Design preview — forms log to console only. Replace WhatsApp + email before launch.',
+      },
+      ar: {
+        nav_brands: 'للعلامات التجارية',
+        nav_gyms: 'للصالات',
+        nav_whatsapp: 'واتساب',
+        hero_kicker: 'الإسكندرية · صالات مميزة',
+        hero_title: 'إعلانات داخل الصالة — أداء يُقاس',
+        hero_lede: 'أول شبكة إعلانات داخل الصالات الرياضية في مصر بأداء قابل للقياس. علامتك على شاشات حيث يتمرن الأعضاء — عبر مسح QR والخصومات، لا تخمين.',
+        cta_brand: 'أعلن في الصالات',
+        cta_gym: 'انضم كشريك',
+        screen_label: 'ساعات الذروة · 4م – 12ص',
+        m1: 'مسح QR', m2: 'فيديو 30 ث', m3: 'توزيع ذكي',
+        t1: '369', t1b: 'صالة في سوق الإسكندرية',
+        t2: 'أب هيل', t2b: 'فرعان في الشبكة',
+        t3: 'لا أسعار على الموقع —', t3b: 'تحدث مع فريقنا',
+        brand_tag: 'للعلامات',
+        brand_h2: 'وصل للأعضاء أثناء التمرين',
+        brand_p: 'ليست لوحات طرقية ولا سكرول. spots قصيرة في صالات مميزة وقت الذروة — بأداء يمكنك الإبلاغ عنه.',
+        c1h: 'ظهور مميز', c1p: 'شاشات داخل صالات عضوية عالية في الإسكندرية.',
+        c2h: 'أداء مُقاس', c2p: 'مسح QR واسترداد أكواد الخصم.',
+        c3h: 'نحن ننفّذ التفعيل', c3p: 'فريق INLINE يدير العينات والمدربين — ليس موظف الاستقبال.',
+        how_title: 'كيف يعمل',
+        s1h: 'أخبرنا أهدافك', s1p: 'الفئة والتوقيت ومعنى النجاح في مكالمة.',
+        s2h: 'المحتوى والعرض', s2p: 'نوائم المواعيد مع ذروة الصالة وإرشادات علامتك.',
+        s3h: 'البث على الشاشات', s3p: 'الحملات مساءً عند امتلاء الصالة.',
+        s4h: 'قياس وتحسين', s4p: 'بيانات QR والأكواد للتقارير والتوزيع.',
+        form_brand_h: 'ابدأ محادثة كعلامة تجارية',
+        form_brand_sub: 'بدون التزام. نشرح آلية الحملات في مكالمة.',
+        form_gym_h: 'قدّم طلب شراكة صالة',
+        form_gym_sub: 'صالات الإسكندرية المميزة أولاً. هذا استفسار وليس عقداً.',
+        l_company: 'الشركة / العلامة', l_name: 'اسم جهة الاتصال', l_email: 'البريد', l_phone: 'واتساب / هاتف',
+        l_category: 'فئة المنتج', l_interest: 'مستوى الاهتمام', l_message: 'رسالة (اختياري)',
+        l_gym: 'اسم الصالة', l_branches: 'فروع في الإسكندرية', l_area: 'المنطقة',
+        l_contact: 'الاسم والدور', l_members: 'عدد الأعضاء تقريباً', l_tier: 'شريحة اشتراك (جنيه)',
+        opt_select: 'اختر…', opt_supp: 'مكملات', opt_sn: 'تغذية رياضية', opt_apparel: 'ملابس رياضية',
+        opt_fnb: 'أطعمة ومشروبات', opt_other: 'أخرى', opt_exploring: 'أستكشف', opt_ready: 'جاهز هذا الربع', opt_unsure: 'غير متأكد',
+        ph_area: 'سموحة، سان ستيفانو…',
+        consent_brand: 'يحق لـ INLINE AD التواصل معي بخصوص الإعلان. هذا ليس عقداً ملزماً.',
+        consent_gym: 'أوافق على التواصل بخصوص شراكة الصالة.',
+        submit_brand: 'إرسال الطلب', submit_gym: 'إرسال الطلب',
+        thanks_brand_h: 'تم استلام طلبك', thanks_brand_p: 'سيتواصل فريقنا خلال يومي عمل لمناقشة الملاءمة والخطوات التالية.',
+        thanks_gym_h: 'تم استلام الطلب', thanks_gym_p: 'نراجع طلبات الصالات أسبوعياً. إن كنت مناسباً للشبكة، سنتواصل لتحديد زيارة.',
+        err_required: 'مطلوب', err_email: 'بريد صالح مطلوب',
+        gym_tag: 'للصالات', gym_h2: 'اربح من صالتك — بدون تكلفة أجهزة',
+        gym_p: 'شارك مع INLINE AD. نركّب الشاشات ونشغّلها. تحصل على حصة عند تشغيل الحملات — مدفوعات مرتبطة بتشغيل الشاشة.',
+        g1h: 'بدون استثمار أجهزة', g1p: 'نوفر الشاشات والتشغيل.',
+        g2h: 'حصة إيراد', g2p: 'تربح عند تشغيل العلامات في صالتك. الشروط عند التقديم.',
+        g3h: 'تشغيل موثّق', g3p: 'المدفوعات مرتبطة بأداء الشاشة — شفافية للطرفين.',
+        footer_loc: 'الإسكندرية، مصر · قبل الإطلاق', footer_privacy: 'الخصوصية',
+        preview_note: 'معاينة تصميم — النماذج تطبع في Console فقط.',
+      },
+    };
+
+    let lang = 'en';
+    const html = document.documentElement;
+    const langBtn = document.getElementById('langToggle');
+
+    function applyLang() {
+      const s = STRINGS[lang];
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (s[key]) el.textContent = s[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (s[key]) el.placeholder = s[key];
+      });
+      html.lang = lang === 'ar' ? 'ar' : 'en';
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      langBtn.textContent = lang === 'ar' ? 'EN' : 'عربي';
+      document.title = lang === 'ar'
+        ? 'INLINE AD — إعلانات داخل الصالات'
+        : 'INLINE AD — In-gym advertising, performance tracked';
+    }
+
+    langBtn.addEventListener('click', () => {
+      lang = lang === 'en' ? 'ar' : 'en';
+      applyLang();
+    });
+
+    function validateForm(form) {
+      let ok = true;
+      form.querySelectorAll('[required]').forEach((field) => {
+        const err = field.parentElement.querySelector('.field-error');
+        let invalid = false;
+        if (field.type === 'checkbox') invalid = !field.checked;
+        else if (field.type === 'email') invalid = !field.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+        else invalid = !field.value?.trim();
+        field.classList.toggle('invalid', invalid);
+        if (err) {
+          err.classList.toggle('show', invalid);
+          if (invalid && field.type === 'email') err.textContent = STRINGS[lang].err_email;
+          else if (invalid) err.textContent = STRINGS[lang].err_required;
+        }
+        if (invalid) ok = false;
+      });
+      return ok;
+    }
+
+    function wireForm(formId, thanksId, leadType) {
+      const form = document.getElementById(formId);
+      const thanks = document.getElementById(thanksId);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const hp = form.querySelector('[name="website"]');
+        if (hp?.value) return;
+        if (!validateForm(form)) return;
+        const data = Object.fromEntries(new FormData(form));
+        data.lead_type = leadType;
+        data.lang = lang;
+        console.log('[INLINE AD lead]', data);
+        form.style.display = 'none';
+        thanks.classList.add('show');
+        thanks.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+
+    wireForm('brandForm', 'brandThanks', 'brand');
+    wireForm('gymForm', 'gymThanks', 'gym');
+
+    if (location.search.includes('intent=gym')) {
+      setTimeout(() => document.getElementById('gym-form').scrollIntoView({ behavior: 'smooth' }), 300);
+    }
+    if (location.search.includes('intent=brand')) {
+      setTimeout(() => document.getElementById('brand-form').scrollIntoView({ behavior: 'smooth' }), 300);
+    }
+
+    applyLang();
+  </script>
+</body>
+</html>

@@ -79,8 +79,45 @@ projects:
       - revenue
     ticket_prefix: GH
 
+  - name: pgm-export-website
+    repo: Dr-kersho/pgm-export-website
+    workspace: workspace/pgm-export-website
+    docs: projects/pgm-export-website
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - frontend-engineer
+      - qa-engineer
+    tags:
+      - customer-facing
+      - marketing-site
+      - export
+    ticket_prefix: GH
+
+  - name: pharma-logistics-export
+    repo: Dr-kersho/PHARMA-LOGISTICS-EXPORT-COMPANY
+    workspace: workspace/pharma-logistics-export
+    docs: projects/pharma-logistics-export
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - product-manager
+      - backend-engineer
+      - frontend-engineer
+      - qa-engineer
+    tags:
+      - new-product
+      - pharma
+      - b2b
+      - export
+    ticket_prefix: GH
+    notes: "PharmaConnect — separate from pgm-export-website (marketing only). Do not merge repos or portfolio entries."
+
   - name: elite-telegram
     repo: Dr-kersho/elite-telegram
+    workspace: workspace/elite-telegram
     docs: projects/elite-telegram
     status: active
     tier: P1
@@ -91,7 +128,42 @@ projects:
       - frontend-engineer
     tags:
       - new-product
-      - planning
+      - telegram
+      - customer-1-dogfood
+    ticket_prefix: GH
+    notes: "Evolves into Sarraf OS B2B — see projects/sarraf-os/"
+
+  - name: inlinead-website
+    repo: Dr-kersho/inlinead-website
+    workspace: workspace/inlinead-website
+    docs: projects/inlinead
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - product-manager
+      - frontend-engineer
+    tags:
+      - marketing-site
+      - lead-gen
+      - pre-launch
+    ticket_prefix: INL
+    notes: "INLINE AD in-gym ad network — Alexandria"
+
+  - name: sarraf-os
+    repo: Dr-kersho/elite-telegram
+    docs: projects/sarraf-os
+    status: planning
+    tier: P1
+    roles:
+      - tech-lead
+      - product-manager
+      - backend-engineer
+      - frontend-engineer
+      - product-analyst
+    tags:
+      - b2b-saas
+      - multi-tenant
       - telegram
     ticket_prefix: GH
 
