@@ -5,7 +5,7 @@
 **Export payroll:** Deferred until domestic gate D; **CEO oversees export + online strategy** from day one.  
 **Detail workbook:** [`FEASIBILITY-OPERATIONS-2026.md`](./FEASIBILITY-OPERATIONS-2026.md) (this file)
 
-**Grill locks:** Domestic-first · Export **cash** after **95% hero fill × 8 weeks** + **100 pharmacies × 2 orders/mo @ ≥1,000 EGP COD** · Hybrid GTM · **Ops Manager** owns **wave dispatch + COD reconciliation** (no separate dispatch hire).
+**Grill locks:** Domestic-first · Export **cash** after **95% hero fill × 8 weeks** + **100 pharmacies × 2 orders/mo @ ≥1,000 EGP COD** · Hybrid GTM · **Ops Manager** owns **wave dispatch + COD reconciliation** (no separate dispatch hire) · Supplier terms **mixed cash + 15–30d trusted credit**.
 
 ---
 
@@ -188,6 +188,7 @@ Conservative:  85,000 EGP / month imputed (for break-even stress test)
 |------|----------------------|
 | Opening inventory | 3–5 **million** (one-time + replenishment) |
 | Monthly stock purchases | Depends on GMV turnover (often **2–4M/mo** at scale) |
+| Supplier payment terms | **Mixed terms (locked — Q11: B):** cash / prepayment for new, hero, or constrained SKUs; **15–30 days** for trusted suppliers |
 | Hero margin give-up | Variable — model as **% of hero GMV**, not payroll |
 | Delivery fee revenue | **50 EGP/order** (planning; verify at launch) — mostly offsets moto courier opex (~22k/mo); at 600 orders/mo ≈ **30k** fee revenue |
 
@@ -244,6 +245,7 @@ Assume **12% blended product gross margin** (after hero give-up), **AOV 1,100 EG
 | Telesales: 2 or 4 people? | Confirm |
 | Hero max monthly margin give-up (EGP) | **100,000 (locked — B)** |
 | Delivery fee per order (EGP) | **50 (B — verify at launch)** |
+| Supplier payment terms | **B locked — mixed cash/prepay + 15–30d trusted supplier credit** |
 | Social insurance exact % | Accountant |
 | Monthly stock purchase target | Purchase manager |
 
@@ -263,7 +265,8 @@ Assume **12% blended product gross margin** (after hero give-up), **AOV 1,100 EG
 | 8 | **55k is gross (A)** — employer ~26% included in ~523k opex; not net take-home |
 | 9 | **Hero margin cap 100,000 EGP/mo (B)** — gross profit, not opex |
 | 10 | **Delivery fee 50 EGP/order (B)** — verify at launch |
+| 11 | **Supplier payment terms mixed (B)** — cash/prepay for new/hero/constrained SKUs; **15–30d** trusted supplier credit |
 
 ---
 
-*Version 0.3 · 2026-05-27 · Investor feasibility — opex ~523k EGP/mo (incl. founder 55k)*
+*Version 0.4 · 2026-05-28 · Investor feasibility — opex ~523k EGP/mo (incl. founder 55k)*
