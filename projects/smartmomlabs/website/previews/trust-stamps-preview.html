@@ -129,14 +129,61 @@
       box-shadow: 0 4px 14px rgba(47, 74, 56, 0.1);
     }
     .v-current .trust-icon img { width: 28px; height: 28px; }
-    /* B: packaging stamps (recommended) */
-    .v-stamps .trust-stamp {
-      width: 72px; height: 72px;
+    /* B: packaging stamps — production trust-rail v3 */
+    .v-stamps .trust-rail {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 0;
+      padding: 14px 0 12px;
+      list-style: none;
+      border-block: 1px solid var(--border);
+    }
+    .v-stamps .trust-rail__item {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 7px;
+      padding: 0 6px;
+    }
+    .v-stamps .trust-rail__item:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      inset-inline-end: 0;
+      top: 14%;
+      height: 72%;
+      width: 1px;
+      background: var(--border);
+    }
+    .v-stamps .trust-rail__stamp {
+      width: 56px;
+      height: 56px;
       display: block;
-      filter:
-        drop-shadow(0 1px 0 rgba(255, 255, 255, 0.9))
-        drop-shadow(0 4px 10px rgba(26, 61, 50, 0.1))
-        drop-shadow(0 10px 22px rgba(26, 61, 50, 0.08));
+      box-shadow: 0 2px 6px rgba(26, 61, 50, 0.08);
+    }
+    .v-stamps .trust-rail__label {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    @media (max-width: 640px) {
+      .v-stamps .trust-rail {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px 10px;
+        padding: 14px 8px 12px;
+      }
+      .v-stamps .trust-rail__item::after { display: none; }
+      .v-stamps .trust-rail__item:nth-child(5) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: min(100%, 11rem);
+      }
     }
     /* C: Up-style line badges */
     .v-line .trust-badge {
@@ -214,16 +261,16 @@
           <h2>B — Packaging stamps</h2>
           <span class="tag pick">Recommended</span>
         </div>
-        <p class="panel-note">v2 — unified double-ring system, arc microtype, 12-dot grid + Fe badge, foil sachet with 1g + neutral mark, bilingual مسجّل arc.</p>
+        <p class="panel-note">v3 — ships in <code>index.html</code> + <code>product.html</code>: 56px stamps, hairline rail, short SFDA label, 2-col grid ≤640px.</p>
         <div class="hero-mock">
           <p class="ksa-chip">صُنع للمملكة · شحن محلي</p>
-          <div class="trust-strip">
-            <div class="trust-item"><img class="trust-stamp" src="../assets/icons/trust/stamp-sugar.svg" alt="" width="72" height="72" /><strong>0غ سكر مضاف</strong></div>
-            <div class="trust-item"><img class="trust-stamp" src="../assets/icons/trust/stamp-sfda.svg" alt="" width="72" height="72" /><strong>مسجّل لدى هيئة الغذاء والدواء</strong></div>
-            <div class="trust-item"><img class="trust-stamp" src="../assets/icons/trust/stamp-sachet.svg" alt="" width="72" height="72" /><strong>مسحوق بلا نكهة</strong></div>
-            <div class="trust-item"><img class="trust-stamp" src="../assets/icons/trust/stamp-nutrients.svg" alt="" width="72" height="72" /><strong>12 عنصرًا + حديد</strong></div>
-            <div class="trust-item"><img class="trust-stamp" src="../assets/icons/trust/stamp-halal.svg" alt="" width="72" height="72" /><strong>تركيبة حلال</strong></div>
-          </div>
+          <ul class="trust-rail">
+            <li class="trust-rail__item"><img class="trust-rail__stamp" src="../assets/icons/trust/stamp-sugar.svg" alt="" width="56" height="56" /><span class="trust-rail__label">0غ سكر مضاف</span></li>
+            <li class="trust-rail__item"><img class="trust-rail__stamp" src="../assets/icons/trust/stamp-sfda.svg" alt="" width="56" height="56" /><span class="trust-rail__label">مسجّل لدى الهيئة</span></li>
+            <li class="trust-rail__item"><img class="trust-rail__stamp" src="../assets/icons/trust/stamp-sachet.svg" alt="" width="56" height="56" /><span class="trust-rail__label">مسحوق بلا نكهة</span></li>
+            <li class="trust-rail__item"><img class="trust-rail__stamp" src="../assets/icons/trust/stamp-nutrients.svg" alt="" width="56" height="56" /><span class="trust-rail__label">12 عنصرًا + حديد</span></li>
+            <li class="trust-rail__item"><img class="trust-rail__stamp" src="../assets/icons/trust/stamp-halal.svg" alt="" width="56" height="56" /><span class="trust-rail__label">تركيبة حلال</span></li>
+          </ul>
         </div>
       </section>
 
@@ -247,7 +294,7 @@
       </section>
     </div>
 
-    <p class="footnote"><strong>SFDA note:</strong> Stamps say “REGISTERED” / مسجّل — not the SFDA logo. Official authority marks must not be implied per Saudi labeling rules. Direction B ships to <code>index.html</code> unless you pick C.</p>
+    <p class="footnote"><strong>SFDA note:</strong> Stamps use مسجّل microtype only — not the SFDA logo. Official authority marks must not be implied per Saudi labeling rules. Direction B v3 is live on <code>index.html</code> and <code>product.html</code>.</p>
   </div>
 </body>
 </html>

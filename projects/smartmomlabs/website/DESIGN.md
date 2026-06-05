@@ -99,14 +99,14 @@ Strategy: **Committed restrained** — mint field + green accent ≤15%, gold fo
 
 - **Default shadow:** `0 20px 50px rgba(26, 61, 50, 0.12)` (`--shadow`) on product cards, step photos, hero frame.
 - **Trust rail:** Hairline `border-block` only — stamps sit on the mint field, not inside a card.
-- **Trust stamps:** Light single `drop-shadow` on `.trust-rail__stamp`; all stamps use double-ring circles (hex/shield shapes retired).
+- **Trust stamps:** Light `box-shadow` on `.trust-rail__stamp` (no `filter`); all stamps use double-ring circles (hex/shield shapes retired).
 - No full-page glass cards; depth via white surfaces on mint field.
 
 ## Components
 
 - **Promo bar:** Full-width `accent`, white text, gold bottom border.
 - **Nav:** Sticky mint, logo serif + sans sublabel; primary CTA white on `accent`.
-- **Trust rail (Direction B v3):** `<ul>` of five **unified circular** stamps at 56px, hairline dividers, label token (0.8125rem, same on mobile). Short SFDA in rail (`trust.sfda.short`); full registration in `hero.proof`. `data-i18n-aria-label` + scroll hint. Thin scrollbar + visible cue ≤520px. Shared on home + PDP.
+- **Trust rail (Direction B v3):** `<ul>` of five **unified circular** stamps at 56px, hairline dividers (desktop), label token (0.8125rem). SFDA in rail only (`trust.sfda.short`); `hero.proof` is evidence line only. `data-i18n-aria-label`. ≤640px: 2-col grid, fifth item centered. Shared on home + PDP.
 - **Hero:** Copy column + `.hero-visual` lifestyle scene (4:3, `object-position: center 42%`) + age badge chrome (variant-synced, does not swap scene image).
 - **Product card:** Pack shot, body stack, full-width primary button.
 - **Usage steps:** Three-column grid; each step has `.step-photo` (4:3 crop, per-step `object-position`), step number chip, h3 + body.
@@ -123,7 +123,7 @@ Strategy: **Committed restrained** — mint field + green accent ≤15%, gold fo
 | Breakpoint | Trust rail | Hero |
 |------------|------------|------|
 | ≤900px | Still one row (flex) | Single column grid |
-| ≤520px | Horizontal scroll, ~3 visible | — |
+| ≤640px | 2-column grid, fifth credential centered | — |
 
 ## Assets (committed)
 
