@@ -28,7 +28,10 @@ window.BLENDAVIT_I18N = {
       "hero.variant.kids": "الأطفال 4+",
       "hero.cta.reserve": "احجز علبتك",
       "hero.cta.compare": "قارن التركيبتين",
-      "hero.scene.alt": "طفل يتناول في مطبخ منزلي مضيء، بلا منتجات على الصورة",
+      "hero.scene.alt": "يدان تخلطان مسحوقًا بلا طعم في زبادي على طاولة منزلية مضيئة، بلا عبوة المنتج",
+      "steps.1.img.alt": "ظرفان فضيان على طاولة خشبية بجانب وعاء شوفان",
+      "steps.2.img.alt": "خلط المسحوق في الزبادي بملعقة في مطبخ منزلي مضيء",
+      "steps.3.img.alt": "وعاء شوفان جاهز للتقديم على طاولة منزلية",
       "pack.t.alt": "علبة بليندافيت للرضّع، فيتامينات متعددة بلا طعم للأعمار 1 إلى 3",
       "pack.k.alt": "علبة بليندافيت للأطفال، فيتامينات متعددة بلا طعم للأعمار 4 سنوات فأكثر",
       "badge.years": "سنة",
@@ -185,7 +188,10 @@ window.BLENDAVIT_I18N = {
       "hero.variant.kids": "Kids 4+",
       "hero.cta.reserve": "Reserve your box",
       "hero.cta.compare": "Compare formulas",
-      "hero.scene.alt": "Child eating in a bright home kitchen, no product packaging in the scene",
+      "hero.scene.alt": "Hands stirring tasteless powder into yoghurt on a bright home table, no product box visible",
+      "steps.1.img.alt": "Two foil sachets on a wooden table beside a bowl of oats",
+      "steps.2.img.alt": "Stirring powder into yoghurt with a spoon in a sunlit home kitchen",
+      "steps.3.img.alt": "Bowl of oats ready to serve on a home table",
       "pack.t.alt": "blendavit Toddlers tasteless multivitamin box for ages 1 to 3",
       "pack.k.alt": "blendavit Kids tasteless multivitamin box for ages 4 and up",
       "badge.years": "YEARS",
@@ -335,6 +341,10 @@ window.BLENDAVIT_I18N = {
     document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
       if (pack[key] != null) el.setAttribute("placeholder", pack[key]);
+    });
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-aria-label");
+      if (pack[key] != null) el.setAttribute("aria-label", pack[key]);
     });
     const titleKey = document.body.dataset.pageTitle;
     if (titleKey && pack[titleKey]) document.title = pack[titleKey];

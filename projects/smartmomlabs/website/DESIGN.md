@@ -60,11 +60,13 @@ components:
 
 ## Overview
 
-**Creative north star:** The calm pharmacy shelf, digitized — clinical trust with family warmth, led by real pack photography.
+**Creative north star:** Luna & Eve's cooperation-free story, localized for KSA — calm clinical trust with family warmth, led by **mealtime proof** (stir into food they already eat) plus **real pack photography** on product surfaces.
 
-Mood: assured, readable, premium DTC supplement (EllaOla register, not UK pastel clone). Mint-tinted surfaces echo pack art; forest green and bronze gold carry action and wordmark emphasis. Layout favors trust strip → bold headline → product duo cards → evidence → comparison table.
+Mood: assured, readable, premium DTC supplement (not UK pastel clone, not multi-SKU hub). Mint-tinted surfaces echo pack art; forest green and bronze gold carry action and wordmark emphasis. Layout: trust strip → bold headline → lifestyle hero → product duo → evidence → comparison → photo-led steps.
 
-Anti-references for agents: identical icon+heading cards, hero metric bands, gradient text, glass cards, all-caps section eyebrows on every block.
+**Imagery policy (2026-06):** Hero and steps use **interim AI lifestyle** assets (`hero-stir-yoghurt.png`, `usage-*`). Ship for MVP/waitlist; swap for owned GCC photography before launch. Pack shots (`WhatsApp_Image_*`) stay on product cards and PDP only. Never ship AI assets with wrong or invented branding.
+
+Anti-references for agents: identical icon+heading cards, hero metric bands, gradient text, glass cards, all-caps section eyebrows on every block, double-layer lifestyle-on-lifestyle heroes.
 
 ## Colors
 
@@ -91,19 +93,33 @@ Strategy: **Committed restrained** — mint field + green accent ≤15%, gold fo
 
 ## Elevation
 
-Single shadow vocabulary: `0 16px 48px rgba(47, 74, 56, 0.1)` on product cards, hero pack, reserve panel. No layered glass; depth via white cards on mint field.
+Single shadow vocabulary: `0 16px 48px rgba(47, 74, 56, 0.1)` on product cards, hero frame, step photos, reserve panel. No layered glass; depth via white cards on mint field.
+
+## Imagery
+
+| Asset | Path | Use |
+|-------|------|-----|
+| Hero stir | `assets/images/hero-stir-yoghurt.png` | Hero lifestyle (4:3), no pack in frame |
+| Step mix | `assets/images/usage-stir-yoghurt.png` | How-it-works step 2 |
+| Step oats | `assets/images/usage-oats-bowl.png` | Steps 1 & 3 (crop: sachets vs bowl) |
+| Pack Kids | `assets/images/WhatsApp_Image_*-0ef57a1c-*.png` | Product duo, PDP Kids |
+| Pack Toddlers | `assets/images/WhatsApp_Image_*__1_-311c9c0f-*.png` | Product duo, PDP Toddlers |
+
+Hero grammar: **one lifestyle scene** + UI age badge. Product grammar: **owned pack photography** on cards only.
 
 ## Components
 
 - **Promo bar:** Full-width `accent`, white text.
-- **Nav:** Sticky, blurred mint, logo serif + sans sublabel.
-- **Trust strip:** 5-column icon + label grid (SVG strokes, not emoji).
-- **Product card:** Image 4:3, body stack, full-width primary button.
+- **Nav:** Sticky, blurred mint; `.nav-links a:not(.btn)` preserves button contrast.
+- **Trust strip:** 5-column grid; packaging stamp system v2 (`assets/icons/trust/stamp-*.svg`, `.trust-stamp` 72px) — shared double-ring (forest + gold), mint inner fill, arc microtype (`textPath`). Sugar: 0g + cube cluster + ban ring; SFDA: scalloped REGISTERED / مسجّل arcs; sachet: foil 1g + neutral slash badge; nutrients: 12-dot grid + gold Fe chip; halal: shield + crescent + حلال. Behance refs: Up, VitaTurm. Preview: `previews/trust-stamps-preview.html`. No SFDA authority logo.
+- **Hero:** `.hero-visual` 4:3, `.hero-scene` full-bleed cover, `.age-badge` top-end overlay.
+- **Product card:** Pack image 4:3, body stack, full-width primary button.
+- **Steps:** 3-column grid; `.step-photo` 4:3 cards above numbered labels.
 - **Evidence row:** Serif quote mark + stagger offset on even rows (desktop).
 - **Variant tabs / market buttons:** 2px border; active = accent fill or tint.
 - **Compare table:** Row headers `th scope="row"` for a11y.
 
-Focus: visible 2px accent outline on interactive elements (add in polish pass).
+Focus: visible 2px accent outline on interactive elements.
 
 ## Do's and Don'ts
 
@@ -111,12 +127,15 @@ Focus: visible 2px accent outline on interactive elements (add in polish pass).
 
 - Lead with iron-in-sachet vs gummy comparison.
 - Keep SFDA + halal + 0g sugar in above-fold trust.
-- Use pack photography from `assets/images/`.
+- Use real pack photography on product duo and PDP.
+- Use mealtime stir imagery to prove "invisible in food."
 - Write reserve/waitlist copy for parents, not developers.
 
 **Don't**
 
 - Reintroduce Cormorant Garamond + DM Sans pair.
+- Stack two lifestyle photos in the hero (scene + lifestyle pack).
+- Use AI images with wrong brand text (e.g. BLENDAVITE).
 - Use em dashes in marketing copy.
 - Show Shopify setup instructions on the storefront.
 - Invent paediatrician quotes without signed advisors.

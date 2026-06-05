@@ -9,6 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=El+Messiri:wght@600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    /* Display + body pairing (Arabic default; LTR overrides in main.css) */
+    body { font-family: "Tajawal", "Tahoma", sans-serif; }
+    h1, h2, h3 { font-family: "El Messiri", "Tajawal", serif; }
+    html[dir="ltr"] body { font-family: "Albert Sans", system-ui, sans-serif; }
+    html[dir="ltr"] h1, html[dir="ltr"] h2, html[dir="ltr"] h3 { font-family: "Source Serif 4", Georgia, serif; }
+  </style>
 </head>
 <body data-page-title="meta.title.home" data-page-desc="meta.desc.home">
   <a class="skip-link" href="#main-content" data-i18n="skip">انتقل إلى المحتوى الرئيسي</a>
@@ -44,23 +51,23 @@
       <p class="ksa-chip" data-i18n="ksa.chip">صُنع للمملكة · شحن محلي</p>
       <div class="trust-strip" aria-label="Product credentials">
         <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z"/></svg>
+          <img class="trust-stamp" src="assets/icons/trust/stamp-sugar.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.sugar">0غ سكر مضاف</strong>
         </div>
         <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <img class="trust-stamp" src="assets/icons/trust/stamp-sfda.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.sfda">مسجّل لدى هيئة الغذاء والدواء</strong>
         </div>
         <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"/><path d="M4 12h16"/><path d="M12 5v14"/></svg>
+          <img class="trust-stamp" src="assets/icons/trust/stamp-sachet.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.powder">مسحوق بلا نكهة</strong>
         </div>
         <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg>
+          <img class="trust-stamp" src="assets/icons/trust/stamp-nutrients.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.nutrients">12 عنصرًا + حديد</strong>
         </div>
         <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <img class="trust-stamp" src="assets/icons/trust/stamp-halal.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.halal">تركيبة حلال</strong>
         </div>
       </div>
@@ -80,19 +87,18 @@
         </div>
         <div class="hero-visual hero-visual-in">
           <img
+            id="hero-visual"
             class="hero-scene"
-            src="assets/images/hero-scene-kitchen.jpg"
+            src="assets/images/hero-stir-yoghurt.png"
             alt=""
-            width="1200"
-            height="900"
+            width="1024"
+            height="764"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
             data-i18n="hero.scene.alt"
           />
-          <div class="hero-pack-stage">
-            <img id="hero-pack" src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" data-i18n="pack.k.alt" width="600" height="600" />
-            <div class="age-badge" id="hero-age-badge">4+<span data-i18n="badge.years">سنة</span></div>
-          </div>
+          <div class="age-badge" id="hero-age-badge" aria-hidden="true">4+<span data-i18n="badge.years">سنة</span></div>
         </div>
       </div>
     </div>
@@ -167,8 +173,7 @@
   <section>
     <div class="wrap">
       <div class="section-head"><h2 data-i18n="compare.title">ما الذي يميّز بليندافيت</h2></div>
-      <table class="compare-table" aria-describedby="compare-desc">
-        <caption id="compare-desc" class="visually-hidden" data-i18n="compare.caption">مقارنة بليندافيت مع العلكة</caption>
+      <table class="compare-table" data-i18n-aria-label="compare.caption">
         <thead>
           <tr><th scope="col"></th><th scope="col" data-i18n="compare.h.gummy">فيتامين علكة</th><th scope="col" data-i18n="compare.h.brand">بليندافيت</th></tr>
         </thead>
@@ -189,9 +194,24 @@
         <p data-i18n="steps.sub">افتح ظرفًا واحدًا، اخلطه مع وجبة مألوفة.</p>
       </div>
       <div class="steps">
-        <div class="step-item"><div class="step-num">1</div><h3 data-i18n="steps.1.t">افتح ظرفًا واحدًا</h3><p data-i18n="steps.1.p">ثلاثون ظرفًا فويل.</p></div>
-        <div class="step-item"><div class="step-num">2</div><h3 data-i18n="steps.2.t">اخلط مع الطعام</h3><p data-i18n="steps.2.p">مع الزبادي أو الشوفان.</p></div>
-        <div class="step-item"><div class="step-num">3</div><h3 data-i18n="steps.3.t">قدّم الوجبة</h3><p data-i18n="steps.3.p">نفس الوجبة مع الحديد والعناصر.</p></div>
+        <div class="step-item">
+          <img class="step-photo" src="assets/images/usage-oats-bowl.png" alt="" width="1024" height="764" loading="lazy" decoding="async" data-i18n="steps.1.img.alt" />
+          <div class="step-num">1</div>
+          <h3 data-i18n="steps.1.t">افتح ظرفًا واحدًا</h3>
+          <p data-i18n="steps.1.p">ثلاثون ظرفًا فويل.</p>
+        </div>
+        <div class="step-item">
+          <img class="step-photo" src="assets/images/usage-stir-yoghurt.png" alt="" width="1024" height="1024" loading="lazy" decoding="async" data-i18n="steps.2.img.alt" />
+          <div class="step-num">2</div>
+          <h3 data-i18n="steps.2.t">اخلط مع الطعام</h3>
+          <p data-i18n="steps.2.p">مع الزبادي أو الشوفان.</p>
+        </div>
+        <div class="step-item">
+          <img class="step-photo" src="assets/images/usage-oats-bowl.png" alt="" width="1024" height="764" loading="lazy" decoding="async" data-i18n="steps.3.img.alt" />
+          <div class="step-num">3</div>
+          <h3 data-i18n="steps.3.t">قدّم الوجبة</h3>
+          <p data-i18n="steps.3.p">نفس الوجبة مع الحديد والعناصر.</p>
+        </div>
       </div>
     </div>
   </section>

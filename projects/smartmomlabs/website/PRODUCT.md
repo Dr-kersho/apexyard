@@ -21,16 +21,18 @@ Success: paid reservations and clear variant/market selection, not vanity traffi
 
 ## Brand Personality
 
-**Confident, clinical, calm.** Premium family wellness (not loud "kids brand" candy aesthetics). EllaOla-style energy: bold product grid, trust credentials up front, parent-first copy. Warmth comes from photography and reassurance, not pastel clichés.
+**Confident, clinical, calm.** Premium family wellness (not loud "kids brand" candy aesthetics). Primary reference: **Luna & Eve** (tasteless format hero, parent reassurance, expert trust scaffold, long FAQ). Warmth comes from mealtime photography and reassurance, not pastel clichés or portfolio-hub energy.
 
 ## Anti-references
 
 - Generic supplement landing (mint wash + Cormorant/DM Sans + three identical quote cards).
 - Luna & Eve **layout clone** without blendavit differentiation (iron-in-sachet story must lead).
+- EllaOla-style multi-SKU catalog energy on blendavit.com (hub pattern is Phase 2 on smartmomlabs.com).
 - Fake named doctor endorsements without signed advisors.
 - Shopper-visible dev/Shopify setup notes.
 - Disease-treatment claims; buzzword cadence ("transform", "revolution", "seamless").
 - Emoji icon grids on a clinical SFDA brand.
+- AI-generated packaging with wrong brand names or invented SKUs.
 
 ## Design Principles
 
@@ -39,6 +41,7 @@ Success: paid reservations and clear variant/market selection, not vanity traffi
 3. **Format is the product** — Tasteless sachet + iron is the hero story, not abstract "wellness."
 4. **Market is explicit** — Kingdom of Saudi Arabia only; no USA/USD selector on site.
 5. **Honest waitlist** — No fake in-stock shipping; deposits explained when enabled.
+6. **Interim assets, honest swap** — AI lifestyle photography is acceptable for MVP/waitlist; replace with owned GCC mealtime shoot before public launch. Real pack photography remains on product cards and PDP.
 
 ## Accessibility & Inclusion
 
@@ -46,3 +49,11 @@ Success: paid reservations and clear variant/market selection, not vanity traffi
 - **Arabic-first (RTL)** with English toggle; both ship on static site via `i18n.js`.
 - Respect `prefers-reduced-motion` for any animation added later.
 - Supplement disclaimer visible in footer on all pages.
+
+## References (locked)
+
+| Surface | Model | URL |
+|---------|--------|-----|
+| blendavit.com | Luna & Eve | [lunaandeve.com](https://lunaandeve.com/) |
+
+Smart Mom Labs portfolio hub (EllaOla pattern) is **out of scope** for this site pass.
