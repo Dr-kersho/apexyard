@@ -51,7 +51,7 @@ components:
     textColor: "#ffffff"
     rounded: "{rounded.pill}"
     padding: "15px 30px"
-    note: "WCAG contrast on light gold stop is ~2.4:1 — darken gradient or label before launch"
+    note: "Gradient ends at gold-deep (#5c4218) for AA on reserve CTAs"
   button-secondary:
     backgroundColor: "{colors.bg-card}"
     textColor: "{colors.text}"
@@ -106,7 +106,7 @@ Strategy: **Committed restrained** — mint field + green accent ≤15%, gold fo
 
 - **Promo bar:** Full-width `accent`, white text, gold bottom border.
 - **Nav:** Sticky mint, logo serif + sans sublabel; primary CTA white on `accent`.
-- **Trust rail (Direction B v3):** Single horizontal row of five **unified circular** packaging stamps at 52px, hairline dividers, muted labels. Short SFDA label in rail (`trust.sfda.short`); full registration in `hero.proof` below. No frosted card, no 3+2 grid wrap. Horizontal scroll on narrow phones.
+- **Trust rail (Direction B v3):** `<ul>` of five **unified circular** stamps at 56px, hairline dividers, label token (0.8125rem, same on mobile). Short SFDA in rail (`trust.sfda.short`); full registration in `hero.proof`. `data-i18n-aria-label` + scroll hint. Thin scrollbar + visible cue ≤520px. Shared on home + PDP.
 - **Hero:** Copy column + `.hero-visual` lifestyle scene (4:3, `object-position: center 42%`) + age badge chrome (variant-synced, does not swap scene image).
 - **Product card:** Pack shot, body stack, full-width primary button.
 - **Usage steps:** Three-column grid; each step has `.step-photo` (4:3 crop, per-step `object-position`), step number chip, h3 + body.

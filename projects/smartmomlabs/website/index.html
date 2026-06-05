@@ -16,8 +16,8 @@
 
   <header class="nav">
     <a class="logo" href="index.html">blendavit<small data-i18n="footer.brand">من Smart Mom Labs</small></a>
-    <nav class="nav-links" aria-label="Primary">
-      <div class="lang-switch" role="group" aria-label="Language">
+    <nav class="nav-links" data-i18n-aria-label="nav.aria.primary">
+      <div class="lang-switch" role="group" data-i18n-aria-label="nav.aria.language">
         <button type="button" class="lang-btn active" data-lang-btn="ar" data-i18n="lang.ar">عربي</button>
         <button type="button" class="lang-btn" data-lang-btn="en" data-i18n="lang.en">EN</button>
       </div>
@@ -28,7 +28,7 @@
       <button type="button" class="nav-menu-btn show-mobile-only" aria-haspopup="dialog" aria-controls="nav-menu" data-nav-open data-i18n="nav.menu">القائمة</button>
     </nav>
   </header>
-  <dialog id="nav-menu" class="nav-menu-dialog" aria-label="Site sections">
+  <dialog id="nav-menu" class="nav-menu-dialog" data-i18n-aria-label="nav.aria.menu">
     <div class="nav-menu-inner">
       <button type="button" class="nav-menu-close" data-nav-close data-i18n="nav.close">إغلاق</button>
       <a href="#products" data-nav-close data-i18n="nav.shop">المنتجات</a>
@@ -42,27 +42,31 @@
   <section class="hero">
     <div class="wrap">
       <p class="ksa-chip" data-i18n="ksa.chip">صُنع للمملكة · شحن محلي</p>
-      <div class="trust-rail" role="list" aria-label="Product credentials">
-        <div class="trust-rail__item" role="listitem">
-          <img class="trust-rail__stamp" src="assets/icons/trust/stamp-sugar.svg" alt="" width="52" height="52" decoding="async" aria-hidden="true" />
-          <span class="trust-rail__label" data-i18n="trust.sugar">0غ سكر مضاف</span>
-        </div>
-        <div class="trust-rail__item" role="listitem">
-          <img class="trust-rail__stamp" src="assets/icons/trust/stamp-sfda.svg" alt="" width="52" height="52" decoding="async" aria-hidden="true" />
-          <span class="trust-rail__label" data-i18n="trust.sfda.short">مسجّل لدى الهيئة</span>
-        </div>
-        <div class="trust-rail__item" role="listitem">
-          <img class="trust-rail__stamp" src="assets/icons/trust/stamp-sachet.svg" alt="" width="52" height="52" decoding="async" aria-hidden="true" />
-          <span class="trust-rail__label" data-i18n="trust.powder">مسحوق بلا نكهة</span>
-        </div>
-        <div class="trust-rail__item" role="listitem">
-          <img class="trust-rail__stamp" src="assets/icons/trust/stamp-nutrients.svg" alt="" width="52" height="52" decoding="async" aria-hidden="true" />
-          <span class="trust-rail__label" data-i18n="trust.nutrients">12 عنصرًا + حديد</span>
-        </div>
-        <div class="trust-rail__item" role="listitem">
-          <img class="trust-rail__stamp" src="assets/icons/trust/stamp-halal.svg" alt="" width="52" height="52" decoding="async" aria-hidden="true" />
-          <span class="trust-rail__label" data-i18n="trust.halal">تركيبة حلال</span>
-        </div>
+      <div class="trust-rail-wrap">
+        <p id="trust-rail-hint" class="visually-hidden" data-i18n="trust.rail.hint">اسحب أفقيًا لعرض كل الاعتمادات</p>
+        <ul class="trust-rail" tabindex="0" aria-label="اعتمادات المنتج" data-i18n-aria-label="trust.rail.label" aria-describedby="trust-rail-hint">
+          <li class="trust-rail__item">
+            <img class="trust-rail__stamp" src="assets/icons/trust/stamp-sugar.svg" alt="" width="56" height="56" decoding="async" aria-hidden="true" />
+            <span class="trust-rail__label" data-i18n="trust.sugar">0غ سكر مضاف</span>
+          </li>
+          <li class="trust-rail__item">
+            <img class="trust-rail__stamp" src="assets/icons/trust/stamp-sfda.svg" alt="" width="56" height="56" decoding="async" aria-hidden="true" />
+            <span class="trust-rail__label" data-i18n="trust.sfda.short">مسجّل لدى الهيئة</span>
+          </li>
+          <li class="trust-rail__item">
+            <img class="trust-rail__stamp" src="assets/icons/trust/stamp-sachet.svg" alt="" width="56" height="56" decoding="async" aria-hidden="true" />
+            <span class="trust-rail__label" data-i18n="trust.powder">مسحوق بلا نكهة</span>
+          </li>
+          <li class="trust-rail__item">
+            <img class="trust-rail__stamp" src="assets/icons/trust/stamp-nutrients.svg" alt="" width="56" height="56" decoding="async" aria-hidden="true" />
+            <span class="trust-rail__label" data-i18n="trust.nutrients">12 عنصرًا + حديد</span>
+          </li>
+          <li class="trust-rail__item">
+            <img class="trust-rail__stamp" src="assets/icons/trust/stamp-halal.svg" alt="" width="56" height="56" decoding="async" aria-hidden="true" />
+            <span class="trust-rail__label" data-i18n="trust.halal">تركيبة حلال</span>
+          </li>
+        </ul>
+        <p class="trust-rail-scroll-cue" aria-hidden="true" data-i18n="trust.rail.hint">اسحب أفقيًا لعرض كل الاعتمادات</p>
       </div>
       <div class="hero-grid">
         <div class="hero-copy-in">

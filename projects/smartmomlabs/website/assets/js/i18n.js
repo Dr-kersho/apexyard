@@ -22,6 +22,11 @@ window.BLENDAVIT_I18N = {
       "trust.powder": "مسحوق بلا نكهة",
       "trust.nutrients": "12 عنصرًا + حديد",
       "trust.halal": "تركيبة حلال",
+      "trust.rail.label": "اعتمادات المنتج",
+      "trust.rail.hint": "اسحب أفقيًا لعرض كل الاعتمادات",
+      "nav.aria.primary": "التنقل الرئيسي",
+      "nav.aria.language": "اللغة",
+      "nav.aria.menu": "أقسام الموقع",
       "hero.proof": "مسجّل لدى هيئة الغذاء والدواء · مدعوم بدراسات منشورة",
       "hero.title": "اثنا عشر عنصرًا غذائيًا في وجبات يأكلها طفلك أصلًا",
       "hero.lead": "مسحوق بلا طعم في ظرف 1غ مع حديد ليبوفير و0غ سكر مضاف. يُخلط مرة واحدة يوميًا مع الطعام أو الشراب.",
@@ -179,7 +184,12 @@ window.BLENDAVIT_I18N = {
       "lang.en": "EN",
       "trust.sugar": "0g added sugar",
       "trust.sfda": "SFDA registered",
-      "trust.sfda.short": "SFDA registered",
+      "trust.sfda.short": "Registered",
+      "trust.rail.label": "Product credentials",
+      "trust.rail.hint": "Scroll horizontally to see all credentials",
+      "nav.aria.primary": "Primary navigation",
+      "nav.aria.language": "Language",
+      "nav.aria.menu": "Site sections",
       "trust.powder": "Unflavored powder",
       "trust.nutrients": "12 nutrients + iron",
       "trust.halal": "Halal formulated",
@@ -343,6 +353,10 @@ window.BLENDAVIT_I18N = {
     document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
       if (pack[key] != null) el.setAttribute("placeholder", pack[key]);
+    });
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-aria-label");
+      if (pack[key] != null) el.setAttribute("aria-label", pack[key]);
     });
     const titleKey = document.body.dataset.pageTitle;
     if (titleKey && pack[titleKey]) document.title = pack[titleKey];
