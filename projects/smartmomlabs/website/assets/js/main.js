@@ -60,7 +60,7 @@
   function updateHeroFromVariant(variant) {
     const tab = document.querySelector('.variant-tab[data-variant="' + variant + '"]');
     const badge = document.getElementById("hero-age-badge");
-    const pack = document.getElementById("hero-pack");
+    const scene = document.getElementById("hero-visual");
     if (!tab) return;
     if (badge) {
       const min = tab.dataset.ageMin || "4";
@@ -72,8 +72,7 @@
       span.textContent = t(labelKey);
       badge.appendChild(span);
     }
-    if (pack && tab.dataset.pack) pack.src = tab.dataset.pack;
-    applyImageAlt(pack, tab.dataset.altKey);
+    if (scene) applyImageAlt(scene, "hero.scene.alt");
   }
 
   function initVariantTabs(root) {

@@ -42,25 +42,25 @@
   <section class="hero">
     <div class="wrap">
       <p class="ksa-chip" data-i18n="ksa.chip">صُنع للمملكة · شحن محلي</p>
-      <div class="trust-strip" aria-label="Product credentials">
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z"/></svg>
+      <div class="trust-strip" role="list" aria-label="Product credentials">
+        <div class="trust-item" role="listitem">
+          <img class="trust-stamp" src="assets/icons/trust/stamp-sugar.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.sugar">0غ سكر مضاف</strong>
         </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        <div class="trust-item trust-item--long" role="listitem">
+          <img class="trust-stamp" src="assets/icons/trust/stamp-sfda.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.sfda">مسجّل لدى هيئة الغذاء والدواء</strong>
         </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"/><path d="M4 12h16"/><path d="M12 5v14"/></svg>
+        <div class="trust-item" role="listitem">
+          <img class="trust-stamp" src="assets/icons/trust/stamp-sachet.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.powder">مسحوق بلا نكهة</strong>
         </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg>
+        <div class="trust-item" role="listitem">
+          <img class="trust-stamp" src="assets/icons/trust/stamp-nutrients.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.nutrients">12 عنصرًا + حديد</strong>
         </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="trust-item" role="listitem">
+          <img class="trust-stamp" src="assets/icons/trust/stamp-halal.svg" alt="" width="72" height="72" decoding="async" aria-hidden="true" />
           <strong data-i18n="trust.halal">تركيبة حلال</strong>
         </div>
       </div>
@@ -80,19 +80,18 @@
         </div>
         <div class="hero-visual hero-visual-in">
           <img
+            id="hero-visual"
             class="hero-scene"
-            src="assets/images/hero-scene-kitchen.jpg"
+            src="assets/images/hero-stir-yoghurt.png"
             alt=""
-            width="1200"
-            height="900"
+            width="1024"
+            height="764"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
             data-i18n="hero.scene.alt"
           />
-          <div class="hero-pack-stage">
-            <img id="hero-pack" src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" data-i18n="pack.k.alt" width="600" height="600" />
-            <div class="age-badge" id="hero-age-badge">4+<span data-i18n="badge.years">سنة</span></div>
-          </div>
+          <div class="age-badge" id="hero-age-badge" aria-hidden="true">4+<span data-i18n="badge.years">سنة</span></div>
         </div>
       </div>
     </div>
@@ -189,9 +188,24 @@
         <p data-i18n="steps.sub">افتح ظرفًا واحدًا، اخلطه مع وجبة مألوفة.</p>
       </div>
       <div class="steps">
-        <div class="step-item"><div class="step-num">1</div><h3 data-i18n="steps.1.t">افتح ظرفًا واحدًا</h3><p data-i18n="steps.1.p">ثلاثون ظرفًا فويل.</p></div>
-        <div class="step-item"><div class="step-num">2</div><h3 data-i18n="steps.2.t">اخلط مع الطعام</h3><p data-i18n="steps.2.p">مع الزبادي أو الشوفان.</p></div>
-        <div class="step-item"><div class="step-num">3</div><h3 data-i18n="steps.3.t">قدّم الوجبة</h3><p data-i18n="steps.3.p">نفس الوجبة مع الحديد والعناصر.</p></div>
+        <div class="step-item">
+          <img class="step-photo" src="assets/images/usage-oats-bowl.png" alt="" width="1024" height="764" loading="lazy" decoding="async" data-i18n="steps.1.img.alt" />
+          <div class="step-num">1</div>
+          <h3 data-i18n="steps.1.t">افتح ظرفًا واحدًا</h3>
+          <p data-i18n="steps.1.p">ثلاثون ظرفًا فويل.</p>
+        </div>
+        <div class="step-item">
+          <img class="step-photo" src="assets/images/usage-stir-yoghurt.png" alt="" width="1024" height="1024" loading="lazy" decoding="async" data-i18n="steps.2.img.alt" />
+          <div class="step-num">2</div>
+          <h3 data-i18n="steps.2.t">اخلط مع الطعام</h3>
+          <p data-i18n="steps.2.p">مع الزبادي أو الشوفان.</p>
+        </div>
+        <div class="step-item">
+          <img class="step-photo" src="assets/images/usage-oats-bowl.png" alt="" width="1024" height="764" loading="lazy" decoding="async" data-i18n="steps.3.img.alt" />
+          <div class="step-num">3</div>
+          <h3 data-i18n="steps.3.t">قدّم الوجبة</h3>
+          <p data-i18n="steps.3.p">نفس الوجبة مع الحديد والعناصر.</p>
+        </div>
       </div>
     </div>
   </section>
