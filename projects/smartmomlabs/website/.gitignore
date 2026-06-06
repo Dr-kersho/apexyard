@@ -13,5 +13,5 @@
 .impeccable/live/deferred-svelte-component-accepts.json
 .impeccable-live.json
 .impeccable-live/
-node_modules/.impeccable-live/
+node_modules/
 # impeccable-live-ignore-end
