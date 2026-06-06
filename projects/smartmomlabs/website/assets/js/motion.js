@@ -12,6 +12,7 @@
     ".compare-table",
     ".step-item",
     ".benefit",
+    ".benefit-strip",
     ".review",
     ".faq-item",
     ".waitlist-wrap",

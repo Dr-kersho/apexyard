@@ -9,12 +9,6 @@
   }
 
   function labelForAction(action) {
-    if (action.labelKey === "buy.deposit" && window.BLENDAVIT_CONFIG?.depositLabel) {
-      return window.BLENDAVIT_CONFIG.depositLabel;
-    }
-    if (action.labelKey === "buy.waitlist" && window.BLENDAVIT_CONFIG?.freeReserveLabel) {
-      return window.BLENDAVIT_CONFIG.freeReserveLabel;
-    }
     return t(action.labelKey) || t("pdp.cta");
   }
 

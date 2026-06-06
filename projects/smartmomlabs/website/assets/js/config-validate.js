@@ -50,10 +50,6 @@
       warnings.push("On-site waitlist only — set waitlistFormAction (e.g. Formspree) to capture emails.");
     }
 
-    if (cfg.depositMode && !nonEmpty(cfg.depositLabel) && hasCheckout) {
-      warnings.push("depositMode is true but depositLabel is empty.");
-    }
-
     if (nonEmpty(cfg.shopifyStoreUrl) && !isHttpsUrl(cfg.shopifyStoreUrl)) {
       warnings.push("shopifyStoreUrl must use https://");
     }
