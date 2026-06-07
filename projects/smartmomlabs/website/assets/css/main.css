@@ -599,13 +599,16 @@ a.logo:focus-visible,
   .step-item:hover {
     transform: none;
   }
+  .hero-scene {
+    transform: none;
+  }
 }
 .hero-visual {
   position: relative;
   border-radius: var(--radius-sm);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  overflow: clip;
+  border: none;
+  box-shadow: 0 0 0 1px var(--border), var(--shadow);
   background: var(--bg-soft);
   min-height: clamp(240px, 36vw, 360px);
   aspect-ratio: 1;
@@ -615,8 +618,7 @@ a.logo:focus-visible,
   position: absolute;
   inset: 0;
   display: block;
-  border-radius: inherit;
-  overflow: hidden;
+  overflow: clip;
 }
 .hero-scene {
   position: absolute;
@@ -627,6 +629,9 @@ a.logo:focus-visible,
   object-position: center center;
   display: block;
   filter: saturate(0.92);
+  /* Slight overscale crops sub-pixel corner bleed inside rounded frame */
+  transform: scale(1.04);
+  transform-origin: center center;
 }
 .hero-visual .age-badge {
   top: clamp(10px, 4%, 18px);
@@ -639,9 +644,7 @@ a.logo:focus-visible,
   inset-inline-end: 0;
   background: var(--text);
   color: #fff;
-  /* Sharp corner points inward (toward image), not at container edge */
   border-radius: 50%;
-  border-end-start-radius: 0;
   min-width: 72px;
   min-height: 72px;
   padding: 8px;
