@@ -265,9 +265,16 @@
     if (root.BLENDAVIT_CONSENT?.isEntrySnoozed()) return;
 
     const delay = Number(cfg().emailCaptureDelayMs) || 2000;
-    setTimeout(() => {
-      if (!dialog.open) openDialog(dialog);
-    }, delay);
+    const scheduleOpen = () => {
+      setTimeout(() => {
+        if (!dialog.open) openDialog(dialog);
+      }, delay);
+    };
+    if (root.BLENDAVIT_CONSENT?.pending()) {
+      root.addEventListener("blendavit:consent", scheduleOpen, { once: true });
+    } else {
+      scheduleOpen();
+    }
 
     dialog.querySelector("[data-entry-dismiss]")?.addEventListener("click", () => {
       root.BLENDAVIT_CONSENT?.snoozeEntry();
