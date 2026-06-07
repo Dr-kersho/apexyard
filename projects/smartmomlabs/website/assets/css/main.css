@@ -674,6 +674,30 @@ section.alt { background: var(--bg-soft); }
   font-size: 1.05rem;
 }
 
+/* Meta-trial posters (source: meta-trials/blendavit/) */
+.poster-figure {
+  margin: 0 0 32px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--bg-card);
+}
+.poster-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+.poster-figure--variants {
+  max-width: 720px;
+  margin-inline: auto;
+  margin-bottom: 36px;
+}
+.poster-figure--split {
+  margin-bottom: 28px;
+}
+
 /* Product duo (EllaOla grid) */
 .product-duo {
   display: grid;

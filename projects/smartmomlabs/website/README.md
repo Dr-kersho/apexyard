@@ -35,7 +35,10 @@ Or: `python3 -m http.server 8080`
 
 | File | Use |
 |------|-----|
-| `assets/images/hero-stir-yoghurt.png` | Hero lifestyle |
+| `assets/images/posters/poster-lifestyle.png` | Hero + home OG (meta trial B1) |
+| `assets/images/posters/poster-split-gummy.png` | Science section — gummy vs sachet (B2) |
+| `assets/images/posters/poster-variants.png` | Products section + PDP OG (B3) |
+| `assets/images/hero-stir-yoghurt.png` | Usage steps (stir yoghurt) |
 | `assets/images/usage-stir-yoghurt.png` | Step 2 — mix into yoghurt |
 | `assets/images/usage-oats-bowl.png` | Steps 1 & 3 — sachets / serve |
 | `assets/icons/trust/stamp-*.svg` | Trust strip (direction B) |
