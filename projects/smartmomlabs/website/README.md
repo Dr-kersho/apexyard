@@ -35,7 +35,8 @@ Or: `python3 -m http.server 8080`
 
 | File | Use |
 |------|-----|
-| `assets/images/posters/poster-lifestyle.png` | Hero + home OG (meta trial B1) |
+| `assets/images/posters/poster-lifestyle.png` | Meta trial B1 only — **do not ship** (Gemini watermark baked in; regenerate) |
+| `assets/images/hero-stir-yoghurt.png` | Hero lifestyle (cropped, no watermark) |
 | `assets/images/posters/poster-split-gummy.png` | Science section — gummy vs sachet (B2) |
 | `assets/images/posters/poster-variants.png` | Products section + PDP OG (B3) |
 | `assets/images/hero-stir-yoghurt.png` | Usage steps (stir yoghurt) |

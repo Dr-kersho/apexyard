@@ -18,7 +18,7 @@ Production model per asset. **Do not use one model for everything** — each too
 
 | # | Asset | Format | Model | File |
 |---|-------|--------|-------|------|
-| B1 | Lifestyle hero | 1536×1024 | **Midjourney** | `blendavit-poster-1-lifestyle.png` → `assets/images/posters/poster-lifestyle.*` |
+| B1 | Lifestyle hero | 1536×1024 | **Midjourney** | `blendavit-poster-1-lifestyle.png` — **blocked:** Gemini watermark in frame; hero uses `hero-stir-yoghurt` until regenerated |
 | B2 | Problem → solution | 1536×1024 | **GPT 4o** | `blendavit-poster-2-split.png` → `assets/images/posters/poster-split-gummy.*` |
 | B3 | Variant picker | 1536×1024 | **GPT 4o** | `blendavit-poster-3-variants.png` → `assets/images/posters/poster-variants.*` |
 | B4 | Meta Reels ad | 1080×1920 · 20s | **Kling** (primary) + **Runway** (optional 3s cutaway) | `blendavit-reel-20s.mp4` |
