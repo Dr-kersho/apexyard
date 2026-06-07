@@ -9,6 +9,13 @@ Luna & Eve–style marketing site for **blendavit** — static HTML, Arabic-firs
 | `PRODUCT.md` | Register, users, principles |
 | `DESIGN.md` | Tokens, components, do/don't (source of truth for colors) |
 
+These are **Impeccable consumer sidecars** — they stay in this folder. Portfolio tooling lives in [impeccable](../../impeccable/) (`workspace/impeccable/`). See [consumers.md](../../impeccable/consumers.md).
+
+| Path | Purpose |
+|------|---------|
+| `.impeccable/live/config.json` | Live Mode entry files (committed) |
+| `.impeccable/live/sessions/` | Live session state (gitignored) |
+
 ## Preview locally
 
 From the repo root or this folder:
