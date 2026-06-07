@@ -609,11 +609,14 @@ a.logo:focus-visible,
   background: var(--bg-soft);
   min-height: clamp(240px, 36vw, 360px);
   aspect-ratio: 1;
+  isolation: isolate;
 }
 .hero-visual picture {
   position: absolute;
   inset: 0;
   display: block;
+  border-radius: inherit;
+  overflow: hidden;
 }
 .hero-scene {
   position: absolute;
@@ -621,7 +624,7 @@ a.logo:focus-visible,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center center;
   display: block;
   filter: saturate(0.92);
 }
@@ -636,7 +639,9 @@ a.logo:focus-visible,
   inset-inline-end: 0;
   background: var(--text);
   color: #fff;
-  border-radius: 50% 50% 50% 0;
+  /* Sharp corner points inward (toward image), not at container edge */
+  border-radius: 50%;
+  border-end-start-radius: 0;
   min-width: 72px;
   min-height: 72px;
   padding: 8px;

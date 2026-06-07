@@ -45,12 +45,14 @@ Vertical 1080x1350 product selector mockup, two equal cards on mint-tinted backg
 ### Kling (primary — use your photos)
 
 Source images (in order, ~5s each):
+
 1. `website/assets/images/hero-stir-yoghurt.png`
 2. `website/assets/images/usage-stir-yoghurt.png`
 3. `website/assets/images/usage-oats-bowl.png`
 4. Pack shot WhatsApp PNG
 
 **Kling prompt (per clip, i2v):**
+
 ```
 Subtle natural motion, spoon slowly stirring yoghurt, steam-free kitchen, soft morning light, premium commercial, camera almost static, 5 seconds
 ```
@@ -60,6 +62,7 @@ Subtle natural motion, spoon slowly stirring yoghurt, steam-free kitchen, soft m
 ### Runway (optional 3s insert only if Kling clip 1 is weak)
 
 Text-to-video:
+
 ```
 Macro close-up plain yoghurt bowl, powder dissolving invisible, mint and white palette, commercial supplement ad b-roll, no faces, 3 seconds
 ```
