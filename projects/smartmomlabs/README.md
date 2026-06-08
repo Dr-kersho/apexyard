@@ -12,6 +12,7 @@ Product and website strategy for **blendavit** (DTC microsite) and the **Smart M
 | [expert-evidence-copy.md](./expert-evidence-copy.md) | Website trust copy from portfolio science (citation-first) |
 | [product-analysis-waitlist-and-launch.md](./product-analysis-waitlist-and-launch.md) | Hanan — what to do, which waitlist/markets/build order |
 | **[website/](./website/)** | **Live MVP** — `index.html` + `product.html` |
+| **[website/hub/](./website/hub/)** | **Parent hub MVP** — Smart Mom Labs portfolio (`/hub/` on deploy) |
 
 ## Impeccable sidecars (local to this site)
 

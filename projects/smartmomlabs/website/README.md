@@ -35,6 +35,7 @@ Or: `python3 -m http.server 8080`
 |------|---------|
 | `index.html` | Home — trust stamps, lifestyle hero, steps, FAQ, reserve |
 | `product.html` | PDP — Toddlers / Kids, KSA, nutrient panel |
+| `hub/index.html` | Smart Mom Labs portfolio hub — blendavit live, other brands soon |
 | `404.html` | Branded not-found (Netlify/Vercel) |
 | `previews/trust-stamps-preview.html` | Trust icon direction comparison |
 

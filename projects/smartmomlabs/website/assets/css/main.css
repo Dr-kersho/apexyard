@@ -1128,6 +1128,12 @@ section.alt { background: var(--bg-soft); }
   gap: 18px;
   margin-bottom: 20px;
 }
+.expert-panel-note {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
 .expert-card {
   padding: 22px 20px;
   background: var(--bg-soft);
@@ -1136,6 +1142,22 @@ section.alt { background: var(--bg-soft); }
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.expert-card__avatar {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-card));
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  color: var(--accent);
+}
+.expert-card__avatar svg {
+  width: 26px;
+  height: 26px;
 }
 .expert-card__tag {
   font-size: 0.72rem;
