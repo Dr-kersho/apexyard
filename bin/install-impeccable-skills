@@ -24,18 +24,17 @@ for arg in "$@"; do
 done
 
 marker="$ops_root/.cursor/skills/impeccable/SKILL.md"
-if [[ -f "$marker" && "$force" -eq 0 ]]; then
-  version="$(grep -m1 '^version:' "$marker" | sed 's/version: *//')"
-  echo "Impeccable skills already present (v${version:-unknown}) in .cursor/skills/impeccable/"
-else
-  echo "Installing Impeccable skills from npm..."
-  cd "$ops_root"
-  echo Y | npx impeccable skills install ${force:+--force}
-  version="$(grep -m1 '^version:' "$marker" | sed 's/version: *//')"
-fi
 
-version="$(grep -m1 '^version:' "$marker" | sed 's/version: *//')"
-cat > "$lock_file" <<EOF
+read_version() {
+  grep -m1 '^version:' "$marker" | sed 's/version: *//'
+}
+
+write_lock_file() {
+  local version="$1"
+  if [[ -f "$lock_file" ]] && grep -q "\"version\": \"${version}\"" "$lock_file" 2>/dev/null; then
+    return 0
+  fi
+  cat > "$lock_file" <<EOF
 {
   "impeccable": {
     "version": "${version:-unknown}",
@@ -45,6 +44,23 @@ cat > "$lock_file" <<EOF
   }
 }
 EOF
+  echo "Wrote $lock_file"
+}
 
-echo "Wrote $lock_file"
+if [[ -f "$marker" && "$force" -eq 0 ]]; then
+  version="$(read_version)"
+  echo "Impeccable skills already present (v${version:-unknown}) in .cursor/skills/impeccable/"
+  write_lock_file "$version"
+  exit 0
+fi
+
+echo "Installing Impeccable skills from npm..."
+cd "$ops_root"
+install_args=()
+if [[ "$force" -eq 1 ]]; then
+  install_args+=(--force)
+fi
+echo Y | npx impeccable skills install "${install_args[@]}"
+version="$(read_version)"
+write_lock_file "$version"
 echo "Done. Commit .claude/.cursor/.github/skills/impeccable/ and skills-lock.json so skills survive clone/clean."
