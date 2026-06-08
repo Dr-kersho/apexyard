@@ -59,16 +59,16 @@
   </dialog>
 
   <main id="main-content">
-  <section class="hero hero--editorial">
+  <section class="hero hero--ella section--surface">
     <div class="wrap">
-      <p class="ksa-chip" data-i18n="ksa.chip">صُنع للمملكة · شحن محلي</p>
       <div class="hero-split hero-enter">
         <div class="hero-copy-in">
+          <p class="hero-eyebrow" data-i18n="hero.eyebrow">صُنع للمملكة · مسجّل لدى الهيئة</p>
           <h1 data-i18n="hero.title">اثنا عشر عنصرًا غذائيًا في وجبات يأكلها طفلك أصلًا</h1>
           <p class="hero-lead" data-i18n="hero.lead">مسحوق بلا طعم في ظرف 1غ مع حديد ليبوفير و0غ سكر مضاف.</p>
+          <p class="hero-proof-line" data-i18n="hero.social">0غ سكر · حديد ليبوفير · 30 ظرف</p>
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="#products" data-i18n="hero.cta.shop">اختر علبتك</a>
-            <a class="btn btn-secondary" href="product.html" data-i18n="hero.cta.details">تفاصيل المنتج</a>
+            <a class="btn btn-gold btn-primary" href="#products" data-i18n="hero.cta.shop">اختر علبتك</a>
           </div>
         </div>
         <div class="hero-visual hero-visual-in">
@@ -90,53 +90,51 @@
           <div class="age-badge" id="hero-age-badge" aria-hidden="true"><span data-i18n="hero.badge.range">1–12</span><span data-i18n="badge.years">سنة</span></div>
         </div>
       </div>
-      <div class="hero-trust" aria-labelledby="hero-trust-heading">
+      <div class="hero-trust-chips" aria-labelledby="hero-trust-heading">
         <h2 id="hero-trust-heading" class="visually-hidden" data-i18n="trust.rail.heading">اعتمادات</h2>
-        <div data-trust-rail-mount="hero"></div>
+        <div data-trust-rail-mount="chips"></div>
       </div>
     </div>
   </section>
 
-  <section id="products" class="alt">
+  <section id="products" class="section--surface">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head section-head--center">
         <h2 data-i18n="products.title">تغذية أساسية بلا عناء</h2>
         <p data-i18n="products.sub">تركيبتان مسجّلتان لدى هيئة الغذاء والدواء.</p>
       </div>
-      <figure class="poster-figure poster-figure--variants">
-        <picture>
-          <source type="image/webp" srcset="assets/images/posters/poster-variants.webp" />
-          <img src="assets/images/posters/poster-variants.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" data-i18n="poster.variants.alt" />
-        </picture>
-      </figure>
       <div class="product-duo">
-        <article class="product-card">
-          <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29__1_-311c9c0f-d5cc-43dc-a74a-3c9c6c2ce54b.png" alt="" loading="lazy" data-i18n="pack.t.alt" />
+        <article class="product-card product-card--shop">
+          <div class="product-card-media">
+            <span class="discount-badge discount-badge--card" data-discount-badge data-i18n="commerce.badge">خصم 20٪</span>
+            <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29__1_-311c9c0f-d5cc-43dc-a74a-3c9c6c2ce54b.png" alt="" loading="lazy" data-i18n="pack.t.alt" />
+          </div>
           <div class="product-card-body">
             <h3 data-i18n="card.t.title">بليندافيت للرضّع</h3>
             <p class="meta" data-i18n="card.t.meta">1–3 سنوات · 30 ظرف</p>
             <p data-i18n="card.t.desc">لوحة 12 عنصرًا مع حديد مغلّف.</p>
-            <div class="price-block" data-price-block data-variant="toddlers">
-              <span class="discount-badge" data-discount-badge hidden data-i18n="commerce.badge">خصم 20٪</span>
-              <span class="price-compare" data-price-compare hidden></span>
+            <div class="price-block" data-price-block data-variant="toddlers" data-launch-price>
+              <span class="price-compare" data-price-compare></span>
               <span class="price-current" data-price-current></span>
             </div>
-            <button type="button" class="btn btn-primary btn-buy" data-add-to-cart data-variant="toddlers" data-i18n="commerce.addToCart">أضيفي للسلة</button>
+            <button type="button" class="btn btn-gold btn-primary btn-buy" data-add-to-cart data-variant="toddlers" data-i18n="commerce.addToCart">أضيفي للسلة</button>
             <a class="product-details" href="product.html?variant=toddlers" data-i18n="card.details">التفاصيل</a>
           </div>
         </article>
-        <article class="product-card">
-          <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" loading="lazy" data-i18n="pack.k.alt" />
+        <article class="product-card product-card--shop">
+          <div class="product-card-media">
+            <span class="discount-badge discount-badge--card" data-discount-badge data-i18n="commerce.badge">خصم 20٪</span>
+            <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" loading="lazy" data-i18n="pack.k.alt" />
+          </div>
           <div class="product-card-body">
             <h3 data-i18n="card.k.title">بليندافيت للأطفال</h3>
             <p class="meta" data-i18n="card.k.meta">4+ سنوات · 30 ظرف</p>
             <p data-i18n="card.k.desc">فيتامينات كاملة مع حديد.</p>
-            <div class="price-block" data-price-block data-variant="kids">
-              <span class="discount-badge" data-discount-badge hidden data-i18n="commerce.badge">خصم 20٪</span>
-              <span class="price-compare" data-price-compare hidden></span>
+            <div class="price-block" data-price-block data-variant="kids" data-launch-price>
+              <span class="price-compare" data-price-compare></span>
               <span class="price-current" data-price-current></span>
             </div>
-            <button type="button" class="btn btn-primary btn-buy" data-add-to-cart data-variant="kids" data-i18n="commerce.addToCart">أضيفي للسلة</button>
+            <button type="button" class="btn btn-gold btn-primary btn-buy" data-add-to-cart data-variant="kids" data-i18n="commerce.addToCart">أضيفي للسلة</button>
             <a class="product-details" href="product.html?variant=kids" data-i18n="card.details">التفاصيل</a>
           </div>
         </article>
@@ -170,21 +168,56 @@
     </div>
   </section>
 
-  <section>
+  <section class="section--surface compare-section" aria-labelledby="compare-title">
     <div class="wrap">
-      <div class="section-head"><h2 data-i18n="compare.title">ما الذي يميّز بليندافيت</h2></div>
-      <table class="compare-table" aria-describedby="compare-desc">
-        <caption id="compare-desc" class="visually-hidden" data-i18n="compare.caption">مقارنة بليندافيت مع العلكة</caption>
-        <thead>
-          <tr><th scope="col"></th><th scope="col" data-i18n="compare.h.gummy">فيتامين علكة</th><th scope="col" data-i18n="compare.h.brand">بليندافيت</th></tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row" data-i18n="compare.r.iron">يحتوي حديد</th><td class="no" data-i18n="compare.no" data-mobile-col="compare.h.gummy">لا</td><td class="yes" data-i18n="compare.yes.iron" data-mobile-col="compare.h.brand">نعم · ليبوفير</td></tr>
-          <tr><th scope="row" data-i18n="compare.r.sugar">سكر مضاف</th><td class="no" data-mobile-col="compare.h.gummy">~8g</td><td class="yes" data-i18n="compare.yes.0g" data-mobile-col="compare.h.brand">0غ</td></tr>
-          <tr><th scope="row" data-i18n="compare.r.coop">تعاون الطفل</th><td class="no" data-i18n="compare.coop.no" data-mobile-col="compare.h.gummy">مطلوب</td><td class="yes" data-i18n="compare.coop.yes" data-mobile-col="compare.h.brand">غير مطلوب</td></tr>
-          <tr><th scope="row" data-i18n="compare.r.detect">يُكتشف في الطعام</th><td class="no" data-i18n="compare.detect.no" data-mobile-col="compare.h.gummy">طعم ولون</td><td class="yes" data-i18n="compare.detect.yes" data-mobile-col="compare.h.brand">غير ملحوظ</td></tr>
-        </tbody>
-      </table>
+      <div class="section-head section-head--center">
+        <h2 id="compare-title" data-i18n="compare.title">ما الذي يميّز بليندافيت</h2>
+        <p data-i18n="compare.sub">لماذا المسحوق يتفوق على العلكة</p>
+      </div>
+      <div class="compare-visual" role="region" data-i18n-aria-label="compare.caption">
+        <article class="compare-panel compare-panel--other">
+          <h3 class="compare-panel__title" data-i18n="compare.h.gummy">فيتامين علكة</h3>
+          <ul class="compare-list">
+            <li class="compare-list__row compare-list__row--no">
+              <span class="compare-list__icon" aria-hidden="true">✕</span>
+              <span><strong data-i18n="compare.r.iron">يحتوي حديد</strong> · <span data-i18n="compare.no">لا</span></span>
+            </li>
+            <li class="compare-list__row compare-list__row--no">
+              <span class="compare-list__icon" aria-hidden="true">✕</span>
+              <span><strong data-i18n="compare.r.sugar">سكر مضاف</strong> · ~8g</span>
+            </li>
+            <li class="compare-list__row compare-list__row--no">
+              <span class="compare-list__icon" aria-hidden="true">✕</span>
+              <span><strong data-i18n="compare.r.coop">تعاون الطفل</strong> · <span data-i18n="compare.coop.no">مطلوب</span></span>
+            </li>
+            <li class="compare-list__row compare-list__row--no">
+              <span class="compare-list__icon" aria-hidden="true">✕</span>
+              <span><strong data-i18n="compare.r.detect">يُكتشف في الطعام</strong> · <span data-i18n="compare.detect.no">طعم ولون</span></span>
+            </li>
+          </ul>
+        </article>
+        <article class="compare-panel compare-panel--brand">
+          <h3 class="compare-panel__title" data-i18n="compare.h.brand">بليندافيت</h3>
+          <ul class="compare-list">
+            <li class="compare-list__row compare-list__row--yes">
+              <span class="compare-list__icon" aria-hidden="true">✓</span>
+              <span><strong data-i18n="compare.r.iron">يحتوي حديد</strong> · <span data-i18n="compare.yes.iron">نعم · ليبوفير</span></span>
+            </li>
+            <li class="compare-list__row compare-list__row--yes">
+              <span class="compare-list__icon" aria-hidden="true">✓</span>
+              <span><strong data-i18n="compare.r.sugar">سكر مضاف</strong> · <span data-i18n="compare.yes.0g">0غ</span></span>
+            </li>
+            <li class="compare-list__row compare-list__row--yes">
+              <span class="compare-list__icon" aria-hidden="true">✓</span>
+              <span><strong data-i18n="compare.r.coop">تعاون الطفل</strong> · <span data-i18n="compare.coop.yes">غير مطلوب</span></span>
+            </li>
+            <li class="compare-list__row compare-list__row--yes">
+              <span class="compare-list__icon" aria-hidden="true">✓</span>
+              <span><strong data-i18n="compare.r.detect">يُكتشف في الطعام</strong> · <span data-i18n="compare.detect.yes">غير ملحوظ</span></span>
+            </li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 

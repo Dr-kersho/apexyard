@@ -52,27 +52,40 @@
     syncDiscountUi();
   }
 
+  function syncPriceBlock(block) {
+    const variant = block.dataset.variant;
+    if (!variant || !root.BLENDAVIT_CART) return;
+    const compare = root.BLENDAVIT_CART.comparePrice(variant);
+    const on = hasDiscount();
+    const launch = block.hasAttribute("data-launch-price");
+    const showPromo = on || launch;
+    const pct = Number(cfg().discountPercent) || 0;
+    const salePrice =
+      showPromo && compare && pct
+        ? Math.round(compare * (1 - pct / 100))
+        : root.BLENDAVIT_CART.unitPrice(variant);
+    const compareEl = block.querySelector("[data-price-compare]");
+    const currentEl = block.querySelector("[data-price-current]");
+    if (compareEl) {
+      compareEl.textContent = showPromo && compare ? formatMoney(compare) : "";
+      compareEl.hidden = !(showPromo && compare);
+    }
+    if (currentEl) {
+      const display = showPromo ? salePrice : compare;
+      currentEl.textContent = display ? formatMoney(display) : "";
+    }
+    const card = block.closest(".product-card");
+    const cardBadge = card?.querySelector("[data-discount-badge]");
+    if (cardBadge) cardBadge.hidden = !showPromo;
+  }
+
   function syncDiscountUi() {
     const on = hasDiscount();
     document.querySelectorAll("[data-discount-badge]").forEach((el) => {
+      if (el.closest("[data-launch-price], .product-card--shop")) return;
       el.hidden = !on;
     });
-    document.querySelectorAll("[data-price-block]").forEach((block) => {
-      const variant = block.dataset.variant;
-      if (!variant || !root.BLENDAVIT_CART) return;
-      const compare = root.BLENDAVIT_CART.comparePrice(variant);
-      const current = root.BLENDAVIT_CART.unitPrice(variant);
-      const compareEl = block.querySelector("[data-price-compare]");
-      const currentEl = block.querySelector("[data-price-current]");
-      if (compareEl) {
-        compareEl.textContent = on && compare ? formatMoney(compare) : "";
-        compareEl.hidden = !(on && compare);
-      }
-      if (currentEl) {
-        const display = on ? current : compare;
-        currentEl.textContent = display ? formatMoney(display) : "";
-      }
-    });
+    document.querySelectorAll("[data-price-block]").forEach(syncPriceBlock);
     renderCart();
   }
 
