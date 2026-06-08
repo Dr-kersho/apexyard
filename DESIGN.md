@@ -73,7 +73,7 @@ Source: `:root` in `site/index.html` (and sibling pages). Dark mode via `prefers
 | Text | `ink` | `#1A1612` | Body, headings |
 | Muted | `ink-soft` / `ink-faint` | `#5C5548` / `#847C68` | Meta, secondary |
 | Accent | `accent` | `#C8321A` | Links hover, keywords, selection (not large fills) |
-| Rules | `rule` / `rule-faint` | hairlines between sections |
+| Rules | `rule` / `rule-faint` | `#1A1612` / `#B6AD9B` | Hairlines between sections |
 
 Dark accent shifts to `#FF6E4A`; paper/ink invert accordingly.
 
