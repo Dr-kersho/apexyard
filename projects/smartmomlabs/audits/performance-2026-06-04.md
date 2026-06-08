@@ -15,4 +15,4 @@
 
 **Estimated savings:** ~2.1MB fewer bytes on initial science + steps path when WebP is served (vs PNG fallbacks for legacy browsers only).
 
-**Deferred:** Compress or remove unused `hero-stir-01.png` / `hero-stir-02.png` from deploy tree; wire OG image to WebP when social crawlers accept it.
+**Follow-up:** Wire OG image to WebP when social crawlers accept it. Removed unused `hero-stir-01.png` / `hero-stir-02.png` (~1MB deploy savings).
