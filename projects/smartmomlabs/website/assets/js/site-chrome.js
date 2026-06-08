@@ -4,26 +4,48 @@
 (function () {
   const PROMO_KEY = "blendavit-promo-dismissed";
 
+  function syncPromoHeight() {
+    const bar = document.querySelector("[data-promo-bar]");
+    const root = document.documentElement;
+    if (!bar || document.body.classList.contains("promo-dismissed")) {
+      root.style.setProperty("--promo-h", "0px");
+      return;
+    }
+    root.style.setProperty("--promo-h", `${bar.offsetHeight}px`);
+  }
+
   function initPromoBar() {
     const bar = document.querySelector("[data-promo-bar]");
-    if (!bar) return;
+    if (!bar) {
+      syncPromoHeight();
+      return;
+    }
 
     if (sessionStorage.getItem(PROMO_KEY) === "1") {
       document.body.classList.add("promo-dismissed");
+      syncPromoHeight();
       return;
     }
 
     const dismiss = () => {
       document.body.classList.add("promo-dismissed");
       sessionStorage.setItem(PROMO_KEY, "1");
+      syncPromoHeight();
     };
 
     bar.querySelector("[data-promo-dismiss]")?.addEventListener("click", dismiss);
+
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => syncPromoHeight());
+      ro.observe(bar);
+    }
+    syncPromoHeight();
+    document.addEventListener("blendavit:lang", syncPromoHeight);
   }
 
   function initShopBar() {
     const bar = document.querySelector("[data-shop-bar]");
-    const hero = document.querySelector(".hero--ella, .hero");
+    const hero = document.querySelector(".hero--ella, .hero, .page-pdp .pdp-buy-box");
     if (!bar || !hero || !("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(

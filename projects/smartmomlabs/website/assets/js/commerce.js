@@ -188,11 +188,15 @@
         formatMoney(line.unitPrice) +
         "</p>" +
         '<div class="cart-line__qty">' +
-        '<button type="button" class="cart-qty-btn" data-cart-dec aria-label="-">−</button>' +
+        '<button type="button" class="cart-qty-btn" data-cart-dec aria-label="' +
+        t("commerce.cart.decrease") +
+        '">−</button>' +
         '<span data-cart-qty>' +
         line.qty +
         "</span>" +
-        '<button type="button" class="cart-qty-btn" data-cart-inc aria-label="+">+</button>' +
+        '<button type="button" class="cart-qty-btn" data-cart-inc aria-label="' +
+        t("commerce.cart.increase") +
+        '">+</button>' +
         "</div>" +
         "</div>" +
         '<button type="button" class="cart-line__remove" data-cart-remove aria-label="' +
@@ -330,7 +334,10 @@
 
     document.addEventListener("blendavit:cart-change", renderCart);
     document.addEventListener("blendavit:discount-unlocked", syncDiscountUi);
-    document.addEventListener("blendavit:lang", syncDiscountUi);
+    document.addEventListener("blendavit:lang", () => {
+      syncDiscountUi();
+      renderCart();
+    });
 
     renderCart();
     syncDiscountUi();
