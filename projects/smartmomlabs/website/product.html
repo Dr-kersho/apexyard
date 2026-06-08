@@ -56,17 +56,17 @@
     </div>
   </dialog>
 
-  <main class="pdp" id="main-content">
+  <main class="pdp section--surface" id="main-content">
     <div class="wrap pdp-layout">
-      <div class="pdp-gallery">
+      <div class="pdp-gallery pdp-gallery--shop">
         <img id="pdp-image" src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" data-i18n="pack.k.alt" />
       </div>
 
-      <div class="pdp-buy-box" id="pdp-buy" data-reserve-root data-variant="kids" data-market="ksa">
-        <p class="ksa-chip" data-i18n="ksa.chip">صُنع للمملكة · شحن محلي</p>
-        <p class="pdp-eyebrow" data-i18n="pdp.eyebrow">فيتامينات متعددة بلا طعم · 30 ظرف × 1غ</p>
+      <div class="pdp-buy-box pdp-buy-box--shop" id="pdp-buy" data-reserve-root data-variant="kids" data-market="ksa">
+        <p class="hero-eyebrow" data-i18n="hero.eyebrow">صُنع للمملكة · مسجّل لدى الهيئة</p>
         <h1 class="pdp-title">blendavit</h1>
         <p class="pdp-summary" data-i18n="pdp.summary">مسجّل لدى هيئة الغذاء والدواء · 0غ سكر مضاف</p>
+        <p class="pdp-proof-line" data-i18n="hero.social">0غ سكر · حديد ليبوفير · 30 ظرف</p>
 
         <p class="choice-label" data-i18n="pdp.step1">اختر عمر طفلك</p>
         <div class="variant-cards" role="group" aria-labelledby="pdp-age-label">
@@ -82,9 +82,9 @@
         </div>
 
         <p class="choice-label" data-i18n="pdp.step2">راجع اللوحة ثم احجز</p>
-        <div class="price-block" data-price-block data-variant="kids" data-pdp-price-block>
-          <span class="discount-badge" data-discount-badge hidden data-i18n="commerce.badge">خصم 20٪</span>
-          <span class="price-compare" data-price-compare hidden></span>
+        <div class="price-block price-block--pdp" data-price-block data-variant="kids" data-pdp-price-block data-launch-price>
+          <span class="discount-badge" data-discount-badge data-i18n="commerce.badge">خصم 20٪</span>
+          <span class="price-compare" data-price-compare></span>
           <span class="price-current" data-price-current></span>
         </div>
 
@@ -96,6 +96,7 @@
         </div>
 
         <p class="reserve-fine" data-i18n="pdp.fine">انضم إلى الدفعة الأولى. عربون قابل للاسترداد عند التفعيل.</p>
+        <p class="pdp-science-link"><a href="index.html#science" data-i18n="pdp.science.link">لماذا المسحوق وليس العلكة؟</a></p>
 
         <details class="nutrients-panel" open>
           <summary data-i18n="pdp.nutrients">اللوحة الغذائية</summary>
@@ -123,6 +124,23 @@
       </div>
     </div>
   </main>
+
+  <section class="newsletter-bar" id="newsletter" aria-labelledby="newsletter-title">
+    <div class="wrap newsletter-bar__inner">
+      <div class="newsletter-bar__copy">
+        <h2 id="newsletter-title" data-i18n="newsletter.title">انضمي لقائمة الإطلاق</h2>
+        <p data-i18n="newsletter.sub">أخبار الدفعة الأولى وخصم 20٪ — شحن داخل المملكة فقط.</p>
+      </div>
+      <form class="newsletter-bar__form" data-waitlist-form method="post" novalidate>
+        <label class="newsletter-bar__field">
+          <span class="visually-hidden" data-i18n="waitlist.email">البريد الإلكتروني</span>
+          <input type="email" name="email" autocomplete="email" required inputmode="email" data-i18n-placeholder="waitlist.email.placeholder" placeholder="you@example.com" />
+        </label>
+        <button type="submit" class="btn btn-gold" data-i18n="newsletter.cta">اشتركي</button>
+        <p class="newsletter-bar__hint" data-waitlist-config-hint hidden data-i18n="waitlist.config">اربط waitlistFormAction في config.js أو روابط waitlistUrls للحفظ التلقائي.</p>
+      </form>
+    </div>
+  </section>
 
   <footer class="footer">
     <div class="wrap footer-grid footer-grid--legal">

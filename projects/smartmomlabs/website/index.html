@@ -169,28 +169,37 @@
     </div>
   </section>
 
-  <section id="science">
+  <section id="science" class="alt science-section">
     <div class="wrap">
-      <div class="section-head section-head--tight">
+      <div class="section-head section-head--center">
         <h2 data-i18n="science.title">لماذا المسحوق وليس العلكة؟</h2>
+        <p data-i18n="science.sub">ثلاثة أسباب مدعومة بأدلة — بلا ادعاءات طبية.</p>
       </div>
-      <figure class="poster-figure poster-figure--split">
+      <figure class="poster-figure poster-figure--split science-poster">
         <picture>
           <source type="image/webp" srcset="assets/images/posters/poster-split-gummy.webp" />
           <img src="assets/images/posters/poster-split-gummy.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" data-i18n="poster.split.alt" />
         </picture>
       </figure>
-      <div class="proof-columns">
-        <div class="proof-block">
-          <h3 data-i18n="proof1.title">89.8٪ يقاومون النكهات غير المألوفة</h3>
+      <div class="science-stats">
+        <article class="science-stat">
+          <p class="science-stat__value" data-i18n="proof1.stat">89.8٪</p>
+          <h3 data-i18n="proof1.title">يقاومون النكهات غير المألوفة</h3>
           <p data-i18n="proof1.body">دراسة جدة على 216 طفلًا. العلكة تفشل قبل التغذية.</p>
-          <p class="source" data-i18n="proof1.src">Kutbi HA et al. · Appetite · 2019</p>
-        </div>
-        <div class="proof-block">
-          <h3 data-i18n="proof2.title">0غ سكر في كل ظرف</h3>
+          <p class="science-stat__src" data-i18n="proof1.src">Kutbi HA et al. · Appetite · 2019</p>
+        </article>
+        <article class="science-stat">
+          <p class="science-stat__value" data-i18n="proof2.stat">0غ</p>
+          <h3 data-i18n="proof2.title">سكر مضاف في كل ظرف</h3>
           <p data-i18n="proof2.body">العلكة غالبًا ~8غ سكر. كل ظرف بليندافيت 0غ سكر مضاف.</p>
-          <p class="source" data-i18n="proof2.src">American Heart Association · ConsumerLab 2023</p>
-        </div>
+          <p class="science-stat__src" data-i18n="proof2.src">American Heart Association · ConsumerLab 2023</p>
+        </article>
+        <article class="science-stat">
+          <p class="science-stat__value" data-i18n="proof3.stat">7mg</p>
+          <h3 data-i18n="proof3.title">حديد ليبوفير في الظرف</h3>
+          <p data-i18n="proof3.body">معظم العلكة تستبعد الحديد. المسحوق يخفي الطعم المعدني في الطعام.</p>
+          <p class="science-stat__src" data-i18n="proof3.src">Layrisse 2000 · Hurrell &amp; Egli 2010 · Lipofer®</p>
+        </article>
       </div>
     </div>
   </section>
@@ -406,6 +415,23 @@
     </div>
   </section>
   </main>
+
+  <section class="newsletter-bar" id="newsletter" aria-labelledby="newsletter-title">
+    <div class="wrap newsletter-bar__inner">
+      <div class="newsletter-bar__copy">
+        <h2 id="newsletter-title" data-i18n="newsletter.title">انضمي لقائمة الإطلاق</h2>
+        <p data-i18n="newsletter.sub">أخبار الدفعة الأولى وخصم 20٪ — شحن داخل المملكة فقط.</p>
+      </div>
+      <form class="newsletter-bar__form" data-waitlist-form method="post" novalidate>
+        <label class="newsletter-bar__field">
+          <span class="visually-hidden" data-i18n="waitlist.email">البريد الإلكتروني</span>
+          <input type="email" name="email" autocomplete="email" required inputmode="email" data-i18n-placeholder="waitlist.email.placeholder" placeholder="you@example.com" />
+        </label>
+        <button type="submit" class="btn btn-gold" data-i18n="newsletter.cta">اشتركي</button>
+        <p class="newsletter-bar__hint" data-waitlist-config-hint hidden data-i18n="waitlist.config">اربط waitlistFormAction في config.js أو روابط waitlistUrls للحفظ التلقائي.</p>
+      </form>
+    </div>
+  </section>
 
   <footer class="footer">
     <div class="wrap footer-grid">

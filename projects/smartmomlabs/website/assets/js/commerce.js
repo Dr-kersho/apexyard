@@ -74,15 +74,19 @@
       const display = showPromo ? salePrice : compare;
       currentEl.textContent = display ? formatMoney(display) : "";
     }
-    const card = block.closest(".product-card");
-    const cardBadge = card?.querySelector("[data-discount-badge]");
-    if (cardBadge) cardBadge.hidden = !showPromo;
+    const badge = block.querySelector("[data-discount-badge]");
+    if (badge) badge.hidden = !showPromo;
   }
 
   function syncDiscountUi() {
     const on = hasDiscount();
     document.querySelectorAll("[data-discount-badge]").forEach((el) => {
-      if (el.closest("[data-launch-price], .product-card--shop")) return;
+      if (
+        el.closest("[data-price-block][data-launch-price]") ||
+        el.closest(".product-card--shop")
+      ) {
+        return;
+      }
       el.hidden = !on;
     });
     document.querySelectorAll("[data-price-block]").forEach(syncPriceBlock);

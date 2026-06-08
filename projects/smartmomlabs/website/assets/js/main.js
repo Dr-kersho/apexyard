@@ -185,22 +185,21 @@
   }
 
   function initWaitlistForm() {
-    const form = document.querySelector("[data-waitlist-form]");
-    if (!form) return;
     const action = window.BLENDAVIT_CONFIG?.waitlistFormAction;
-    if (action) form.action = action;
-
-    form.addEventListener("submit", (event) => {
-      if (!action) {
-        event.preventDefault();
-        const email = form.querySelector('input[type="email"]');
-        if (email && !email.value) {
-          email.focus();
-          return;
+    document.querySelectorAll("[data-waitlist-form]").forEach((form) => {
+      if (action) form.action = action;
+      form.addEventListener("submit", (event) => {
+        if (!action) {
+          event.preventDefault();
+          const email = form.querySelector('input[type="email"]');
+          if (email && !email.value) {
+            email.focus();
+            return;
+          }
+          const note = form.querySelector("[data-waitlist-config-hint]");
+          if (note) note.hidden = false;
         }
-        const note = form.querySelector("[data-waitlist-config-hint]");
-        if (note) note.hidden = false;
-      }
+      });
     });
   }
 
