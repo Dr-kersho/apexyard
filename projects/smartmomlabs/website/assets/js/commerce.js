@@ -263,16 +263,16 @@
   function proceedToPreorder() {
     const restock = document.querySelector("[data-restock-modal]");
     restock?.close();
-    const section = document.getElementById("preorder");
-    if (section) {
-      if (!window.location.pathname.endsWith("index.html") && !window.location.pathname.endsWith("/")) {
-        window.location.href = "index.html#preorder";
-        return;
-      }
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-      const email = section.querySelector('input[type="email"]');
-      if (email) setTimeout(() => email.focus(), 400);
+    if (!window.location.pathname.endsWith("index.html") && !window.location.pathname.endsWith("/")) {
+      window.location.href = "index.html#newsletter";
+      return;
     }
+    if (window.BLENDAVIT_SITE_CHROME?.scrollToNewsletter()) return;
+    const section = document.getElementById("newsletter") || document.getElementById("preorder");
+    if (!section) return;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    const email = section.querySelector('input[type="email"]');
+    if (email) setTimeout(() => email.focus(), 400);
   }
 
   function initEntryModal() {

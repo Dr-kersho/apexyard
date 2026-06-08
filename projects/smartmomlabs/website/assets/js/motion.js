@@ -17,7 +17,7 @@
     ".benefit-strip",
     ".review-card",
     ".faq-item",
-    ".waitlist-wrap",
+    ".preorder-cta__inner",
     ".newsletter-bar__inner",
     ".variant-card",
     ".pdp-gallery",

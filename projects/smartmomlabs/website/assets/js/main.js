@@ -52,12 +52,17 @@
       pdpRoot.dataset.variant = formulaId;
       pdpRoot.dataset.market = purchase().market;
     }
-    const input = document.getElementById("waitlist-variant");
-    const label = document.querySelector("[data-waitlist-variant-label]");
-    if (input) input.value = formulaId;
+    const variantInput =
+      document.getElementById("newsletter-variant") ||
+      document.getElementById("waitlist-variant");
+    const label =
+      document.querySelector("[data-newsletter-variant-label]") ||
+      document.querySelector("[data-waitlist-variant-label]");
+    if (variantInput) variantInput.value = formulaId;
     if (label) {
       const key = formulaId === "toddlers" ? "card.t.title" : "card.k.title";
       label.textContent = t(key);
+      label.dataset.i18n = key;
     }
   }
 
@@ -117,7 +122,8 @@
 
   function openOnSiteWaitlist(formulaId) {
     formula().set(formulaId);
-    const section = document.getElementById("preorder");
+    if (window.BLENDAVIT_SITE_CHROME?.scrollToNewsletter()) return;
+    const section = document.getElementById("preorder") || document.getElementById("newsletter");
     if (!section) return;
     section.scrollIntoView({ behavior: "smooth", block: "start" });
     const email = section.querySelector('input[type="email"]');
@@ -224,8 +230,8 @@
     formula().fromQueryString(window.location.search);
     const hash = window.location.hash;
     if (
-      (hash === "#preorder" || hash === "#waitlist") &&
-      document.getElementById("preorder")
+      (hash === "#preorder" || hash === "#waitlist" || hash === "#newsletter") &&
+      (document.getElementById("newsletter") || document.getElementById("preorder"))
     ) {
       window.setTimeout(() => openOnSiteWaitlist(formula().get()), 300);
     }

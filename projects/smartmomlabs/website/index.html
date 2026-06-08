@@ -28,7 +28,11 @@
 </head>
 <body data-page-title="meta.title.home" data-page-desc="meta.desc.home">
   <a class="skip-link" href="#main-content" data-i18n="skip">انتقل إلى المحتوى الرئيسي</a>
-  <div class="promo" data-i18n="promo">الدفعة الأولى مفتوحة للحجز · شحن داخل المملكة · الدفع بالريال</div>
+  <div class="promo-bar" data-promo-bar role="region" data-i18n-aria-label="promo.aria">
+    <p class="promo-bar__text" data-i18n="promo">الدفعة الأولى مفتوحة للحجز · شحن داخل المملكة · خصم 20٪</p>
+    <a class="promo-bar__cta" href="#products" data-i18n="promo.cta">احجزي الآن</a>
+    <button type="button" class="promo-bar__close" data-promo-dismiss data-i18n-aria-label="promo.dismiss" aria-label="إغلاق">×</button>
+  </div>
 
   <header class="nav">
     <a class="logo" href="index.html">blendavit<small data-i18n="footer.brand">من Smart Mom Labs</small></a>
@@ -107,7 +111,7 @@
         <article class="product-card product-card--shop">
           <div class="product-card-media">
             <span class="discount-badge discount-badge--card" data-discount-badge data-i18n="commerce.badge">خصم 20٪</span>
-            <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29__1_-311c9c0f-d5cc-43dc-a74a-3c9c6c2ce54b.png" alt="" loading="lazy" data-i18n="pack.t.alt" />
+            <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29__1_-311c9c0f-d5cc-43dc-a74a-3c9c6c2ce54b.png" alt="" width="800" height="600" loading="lazy" decoding="async" data-i18n="pack.t.alt" />
           </div>
           <div class="product-card-body">
             <h3 data-i18n="card.t.title">بليندافيت للرضّع</h3>
@@ -124,7 +128,7 @@
         <article class="product-card product-card--shop">
           <div class="product-card-media">
             <span class="discount-badge discount-badge--card" data-discount-badge data-i18n="commerce.badge">خصم 20٪</span>
-            <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" loading="lazy" data-i18n="pack.k.alt" />
+            <img src="assets/images/WhatsApp_Image_2026-06-02_at_15.33.29-0ef57a1c-28be-4ac3-8c8d-68b498609c95.png" alt="" width="800" height="600" loading="lazy" decoding="async" data-i18n="pack.k.alt" />
           </div>
           <div class="product-card-body">
             <h3 data-i18n="card.k.title">بليندافيت للأطفال</h3>
@@ -393,28 +397,19 @@
     </div>
   </section>
 
-  <section id="preorder" class="alt">
-    <div class="wrap waitlist-wrap">
-      <h2 class="waitlist-title" data-i18n="preorder.title">أكملي الطلب المسبق</h2>
-      <p class="waitlist-sub" data-i18n="preorder.sub">أدخلي بريدك لتأكيد الطلب. شحن داخل المملكة فقط.</p>
-      <form class="waitlist-form" data-waitlist-form method="post" novalidate>
-        <input type="hidden" name="variant" id="waitlist-variant" value="kids" />
-        <label class="waitlist-field">
-          <span class="waitlist-label" data-i18n="waitlist.email">البريد الإلكتروني</span>
-          <input type="email" name="email" autocomplete="email" required inputmode="email" data-i18n-placeholder="waitlist.email.placeholder" placeholder="you@example.com" />
-        </label>
-        <p class="waitlist-pick">
-          <span data-i18n="waitlist.for">لـ</span>
-          <strong data-waitlist-variant-label data-i18n="card.k.title">بليندافيت للأطفال</strong>
-        </p>
-        <button type="submit" class="btn btn-gold btn-cta" data-i18n="waitlist.submit">انضم للقائمة</button>
-        <p class="form-privacy"><span data-i18n="forms.privacy.prefix">بإرسال بريدك توافقين على</span> <a href="privacy.html" data-i18n="footer.privacy">سياسة الخصوصية</a>.</p>
-        <p class="waitlist-config-hint" data-waitlist-config-hint hidden data-i18n="waitlist.config">اربط waitlistFormAction في config.js أو روابط waitlistUrls للحفظ التلقائي.</p>
-      </form>
-      <p class="waitlist-fine" data-i18n="waitlist.fine">بلا دفع الآن. عند التفعيل يمكنك الحجز بعربون قابل للاسترداد.</p>
+  <section id="preorder" class="section--surface preorder-cta">
+    <div class="wrap preorder-cta__inner">
+      <h2 class="preorder-cta__title" data-i18n="preorder.cta.title">جاهزة للحجز؟</h2>
+      <p class="preorder-cta__sub" data-i18n="preorder.cta.sub">انضمي لقائمة الإطلاق واحصلي على خصم 20٪ للدفعة الأولى.</p>
+      <a class="btn btn-gold btn-primary" href="#newsletter" data-i18n="preorder.cta.btn">انضمي للقائمة</a>
+      <p class="preorder-cta__fine" data-i18n="waitlist.fine">بلا دفع الآن. عند التفعيل يمكنك الحجز بعربون قابل للاسترداد.</p>
     </div>
   </section>
   </main>
+
+  <div class="shop-bar" data-shop-bar aria-hidden="true">
+    <a class="btn btn-gold shop-bar__btn" href="#products" data-i18n="shop.bar.cta">اختر علبتك</a>
+  </div>
 
   <section class="newsletter-bar" id="newsletter" aria-labelledby="newsletter-title">
     <div class="wrap newsletter-bar__inner">
@@ -423,11 +418,17 @@
         <p data-i18n="newsletter.sub">أخبار الدفعة الأولى وخصم 20٪ — شحن داخل المملكة فقط.</p>
       </div>
       <form class="newsletter-bar__form" data-waitlist-form method="post" novalidate>
+        <input type="hidden" name="variant" id="newsletter-variant" value="kids" />
         <label class="newsletter-bar__field">
           <span class="visually-hidden" data-i18n="waitlist.email">البريد الإلكتروني</span>
           <input type="email" name="email" autocomplete="email" required inputmode="email" data-i18n-placeholder="waitlist.email.placeholder" placeholder="you@example.com" />
         </label>
         <button type="submit" class="btn btn-gold" data-i18n="newsletter.cta">اشتركي</button>
+        <p class="newsletter-bar__pick">
+          <span data-i18n="waitlist.for">لـ</span>
+          <strong data-newsletter-variant-label data-i18n="card.k.title">بليندافيت للأطفال</strong>
+        </p>
+        <p class="form-privacy newsletter-bar__privacy"><span data-i18n="forms.privacy.prefix">بإرسال بريدك توافقين على</span> <a href="privacy.html" data-i18n="footer.privacy">سياسة الخصوصية</a>.</p>
         <p class="newsletter-bar__hint" data-waitlist-config-hint hidden data-i18n="waitlist.config">اربط waitlistFormAction في config.js أو روابط waitlistUrls للحفظ التلقائي.</p>
       </form>
     </div>
@@ -527,6 +528,7 @@
   <script src="assets/js/formula.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/reviews-carousel.js"></script>
+  <script src="assets/js/site-chrome.js"></script>
   <script src="assets/js/motion.js"></script>
 </body>
 </html>

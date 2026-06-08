@@ -22,12 +22,16 @@
   <meta name="twitter:image" content="https://website-dun-zeta-85.vercel.app/assets/images/posters/poster-variants.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=El+Messiri:wght@600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=El+Messiri:wght@600;700&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body data-page-title="meta.title.pdp" data-page-desc="meta.desc.home" class="page-pdp">
   <a class="skip-link" href="#main-content" data-i18n="skip">انتقل إلى المحتوى الرئيسي</a>
-  <div class="promo" data-i18n="pdp.promo">احجز علبتك · داخل المملكة · الدفعة الأولى</div>
+  <div class="promo-bar" data-promo-bar role="region" data-i18n-aria-label="promo.aria">
+    <p class="promo-bar__text" data-i18n="pdp.promo">احجز علبتك · داخل المملكة · خصم 20٪</p>
+    <a class="promo-bar__cta" href="#pdp-buy" data-i18n="promo.cta">احجزي الآن</a>
+    <button type="button" class="promo-bar__close" data-promo-dismiss data-i18n-aria-label="promo.dismiss" aria-label="إغلاق">×</button>
+  </div>
 
   <header class="nav">
     <a class="logo" href="index.html">blendavit<small data-i18n="footer.brand">من Smart Mom Labs</small></a>
@@ -132,6 +136,7 @@
         <p data-i18n="newsletter.sub">أخبار الدفعة الأولى وخصم 20٪ — شحن داخل المملكة فقط.</p>
       </div>
       <form class="newsletter-bar__form" data-waitlist-form method="post" novalidate>
+        <input type="hidden" name="variant" id="newsletter-variant" value="kids" />
         <label class="newsletter-bar__field">
           <span class="visually-hidden" data-i18n="waitlist.email">البريد الإلكتروني</span>
           <input type="email" name="email" autocomplete="email" required inputmode="email" data-i18n-placeholder="waitlist.email.placeholder" placeholder="you@example.com" />
@@ -234,6 +239,7 @@
   <script src="assets/js/purchase-path.js"></script>
   <script src="assets/js/formula.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/site-chrome.js"></script>
   <script src="assets/js/motion.js"></script>
 </body>
 </html>
