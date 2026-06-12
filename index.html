@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7faf8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#080e0a" media="(prefers-color-scheme: dark)">
+<title>Ahmed: I build business software, solo</title>
+<meta name="description" content="Solo developer with a business brain. CRMs, booking platforms, AI assistants, and sales websites, built end to end at the lowest running cost.">
+<meta property="og:title" content="Ahmed: systems builder">
+<meta property="og:description" content="CRMs, automation, dashboards and sales websites. Built solo, end to end, cheap to run.">
+<meta property="og:type" content="website">
+<!-- TODO before launch: set absolute URLs once the domain is live.
+     Telegram previews REQUIRE og:image with a full https:// URL (1200×630).
+<meta property="og:url" content="https://yourdomain.com/">
+<meta property="og:image" content="https://yourdomain.com/og.png">
+-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f7faf8'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%230c120e' text-anchor='middle'%3EA.%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens ──────────────────────────────────────────── */
+  :root {
+    --bg:        #f7faf8;
+    --surface:   #ffffff;
+    --ink:       #0c120e;
+    --ink-2:     #3c5244;
+    --ink-3:     #5a7060;
+    --green:     #1a6b3c;
+    --green-dim: #e8f5ee;
+    --red:       #b83018;
+    --rule:      #d4e4d8;
+    --serif: "Source Serif 4", Charter, "Bitstream Charter", Georgia, serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #080e0a;
+      --surface:   #101a12;
+      --ink:       #e2ede5;
+      --ink-2:     #8aab90;
+      --ink-3:     #4d6b54;
+      --green:     #4db872;
+      --green-dim: #0c2014;
+      --red:       #e05c38;
+      --rule:      #162012;
+    }
+  }
+
+  /* ── Reset / base ──────────────────────────────────────── */
+  * { box-sizing: border-box }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 48rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem }
+
+  a {
+    color: var(--green);
+    text-decoration-thickness: 1px;
+    text-underline-offset: .2em;
+    transition: color .18s ease-out;
+  }
+  a:hover { color: var(--ink) }
+
+  /* ── Wordmark (topline name) ─────────────────────────── */
+  .wordmark {
+    font-weight: 700;
+    font-size: .95rem;
+    letter-spacing: .01em;
+    color: var(--ink);
+  }
+
+  /* ── Header ──────────────────────────────────────────── */
+  header { margin-bottom: 3.5rem }
+  header .topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: .9rem;
+    margin-bottom: 2.8rem;
+  }
+  header .topline a {
+    font-size: .88rem;
+    font-weight: 500;
+  }
+
+  /* ── H1 — bold display ──────────────────────────────────── */
+  h1 {
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.025em;
+    margin: 0 0 1.4rem;
+    font-variation-settings: "opsz" 60;
+    text-wrap: balance;
+  }
+
+  .intro p {
+    margin: 0 0 1rem;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    max-width: 62ch;
+  }
+  .intro p:first-of-type { color: var(--ink) }
+
+  /* ── H2 ──────────────────────────────────────────────── */
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    font-variation-settings: "opsz" 40;
+    letter-spacing: -.015em;
+    margin: 3.8rem 0 .4rem;
+    text-wrap: balance;
+  }
+
+  /* Section subtitle — plain italic, not a kicker/eyebrow */
+  .subtitle {
+    display: block;
+    font-size: .9rem;
+    font-style: italic;
+    color: var(--ink-3);
+    margin: .2rem 0 1.6rem;
+  }
+
+  /* ── Services dl — no numbered markers ──────────────────── */
+  dl { margin: 1.6rem 0 0 }
+  dt {
+    font-weight: 700;
+    font-size: 1.08rem;
+    color: var(--ink);
+    margin: 0 0 .3rem;
+    font-variation-settings: "opsz" 20;
+  }
+  dd {
+    margin: 0 0 1.5rem;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+
+  /* ── Case file list — ruled, not cards ───────────────────── */
+  .file {
+    border-top: 1px solid var(--rule);
+    padding: 1.8rem 0 1.6rem;
+  }
+  .file:last-of-type { border-bottom: 1px solid var(--rule) }
+  .file h3 {
+    font-size: 1.12rem;
+    font-weight: 700;
+    margin: 0 0 .6rem;
+    text-wrap: balance;
+    color: var(--ink);
+    transition: color .2s ease-out;
+  }
+  .file:hover h3 { color: var(--green) }
+  .file p {
+    margin: 0 0 .55rem;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .file p b { color: var(--ink); font-weight: 700 }
+
+  /* ── Stack pill badges ────────────────────────────────── */
+  .stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .9rem }
+  .tag {
+    font-size: .72rem;
+    font-weight: 600;
+    font-variation-settings: "opsz" 8;
+    letter-spacing: .02em;
+    padding: .2em .6em;
+    border-radius: 4px;
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid var(--rule);
+  }
+
+  /* ── Note box — full border, no side stripe ───────────────── */
+  .note {
+    background: var(--green-dim);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    margin: 1.8rem 0 2.2rem;
+    font-size: .95rem;
+    color: var(--ink-2);
+    position: relative;
+  }
+  .note b { color: var(--ink) }
+
+  /* ── Stamp ────────────────────────────────────────────────── */
+  .stamp {
+    position: absolute;
+    top: -.9rem; right: 1rem;
+    font-size: .64rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 2px solid var(--red);
+    border-radius: 4px;
+    padding: .22rem .5rem;
+    background: var(--green-dim);
+    transform-origin: center;
+  }
+
+  /* ── Why section ──────────────────────────────────────────── */
+  .why p {
+    margin: 0 0 1rem;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .why p b { color: var(--ink) }
+
+  /* ── CTA / close — dark block ────────────────────────────── */
+  .close {
+    background: #0c120e;
+    color: #f7faf8;
+    padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1.5rem, 5vw, 3.5rem);
+    border-radius: 10px;
+    margin-top: 4rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    .close {
+      background: #0d2416;
+      color: #e2ede5;
+    }
+  }
+  .close h2 {
+    font-size: clamp(2rem, 6.5vw, 3.8rem);
+    margin: 0 0 1rem;
+    color: inherit;
+    letter-spacing: -.02em;
+  }
+  .close p { color: rgba(247, 250, 248, .80); text-wrap: pretty }
+  @media (prefers-color-scheme: dark) {
+    .close p { color: rgba(226, 237, 229, .65) }
+  }
+
+  /* ── CTA link — button on dark block ──────────────────────── */
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .45em;
+    font-weight: 700;
+    font-size: .98rem;
+    font-variation-settings: "opsz" 12;
+    color: #0c120e !important;
+    background: #f7faf8;
+    padding: .65em 1.4em;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-top: .7rem;
+    transition: background .2s, color .2s, transform .18s cubic-bezier(.16,1,.3,1);
+  }
+  .cta-link:hover {
+    background: var(--green);
+    color: #f7faf8 !important;
+    transform: translateY(-2px);
+  }
+  @media (prefers-color-scheme: dark) {
+    .cta-link {
+      background: var(--green);
+      color: #080e0a !important;
+    }
+    .cta-link:hover {
+      background: #f7faf8;
+      color: #080e0a !important;
+    }
+  }
+  .cta-arrow {
+    display: inline-block;
+    transition: transform .25s cubic-bezier(.16,1,.3,1);
+  }
+  .cta-link:hover .cta-arrow { transform: translateX(6px) }
+  .cta-handle {
+    display: block;
+    margin-top: .4rem;
+    font-size: .85rem;
+    font-weight: 500;
+    color: rgba(247, 250, 248, .55);
+  }
+  @media (max-width: 22rem) {
+    .cta-link { font-size: .85rem; padding: .6em 1.1em }
+  }
+  @media (prefers-color-scheme: dark) {
+    .cta-handle { color: rgba(226, 237, 229, .45) }
+  }
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  footer {
+    font-size: .83rem;
+    color: var(--ink-3);
+    display: flex;
+    justify-content: space-between;
+    gap: .8rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    margin-top: 3.5rem;
+  }
+
+  /* ── Floating Telegram CTA ──────────────────────────────── */
+  .float-cta {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-size: .85rem;
+    font-weight: 700;
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 12;
+    color: #f7faf8 !important;
+    background: var(--green);
+    padding: .65em 1.1em;
+    border-radius: 100px;
+    text-decoration: none !important;
+    box-shadow: 0 4px 16px rgba(26,107,60,.38);
+    transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s;
+  }
+  .float-cta:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(26,107,60,.48);
+    color: #f7faf8 !important;
+  }
+  @media (max-width: 30rem) {
+    .float-cta span { font-size: .72rem; letter-spacing: 0 }
+    .float-cta { padding: .6em .9em }
+  }
+
+  ::selection     { background: var(--green); color: #f7faf8 }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px }
+
+  /* ═══════════════════════════════════════════════════════════
+     ANIMATIONS — scoped to no-preference
+  ═══════════════════════════════════════════════════════════ */
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* ── Word-mask reveal (h1, CTA h2) ───────────────────────
+       JS splits text into .word-wrap > em; each word slides
+       up from below an overflow:hidden clip.                  */
+    .word-wrap {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: .15em;
+      margin-bottom: -.15em;
+    }
+    .word-wrap em {
+      display: inline-block;
+      font-style: normal;
+      animation: word-up .65s cubic-bezier(.16, 1, .3, 1) both;
+      animation-delay: calc(var(--wi) * 0.052s + var(--word-start, 0s));
+    }
+    @keyframes word-up {
+      from { transform: translateY(110%) }
+      to   { transform: translateY(0) }
+    }
+
+    /* ── Page-load fade-up ────────────────────────────────────*/
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px) }
+      to   { opacity: 1; transform: none }
+    }
+    .load-fade {
+      animation: fade-up .6s cubic-bezier(.16, 1, .3, 1) both;
+      animation-delay: var(--d, 0s);
+    }
+
+    /* ── Scroll: clip-path wipe for h2s ───────────────────────*/
+    .wipe {
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path .5s cubic-bezier(.22, 1, .36, 1);
+    }
+    .wipe.is-visible { clip-path: inset(0 0 0% 0) }
+
+    /* ── Scroll: subtitle / label fade ───────────────────────*/
+    .fade-in {
+      opacity: 0;
+      transition: opacity .45s ease-out var(--d, 0s);
+    }
+    .fade-in.is-visible { opacity: 1 }
+
+    /* ── Scroll: snap-up ────────────────────────────────────*/
+    .snap-up {
+      opacity: 0;
+      transform: translateY(40px) scale(.96);
+      transition:
+        opacity   .48s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
+        transform .48s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s);
+    }
+    .snap-up.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Scroll: card-in — diagonal snap ──────────────────────*/
+    .card-in {
+      opacity: 0;
+      transform: translateY(48px) translateX(-16px) scale(.96);
+      transition:
+        opacity   .52s cubic-bezier(.16, 1, .3, 1),
+        transform .52s cubic-bezier(.16, 1, .3, 1);
+    }
+    .card-in.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Scroll: note box ─────────────────────────────────────*/
+    .note-in {
+      opacity: 0;
+      transform: translateY(32px) scale(.97);
+      transition:
+        opacity   .5s cubic-bezier(.16, 1, .3, 1),
+        transform .5s cubic-bezier(.22, 1, .36, 1);
+    }
+    .note-in.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Scroll: close section ────────────────────────────────*/
+    .close-in {
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity   .55s cubic-bezier(.16, 1, .3, 1),
+        transform .55s cubic-bezier(.22, 1, .36, 1);
+    }
+    .close-in.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Continuous: stamp float ────────────────────────────────*/
+    .stamp {
+      animation: stamp-float 4s ease-in-out infinite;
+    }
+    @keyframes stamp-float {
+      0%, 100% { transform: rotate(-5deg) translateY(0) }
+      50%       { transform: rotate(-4deg) translateY(-5px) }
+    }
+
+    /* ── Continuous: float-cta attention pulse ──────────────────*/
+    @keyframes cta-pulse {
+      0%, 80%, 100% { opacity: 1 }
+      90%           { opacity: .65 }
+    }
+    .float-cta { animation: cta-pulse 4s ease-in-out infinite 3s }
+  }
+</style>
+</head>
+<body>
+
+<!-- Word-split: runs before first paint to avoid FOUT -->
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function splitWords(el, startDelay) {
+    if (!el) return;
+    var words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map(function (w, i) {
+      return '<span class="word-wrap"><em style="--wi:' + i + ';--word-start:' + (startDelay || 0) + 's">' + w + '</em></span>';
+    }).join(' ');
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    splitWords(document.querySelector('h1'), 0.05);
+    splitWords(document.querySelector('.close h2'), 0);
+  });
+}());
+</script>
+
+<main class="page">
+
+<header>
+  <div class="topline load-fade" style="--d:.38s">
+    <span class="wordmark">Ahmed</span>
+    <nav style="display:flex;align-items:center;gap:1.4rem">
+      <a href="#work" style="font-size:.88rem;font-weight:500">Work</a>
+      <a href="#contact" style="font-size:.88rem;font-weight:500">Contact</a>
+      <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" style="font-size:.88rem;font-weight:500">@BuildwithAhmed</a>
+    </nav>
+  </div>
+  <h1>I build the software that runs your sales: solo, end to end.</h1>
+  <div class="intro">
+    <p class="load-fade" style="--d:.52s">I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
+    <p class="load-fade" style="--d:.66s">Before software I was a licensed pharmacist, and I still run an export business on the side, so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
+  </div>
+</header>
+
+<section>
+  <h2 class="wipe">What I build</h2>
+  <span class="subtitle fade-in" style="--d:.1s">For sales and operations people</span>
+  <dl>
+    <dt class="snap-up">Landing pages built to close</dt>
+    <dd class="snap-up">Conversion copy, waitlist funnels, payment-ready checkout. A page with one job: turn a visitor into a lead or a sale.</dd>
+    <dt class="snap-up">CRMs shaped around your sales process</dt>
+    <dd class="snap-up">Pipeline boards, call logging, lead scoring, WhatsApp outreach. Not a generic CRM you fight with: a tool built around how your team actually sells.</dd>
+    <dt class="snap-up">Automation that removes manual work</dt>
+    <dd class="snap-up">Intake forms that fill themselves into profiles, AI that drafts the documents you write by hand today, Telegram and WhatsApp bots that answer while you sleep.</dd>
+    <dt class="snap-up">Dashboards with live numbers</dt>
+    <dd class="snap-up">Calls made, deals moved, revenue in: on a screen that updates as it happens, not in next week's spreadsheet.</dd>
+  </dl>
+</section>
+
+<section id="work">
+  <h2 class="wipe">Case files</h2>
+  <span class="subtitle fade-in" style="--d:.1s">Real systems, in production or pilot use</span>
+
+  <div class="note note-in">
+    <span class="stamp" aria-hidden="true">Built solo</span>
+    <b>Why no names or screenshots?</b> My clients' tools are their competitive edge, and my own products are my business. I keep both private. Every system below is real. Just ask and I'll show you the live system on a private call.
+  </div>
+
+  <article class="file card-in">
+    <h3>A CRM for an export trade team cold-calling Gulf markets</h3>
+    <p><b>The problem:</b> an outbound team selling container loads by phone and WhatsApp. Leads lived in spreadsheets, follow-ups got lost, nobody knew which lead deserved the next call.</p>
+    <p><b>What I built:</b> a vertical CRM with a pipeline board, call logging, scored lead import from CSV, and assisted WhatsApp outreach, plus secure login and subscription billing. One tool replaced the spreadsheet-and-chat chaos.</p>
+    <div class="stack">
+      <span class="tag">TypeScript</span>
+      <span class="tag">Next.js</span>
+      <span class="tag">WhatsApp</span>
+      <span class="tag">Stripe</span>
+      <span class="tag">Cloud DB</span>
+    </div>
+  </article>
+
+  <article class="file card-in">
+    <h3>A booking marketplace for clinics and their patients</h3>
+    <p><b>The problem:</b> clinics taking bookings by phone calls and paper, patients with no way to see availability.</p>
+    <p><b>What I built:</b> a progressive web app where patients log in with a one-time phone code and book treatments, while each clinic runs its own schedule and admin panel. One deployment serves both sides.</p>
+    <div class="stack">
+      <span class="tag">TypeScript</span>
+      <span class="tag">Next.js</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">OTP Login</span>
+      <span class="tag">PWA</span>
+    </div>
+  </article>
+
+  <article class="file card-in">
+    <h3>A sports platform with ID cards, bookings and card payments</h3>
+    <p><b>The problem:</b> a sports club managing bookings, memberships, and player identity across paper forms and phone calls, with no digital record for parents or staff.</p>
+    <p><b>What I built:</b> digital player ID cards, court booking paid by card online, community matches, and parent-managed profiles for kids. Arabic-first, with a full right-to-left interface.</p>
+    <p>End to end: identity, scheduling, and a payment gateway in one product.</p>
+    <div class="stack">
+      <span class="tag">TypeScript</span>
+      <span class="tag">Next.js</span>
+      <span class="tag">Card Payments</span>
+      <span class="tag">Arabic RTL</span>
+    </div>
+  </article>
+
+  <article class="file card-in">
+    <h3>An AI portal that turns intake forms into personalized plans</h3>
+    <p><b>The problem:</b> a coach spending hours per client writing plans by hand.</p>
+    <p><b>What I built:</b> the client fills an intake form, the system builds a profile and drafts a personalized plan, the coach reviews and approves. Hours of writing became a review step.</p>
+    <div class="stack">
+      <span class="tag">Python</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">Next.js</span>
+      <span class="tag">AI Drafting</span>
+    </div>
+  </article>
+
+  <article class="file card-in">
+    <h3>An AI compliance assistant for pharmaceutical drug safety</h3>
+    <p><b>What I built:</b> AI-powered search across safety case data and regulations, with compliance dashboards for the responsible officer. Built for an industry where a wrong answer is not acceptable.</p>
+    <p>I'm a licensed pharmacist; I understand drug safety compliance from the inside, not just the code.</p>
+    <div class="stack">
+      <span class="tag">Python</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">Vector Search</span>
+      <span class="tag">LLM</span>
+      <span class="tag">PostgreSQL</span>
+    </div>
+  </article>
+
+  <article class="file card-in">
+    <h3>A direct-to-consumer brand site built to convert</h3>
+    <p><b>What I built:</b> a product website with a waitlist funnel, trust copy backed by published evidence, and product pages designed around one action: join or buy.</p>
+    <div class="stack">
+      <span class="tag">HTML/CSS</span>
+      <span class="tag">Waitlist Funnel</span>
+      <span class="tag">Conversion Copy</span>
+      <span class="tag">SEO-ready</span>
+    </div>
+  </article>
+
+  <p class="snap-up" style="color:var(--ink-2);font-size:.95rem;margin-top:1.6rem">Also built: Telegram bots, an operations system for a currency-exchange desk, an AI WhatsApp assistant for small businesses, and marketing sites. Ask me about your industry.</p>
+</section>
+
+<section class="why">
+  <h2 class="wipe">Why my prices work</h2>
+  <span class="subtitle fade-in" style="--d:.1s">Lowest running cost is a design decision, not a discount</span>
+  <p class="snap-up" style="margin-top:1.2rem"><b>One person, full stack.</b> No agency overhead, no handoffs, no account managers. You talk to the person writing the code.</p>
+  <p class="snap-up"><b>Free-tier infrastructure.</b> I architect systems to run on infrastructure that costs nothing until you grow. Your monthly bill starts near zero.</p>
+  <p class="snap-up"><b>A business brain.</b> I run my own SaaS products. I build for revenue and ask about your numbers before I ask about features.</p>
+  <p class="snap-up"><b>A modern, fast stack.</b> TypeScript, Next.js, Python, AI APIs: the same tools running my own production SaaS, applied to your tool.</p>
+</section>
+
+<section class="close close-in" id="contact" aria-label="Contact">
+  <h2>Tell me what is slowing your sales.</h2>
+  <p>Describe the manual work, the lost leads, or the missing page. I'll tell you what I would build, how long it takes, and what it costs.</p>
+  <p>
+    <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" class="cta-link">
+      Message me on Telegram
+      <span class="cta-arrow" aria-hidden="true">→</span>
+    </a>
+    <span class="cta-handle">@BuildwithAhmed</span>
+  </p>
+</section>
+
+<footer>
+  <span>Ahmed · websites, CRMs, automation, dashboards</span>
+  <span>built solo, including this page · <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" style="color:inherit">@BuildwithAhmed</a></span>
+</footer>
+
+</main>
+
+<a class="float-cta" href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" aria-label="Message Ahmed on Telegram">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+  <span>Message me</span>
+</a>
+
+<script>
+(function () {
+  if (!window.IntersectionObserver) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var parents = new Set();
+  document.querySelectorAll('.snap-up').forEach(function (el) {
+    parents.add(el.parentElement);
+  });
+  parents.forEach(function (parent) {
+    var items = parent.querySelectorAll('.snap-up');
+    items.forEach(function (el, i) {
+      el.style.setProperty('--stagger', (i * 0.072) + 's');
+    });
+  });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
+
+  document.querySelectorAll(
+    '.wipe, .fade-in, .snap-up, .card-in, .note-in, .close-in'
+  ).forEach(function (el) { io.observe(el); });
+}());
+</script>
+</body>
+</html>
