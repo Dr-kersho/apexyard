@@ -74,9 +74,7 @@
     color: var(--ink-soft);
   }
 
-  /* ── Header ─────────────────────────────────────────────────── */
   header { margin-bottom: 3rem }
-
   header .topline {
     display: flex;
     justify-content: space-between;
@@ -92,17 +90,14 @@
   h1 {
     font-size: clamp(2rem, 5.8vw, 2.8rem);
     font-weight: 700;
-    line-height: 1.12;
+    line-height: 1.18;
     letter-spacing: -.015em;
     margin: 0 0 1.1rem;
     font-variation-settings: "opsz" 60;
-    text-wrap: balance;
   }
-
   .intro p { margin: 0 0 1rem; color: var(--ink-soft); text-wrap: pretty }
   .intro p:first-of-type { color: var(--ink) }
 
-  /* ── Section headings ────────────────────────────────────────── */
   h2 {
     font-size: 1.4rem;
     margin: 3.2rem 0 .4rem;
@@ -112,12 +107,10 @@
   }
   h2 + .label { display: block; margin-bottom: 1.4rem }
 
-  /* ── Service list ────────────────────────────────────────────── */
   dl { margin: 1.4rem 0 0 }
   dt { font-weight: 700 }
   dd { margin: 0 0 1.1rem; color: var(--ink-soft); text-wrap: pretty }
 
-  /* ── Case file articles ──────────────────────────────────────── */
   .file { border-top: 1px solid var(--rule); padding: 1.5rem 0 1.7rem }
   .file:last-of-type { border-bottom: 1px solid var(--rule) }
   .file h3 { font-size: 1.12rem; margin: 0 0 .55rem; text-wrap: balance }
@@ -136,7 +129,6 @@
     font-weight: 600;
   }
 
-  /* ── Disclaimer note ─────────────────────────────────────────── */
   .note {
     border: 1px solid var(--rule);
     padding: 1.1rem 1.3rem;
@@ -151,7 +143,6 @@
     position: absolute;
     top: -1.05rem;
     right: .9rem;
-    transform: rotate(-5deg);
     font-family: system-ui, sans-serif;
     font-size: .68rem;
     font-weight: 700;
@@ -163,13 +154,12 @@
     padding: .28rem .6rem;
     background: var(--paper);
     opacity: .85;
+    transform-origin: center;
   }
 
-  /* ── Why section ─────────────────────────────────────────────── */
   .why p   { margin: 0 0 1rem; color: var(--ink-soft); text-wrap: pretty }
   .why p b { color: var(--ink) }
 
-  /* ── Close / CTA ─────────────────────────────────────────────── */
   .close {
     margin-top: 3.4rem;
     border-top: 2px solid var(--rule-strong);
@@ -183,14 +173,31 @@
     gap: .3em;
     font-weight: 600;
     font-size: 1.05rem;
+    position: relative;
+  }
+  /* animated underline sweep */
+  .cta-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--pen);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .4s cubic-bezier(.16,1,.3,1);
+  }
+  .cta-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
   .cta-arrow {
     display: inline-block;
-    transition: transform .2s cubic-bezier(.16, 1, .3, 1);
+    transition: transform .25s cubic-bezier(.16,1,.3,1);
   }
-  .cta-link:hover .cta-arrow { transform: translateX(5px) }
+  .cta-link:hover .cta-arrow { transform: translateX(6px) }
 
-  /* ── Footer ──────────────────────────────────────────────────── */
   footer {
     margin-top: 3.5rem;
     color: var(--ink-soft);
@@ -203,172 +210,245 @@
     padding-top: 1.1rem;
   }
 
-  /* ── Global affordances ──────────────────────────────────────── */
   ::selection     { background: var(--pen); color: var(--paper) }
   a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px }
 
-  /* ── Animations (all scoped to no-preference) ────────────────── */
+  /* ═══════════════════════════════════════════════════════════════
+     ANIMATIONS — all scoped to no-preference
+  ═══════════════════════════════════════════════════════════════ */
   @media (prefers-reduced-motion: no-preference) {
 
-    /* Page-load: header animates in immediately on DOMContentLoaded */
-    @keyframes load-up {
-      from { opacity: 0; transform: translateY(30px); }
+    /* ── Word-mask reveal (h1, CTA heading) ──────────────────────
+       JS splits text into .word-wrap > em spans.
+       Each word slides up from below an overflow:hidden clip.     */
+    .word-wrap {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: .15em;
+      margin-bottom: -.15em;
+    }
+    .word-wrap em {
+      display: inline-block;
+      font-style: normal;
+      animation: word-up .65s cubic-bezier(.16, 1, .3, 1) both;
+      animation-delay: calc(var(--wi) * 0.052s + var(--word-start, 0s));
+    }
+    @keyframes word-up {
+      from { transform: translateY(110%); }
+      to   { transform: translateY(0); }
+    }
+
+    /* ── Page-load: topline + intro lines ────────────────────────*/
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: none; }
     }
-    .load-in {
-      animation: load-up .75s cubic-bezier(.16, 1, .3, 1) both;
+    .load-fade {
+      animation: fade-up .6s cubic-bezier(.16, 1, .3, 1) both;
       animation-delay: var(--d, 0s);
     }
 
-    /* Standard scroll-reveal: fade up + very slight scale */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px) scale(.98);
-      transition:
-        opacity   .65s cubic-bezier(.16, 1, .3, 1),
-        transform .65s cubic-bezier(.16, 1, .3, 1);
+    /* ── Scroll: clip-path wipe for h2s ─────────────────────────
+       Paints in from bottom to top, like a card being revealed.   */
+    .wipe {
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path .5s cubic-bezier(.22, 1, .36, 1);
     }
-    .reveal.is-visible {
+    .wipe.is-visible { clip-path: inset(0 0 0% 0); }
+
+    /* ── Scroll: label fade ──────────────────────────────────────*/
+    .fade-in {
+      opacity: 0;
+      transition: opacity .45s ease-out var(--d, 0s);
+    }
+    .fade-in.is-visible { opacity: 1; }
+
+    /* ── Scroll: snap-up (service items, why paragraphs) ─────────
+       Fast snap with slight overshoot — that pop feel.            */
+    .snap-up {
+      opacity: 0;
+      transform: translateY(40px) scale(.96);
+      transition:
+        opacity   .48s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
+        transform .48s cubic-bezier(.34, 1.35, .64, 1) var(--stagger, 0s);
+    }
+    .snap-up.is-visible {
       opacity: 1;
       transform: none;
     }
 
-    /* Left-enter: case file articles come from the left */
-    .reveal-left {
+    /* ── Scroll: card-in (case file articles) ────────────────────
+       Comes from below-left, snaps into place.                    */
+    .card-in {
       opacity: 0;
-      transform: translateX(-32px) translateY(8px);
+      transform: translateY(48px) translateX(-16px) scale(.96);
       transition:
-        opacity   .62s cubic-bezier(.16, 1, .3, 1),
-        transform .62s cubic-bezier(.16, 1, .3, 1);
+        opacity   .52s cubic-bezier(.16, 1, .3, 1),
+        transform .52s cubic-bezier(.34, 1.2, .64, 1);
     }
-    .reveal-left.is-visible {
+    .card-in.is-visible {
       opacity: 1;
       transform: none;
     }
 
-    /* Stagger-dl: dl items cascade in; delays set via JS --stagger var */
-    .stagger-dl dt,
-    .stagger-dl dd {
+    /* ── Scroll: note box ────────────────────────────────────────*/
+    .note-in {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(32px) scale(.97);
       transition:
-        opacity   .52s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
-        transform .52s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s);
+        opacity   .5s cubic-bezier(.16, 1, .3, 1),
+        transform .5s cubic-bezier(.22, 1, .36, 1);
     }
-    .stagger-dl.is-visible dt,
-    .stagger-dl.is-visible dd {
+    .note-in.is-visible {
       opacity: 1;
       transform: none;
     }
 
-    /* Stagger-section: every direct child cascades; delays set via JS */
-    .stagger-section > * {
+    /* ── Scroll: close section ───────────────────────────────────*/
+    .close-in {
       opacity: 0;
-      transform: translateY(22px) scale(.98);
+      transform: translateY(36px);
       transition:
-        opacity   .58s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
-        transform .58s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s);
+        opacity   .55s cubic-bezier(.16, 1, .3, 1),
+        transform .55s cubic-bezier(.22, 1, .36, 1);
     }
-    .stagger-section.is-visible > * {
+    .close-in.is-visible {
       opacity: 1;
       transform: none;
     }
+
+    /* ── Continuous: stamp float ─────────────────────────────────*/
+    .stamp {
+      animation: stamp-float 4s ease-in-out infinite;
+    }
+    @keyframes stamp-float {
+      0%, 100% { transform: rotate(-5deg) translateY(0); }
+      50%       { transform: rotate(-4deg) translateY(-5px); }
+    }
+
+    /* ── Continuous: CTA attention pulse ─────────────────────────*/
+    @keyframes cta-pulse {
+      0%, 80%, 100% { opacity: 1; }
+      90%           { opacity: .65; }
+    }
+    .cta-link { animation: cta-pulse 4s ease-in-out infinite 3s; }
   }
 </style>
 </head>
 <body>
+
+<!-- Word-split runs before first paint to avoid flash of unstyled text -->
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function splitWords(el, startDelay) {
+    if (!el) return;
+    var words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map(function (w, i) {
+      return '<span class="word-wrap"><em style="--wi:' + i + ';--word-start:' + (startDelay || 0) + 's">' + w + '</em></span>';
+    }).join(' ');
+  }
+  /* These run synchronously — DOM is parsed up to this point but not rendered */
+  document.addEventListener('DOMContentLoaded', function () {
+    splitWords(document.querySelector('h1'), 0.05);
+    splitWords(document.querySelector('.close h2'), 0);
+  });
+}());
+</script>
+
 <main class="page">
 
 <header>
-  <div class="topline load-in" style="--d:.06s">
+  <div class="topline load-fade" style="--d:.38s">
     <span class="label">Ahmed</span>
     <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio">Telegram: @BuildwithAhmed</a>
   </div>
-  <h1 class="load-in" style="--d:0s">I build the software that runs your sales — solo, end to end.</h1>
+  <h1>I build the software that runs your sales — solo, end to end.</h1>
   <div class="intro">
-    <p class="load-in" style="--d:.2s">I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
-    <p class="load-in" style="--d:.33s">Before software I was a licensed pharmacist, and I still run an export business on the side — so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
+    <p class="load-fade" style="--d:.52s">I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
+    <p class="load-fade" style="--d:.66s">Before software I was a licensed pharmacist, and I still run an export business on the side — so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
   </div>
 </header>
 
 <section>
-  <h2 class="reveal">What I build</h2>
-  <span class="label reveal">For sales and operations people</span>
-  <dl class="stagger-dl">
-    <dt>Landing pages built to close</dt>
-    <dd>Conversion copy, waitlist funnels, payment-ready checkout. A page with one job: turn a visitor into a lead or a sale.</dd>
-    <dt>CRMs shaped around your sales process</dt>
-    <dd>Pipeline boards, call logging, lead scoring, WhatsApp outreach. Not a generic CRM you fight with — a tool that matches how your team actually sells.</dd>
-    <dt>Automation that removes manual work</dt>
-    <dd>Intake forms that fill themselves into profiles, AI that drafts the documents you write by hand today, Telegram and WhatsApp bots that answer while you sleep.</dd>
-    <dt>Dashboards with live numbers</dt>
-    <dd>Calls made, deals moved, revenue in — on a screen that updates as it happens, not in next week's spreadsheet.</dd>
+  <h2 class="wipe">What I build</h2>
+  <span class="label fade-in" style="--d:.1s">For sales and operations people</span>
+  <dl>
+    <dt class="snap-up">Landing pages built to close</dt>
+    <dd class="snap-up">Conversion copy, waitlist funnels, payment-ready checkout. A page with one job: turn a visitor into a lead or a sale.</dd>
+    <dt class="snap-up">CRMs shaped around your sales process</dt>
+    <dd class="snap-up">Pipeline boards, call logging, lead scoring, WhatsApp outreach. Not a generic CRM you fight with — a tool that matches how your team actually sells.</dd>
+    <dt class="snap-up">Automation that removes manual work</dt>
+    <dd class="snap-up">Intake forms that fill themselves into profiles, AI that drafts the documents you write by hand today, Telegram and WhatsApp bots that answer while you sleep.</dd>
+    <dt class="snap-up">Dashboards with live numbers</dt>
+    <dd class="snap-up">Calls made, deals moved, revenue in — on a screen that updates as it happens, not in next week's spreadsheet.</dd>
   </dl>
 </section>
 
 <section id="work">
-  <h2 class="reveal">Case files</h2>
-  <span class="label reveal">Real systems, in production or pilot use</span>
+  <h2 class="wipe">Case files</h2>
+  <span class="label fade-in" style="--d:.1s">Real systems, in production or pilot use</span>
 
-  <div class="note reveal">
+  <div class="note note-in">
     <span class="stamp">Built solo</span>
     <b>Why no names or screenshots?</b> My clients' tools are their competitive edge, and my own products are my business. I keep both private. Every system below is real — I walk serious clients through live demos in a private call.
   </div>
 
-  <article class="file reveal-left">
+  <article class="file card-in">
     <h3>A CRM for an export trade team cold-calling Gulf markets</h3>
     <p><b>The problem:</b> an outbound team selling container loads by phone and WhatsApp. Leads lived in spreadsheets, follow-ups got lost, nobody knew which lead deserved the next call.</p>
     <p><b>What I built:</b> a vertical CRM with a pipeline board, call logging, scored lead import from CSV, and assisted WhatsApp outreach — plus secure login and subscription billing. One tool replaced the spreadsheet-and-chat chaos.</p>
     <p class="stack">TypeScript, Next.js, WhatsApp, Stripe billing, cloud DB</p>
   </article>
 
-  <article class="file reveal-left">
+  <article class="file card-in">
     <h3>A booking marketplace for clinics and their patients</h3>
     <p><b>The problem:</b> clinics taking bookings by phone calls and paper, patients with no way to see availability.</p>
     <p><b>What I built:</b> a progressive web app where patients log in with a one-time phone code and book treatments, while each clinic runs its own schedule and admin panel. One deployment serves both sides.</p>
     <p class="stack">TypeScript, Next.js, PostgreSQL, OTP login, PWA</p>
   </article>
 
-  <article class="file reveal-left">
+  <article class="file card-in">
     <h3>A sports platform with ID cards, bookings and card payments</h3>
     <p><b>What I built:</b> digital player ID cards, court booking paid by card online, community matches, and parent-managed profiles for kids. Arabic-first, with a full right-to-left interface.</p>
     <p>End to end: identity, scheduling, and a payment gateway in one product.</p>
     <p class="stack">TypeScript, Next.js, card payments, Arabic RTL</p>
   </article>
 
-  <article class="file reveal-left">
+  <article class="file card-in">
     <h3>An AI portal that turns intake forms into personalized plans</h3>
     <p><b>The problem:</b> a coach spending hours per client writing plans by hand.</p>
     <p><b>What I built:</b> the client fills an intake form, the system builds a profile and drafts a personalized plan, the coach reviews and approves. Hours of writing became a review step.</p>
     <p class="stack">Python, FastAPI, Next.js, AI drafting</p>
   </article>
 
-  <article class="file reveal-left">
+  <article class="file card-in">
     <h3>An AI compliance assistant for pharmaceutical drug safety</h3>
     <p><b>What I built:</b> AI-powered search across safety case data and regulations, with compliance dashboards for the responsible officer. Built for an industry where a wrong answer is not acceptable.</p>
     <p>I'm a licensed pharmacist — I understand drug safety compliance from the inside, not just the code.</p>
     <p class="stack">Python, FastAPI, vector search, LLM, PostgreSQL</p>
   </article>
 
-  <article class="file reveal-left">
+  <article class="file card-in">
     <h3>A direct-to-consumer brand site built to convert</h3>
     <p><b>What I built:</b> a product website with a waitlist funnel, trust copy backed by published evidence, and product pages designed around one action: join or buy.</p>
     <p class="stack">HTML/CSS, waitlist funnel, conversion copy, SEO-ready</p>
   </article>
 
-  <p class="reveal" style="color:var(--ink-soft);font-size:.95rem;margin-top:1.4rem">Also built: Telegram bots, an operations system for a currency-exchange desk, an AI WhatsApp assistant for small businesses, and marketing sites. Ask me about your industry.</p>
+  <p class="snap-up" style="color:var(--ink-soft);font-size:.95rem;margin-top:1.4rem">Also built: Telegram bots, an operations system for a currency-exchange desk, an AI WhatsApp assistant for small businesses, and marketing sites. Ask me about your industry.</p>
 </section>
 
-<section class="why stagger-section">
-  <h2>Why my prices work</h2>
-  <span class="label">Lowest running cost is a design decision, not a discount</span>
-  <p style="margin-top:1.2rem"><b>One person, full stack.</b> No agency overhead, no handoffs, no account managers. You talk to the person writing the code.</p>
-  <p><b>Free-tier infrastructure.</b> I architect systems to run on infrastructure that costs nothing until you grow. Your monthly bill starts near zero.</p>
-  <p><b>A business brain.</b> I run my own SaaS products. I build for revenue and ask about your numbers before I ask about features.</p>
-  <p><b>A modern, fast stack.</b> TypeScript, Next.js, Python, AI APIs — the same tools running my own production SaaS, applied to your tool.</p>
+<section class="why">
+  <h2 class="wipe">Why my prices work</h2>
+  <span class="label fade-in" style="--d:.1s">Lowest running cost is a design decision, not a discount</span>
+  <p class="snap-up" style="margin-top:1.2rem"><b>One person, full stack.</b> No agency overhead, no handoffs, no account managers. You talk to the person writing the code.</p>
+  <p class="snap-up"><b>Free-tier infrastructure.</b> I architect systems to run on infrastructure that costs nothing until you grow. Your monthly bill starts near zero.</p>
+  <p class="snap-up"><b>A business brain.</b> I run my own SaaS products. I build for revenue and ask about your numbers before I ask about features.</p>
+  <p class="snap-up"><b>A modern, fast stack.</b> TypeScript, Next.js, Python, AI APIs — the same tools running my own production SaaS, applied to your tool.</p>
 </section>
 
-<section class="close reveal">
+<section class="close close-in">
   <h2>Tell me what is slowing your sales.</h2>
   <p>Describe the manual work, the lost leads, or the missing page. I'll tell you what I would build, how long it takes, and what it costs.</p>
   <p>
@@ -391,18 +471,15 @@
   if (!window.IntersectionObserver) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  /* Pre-set stagger delays on dl items before observing */
-  document.querySelectorAll('.stagger-dl').forEach(function (dl) {
-    var dts = dl.querySelectorAll('dt');
-    var dds = dl.querySelectorAll('dd');
-    dts.forEach(function (dt, i) { dt.style.setProperty('--stagger', (i * 0.10) + 's'); });
-    dds.forEach(function (dd, i) { dd.style.setProperty('--stagger', (i * 0.10 + 0.04) + 's'); });
+  /* Assign stagger delays to .snap-up siblings within the same parent */
+  var parents = new Set();
+  document.querySelectorAll('.snap-up').forEach(function (el) {
+    parents.add(el.parentElement);
   });
-
-  /* Pre-set stagger delays on stagger-section children */
-  document.querySelectorAll('.stagger-section').forEach(function (section) {
-    Array.from(section.children).forEach(function (child, i) {
-      child.style.setProperty('--stagger', (i * 0.09) + 's');
+  parents.forEach(function (parent) {
+    var items = parent.querySelectorAll('.snap-up');
+    items.forEach(function (el, i) {
+      el.style.setProperty('--stagger', (i * 0.072) + 's');
     });
   });
 
@@ -413,11 +490,11 @@
         io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
 
-  document.querySelectorAll('.reveal, .reveal-left, .stagger-dl, .stagger-section').forEach(function (el) {
-    io.observe(el);
-  });
+  document.querySelectorAll(
+    '.wipe, .fade-in, .snap-up, .card-in, .note-in, .close-in'
+  ).forEach(function (el) { io.observe(el); });
 }());
 </script>
 </body>
