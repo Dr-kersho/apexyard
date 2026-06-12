@@ -43,7 +43,6 @@
   }
 
   * { box-sizing: border-box }
-
   html { scroll-behavior: smooth }
 
   body {
@@ -148,7 +147,6 @@
   }
   .note b { color: var(--ink) }
 
-  /* the one flourish: a rubber stamp */
   .stamp {
     position: absolute;
     top: -1.05rem;
@@ -209,18 +207,69 @@
   ::selection     { background: var(--pen); color: var(--paper) }
   a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px }
 
-  /* ── Scroll reveal ───────────────────────────────────────────── */
-  /* Scoped inside no-preference so content stays visible for reduced-motion
-     users without any JS involvement — no opacity:0 flash risk. */
+  /* ── Animations (all scoped to no-preference) ────────────────── */
   @media (prefers-reduced-motion: no-preference) {
+
+    /* Page-load: header animates in immediately on DOMContentLoaded */
+    @keyframes load-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .load-in {
+      animation: load-up .75s cubic-bezier(.16, 1, .3, 1) both;
+      animation-delay: var(--d, 0s);
+    }
+
+    /* Standard scroll-reveal: fade up + very slight scale */
     .reveal {
+      opacity: 0;
+      transform: translateY(28px) scale(.98);
+      transition:
+        opacity   .65s cubic-bezier(.16, 1, .3, 1),
+        transform .65s cubic-bezier(.16, 1, .3, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Left-enter: case file articles come from the left */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px) translateY(8px);
+      transition:
+        opacity   .62s cubic-bezier(.16, 1, .3, 1),
+        transform .62s cubic-bezier(.16, 1, .3, 1);
+    }
+    .reveal-left.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger-dl: dl items cascade in; delays set via JS --stagger var */
+    .stagger-dl dt,
+    .stagger-dl dd {
       opacity: 0;
       transform: translateY(18px);
       transition:
-        opacity   .58s cubic-bezier(.16, 1, .3, 1),
-        transform .58s cubic-bezier(.16, 1, .3, 1);
+        opacity   .52s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
+        transform .52s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s);
     }
-    .reveal.is-visible {
+    .stagger-dl.is-visible dt,
+    .stagger-dl.is-visible dd {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger-section: every direct child cascades; delays set via JS */
+    .stagger-section > * {
+      opacity: 0;
+      transform: translateY(22px) scale(.98);
+      transition:
+        opacity   .58s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
+        transform .58s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s);
+    }
+    .stagger-section.is-visible > * {
       opacity: 1;
       transform: none;
     }
@@ -231,21 +280,21 @@
 <main class="page">
 
 <header>
-  <div class="topline">
-    <span class="label">Ahmed · Alexandria, Egypt</span>
+  <div class="topline load-in" style="--d:.06s">
+    <span class="label">Ahmed</span>
     <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio">Telegram: @BuildwithAhmed</a>
   </div>
-  <h1>I build the software that runs your sales — solo, end to end.</h1>
+  <h1 class="load-in" style="--d:0s">I build the software that runs your sales — solo, end to end.</h1>
   <div class="intro">
-    <p>I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
-    <p>Before software I was a licensed pharmacist, and I still run an export business on the side — so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
+    <p class="load-in" style="--d:.2s">I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
+    <p class="load-in" style="--d:.33s">Before software I was a licensed pharmacist, and I still run an export business on the side — so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
   </div>
 </header>
 
-<section class="reveal">
-  <h2>What I build</h2>
-  <span class="label">For sales and operations people</span>
-  <dl>
+<section>
+  <h2 class="reveal">What I build</h2>
+  <span class="label reveal">For sales and operations people</span>
+  <dl class="stagger-dl">
     <dt>Landing pages built to close</dt>
     <dd>Conversion copy, waitlist funnels, payment-ready checkout. A page with one job: turn a visitor into a lead or a sale.</dd>
     <dt>CRMs shaped around your sales process</dt>
@@ -258,50 +307,50 @@
 </section>
 
 <section id="work">
-  <h2>Case files</h2>
-  <span class="label">Real systems, in production or pilot use</span>
+  <h2 class="reveal">Case files</h2>
+  <span class="label reveal">Real systems, in production or pilot use</span>
 
   <div class="note reveal">
     <span class="stamp">Built solo</span>
     <b>Why no names or screenshots?</b> My clients' tools are their competitive edge, and my own products are my business. I keep both private. Every system below is real — I walk serious clients through live demos in a private call.
   </div>
 
-  <article class="file reveal">
+  <article class="file reveal-left">
     <h3>A CRM for an export trade team cold-calling Gulf markets</h3>
     <p><b>The problem:</b> an outbound team selling container loads by phone and WhatsApp. Leads lived in spreadsheets, follow-ups got lost, nobody knew which lead deserved the next call.</p>
     <p><b>What I built:</b> a vertical CRM with a pipeline board, call logging, scored lead import from CSV, and assisted WhatsApp outreach — plus secure login and subscription billing. One tool replaced the spreadsheet-and-chat chaos.</p>
     <p class="stack">TypeScript, Next.js, WhatsApp, Stripe billing, cloud DB</p>
   </article>
 
-  <article class="file reveal">
+  <article class="file reveal-left">
     <h3>A booking marketplace for clinics and their patients</h3>
     <p><b>The problem:</b> clinics taking bookings by phone calls and paper, patients with no way to see availability.</p>
     <p><b>What I built:</b> a progressive web app where patients log in with a one-time phone code and book treatments, while each clinic runs its own schedule and admin panel. One deployment serves both sides.</p>
     <p class="stack">TypeScript, Next.js, PostgreSQL, OTP login, PWA</p>
   </article>
 
-  <article class="file reveal">
+  <article class="file reveal-left">
     <h3>A sports platform with ID cards, bookings and card payments</h3>
     <p><b>What I built:</b> digital player ID cards, court booking paid by card online, community matches, and parent-managed profiles for kids. Arabic-first, with a full right-to-left interface.</p>
     <p>End to end: identity, scheduling, and a payment gateway in one product.</p>
     <p class="stack">TypeScript, Next.js, card payments, Arabic RTL</p>
   </article>
 
-  <article class="file reveal">
+  <article class="file reveal-left">
     <h3>An AI portal that turns intake forms into personalized plans</h3>
     <p><b>The problem:</b> a coach spending hours per client writing plans by hand.</p>
     <p><b>What I built:</b> the client fills an intake form, the system builds a profile and drafts a personalized plan, the coach reviews and approves. Hours of writing became a review step.</p>
     <p class="stack">Python, FastAPI, Next.js, AI drafting</p>
   </article>
 
-  <article class="file reveal">
+  <article class="file reveal-left">
     <h3>An AI compliance assistant for pharmaceutical drug safety</h3>
     <p><b>What I built:</b> AI-powered search across safety case data and regulations, with compliance dashboards for the responsible officer. Built for an industry where a wrong answer is not acceptable.</p>
     <p>I'm a licensed pharmacist — I understand drug safety compliance from the inside, not just the code.</p>
     <p class="stack">Python, FastAPI, vector search, LLM, PostgreSQL</p>
   </article>
 
-  <article class="file reveal">
+  <article class="file reveal-left">
     <h3>A direct-to-consumer brand site built to convert</h3>
     <p><b>What I built:</b> a product website with a waitlist funnel, trust copy backed by published evidence, and product pages designed around one action: join or buy.</p>
     <p class="stack">HTML/CSS, waitlist funnel, conversion copy, SEO-ready</p>
@@ -310,7 +359,7 @@
   <p class="reveal" style="color:var(--ink-soft);font-size:.95rem;margin-top:1.4rem">Also built: Telegram bots, an operations system for a currency-exchange desk, an AI WhatsApp assistant for small businesses, and marketing sites. Ask me about your industry.</p>
 </section>
 
-<section class="why reveal">
+<section class="why stagger-section">
   <h2>Why my prices work</h2>
   <span class="label">Lowest running cost is a design decision, not a discount</span>
   <p style="margin-top:1.2rem"><b>One person, full stack.</b> No agency overhead, no handoffs, no account managers. You talk to the person writing the code.</p>
@@ -338,10 +387,24 @@
 
 </main>
 <script>
-/* Scroll reveal — runs only when reduced motion is not preferred */
 (function () {
   if (!window.IntersectionObserver) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Pre-set stagger delays on dl items before observing */
+  document.querySelectorAll('.stagger-dl').forEach(function (dl) {
+    var dts = dl.querySelectorAll('dt');
+    var dds = dl.querySelectorAll('dd');
+    dts.forEach(function (dt, i) { dt.style.setProperty('--stagger', (i * 0.10) + 's'); });
+    dds.forEach(function (dd, i) { dd.style.setProperty('--stagger', (i * 0.10 + 0.04) + 's'); });
+  });
+
+  /* Pre-set stagger delays on stagger-section children */
+  document.querySelectorAll('.stagger-section').forEach(function (section) {
+    Array.from(section.children).forEach(function (child, i) {
+      child.style.setProperty('--stagger', (i * 0.09) + 's');
+    });
+  });
 
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -352,7 +415,7 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
-  document.querySelectorAll('.reveal').forEach(function (el) {
+  document.querySelectorAll('.reveal, .reveal-left, .stagger-dl, .stagger-section').forEach(function (el) {
     io.observe(el);
   });
 }());
