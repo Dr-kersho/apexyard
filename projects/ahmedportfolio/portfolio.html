@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f7faf8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#080e0a" media="(prefers-color-scheme: dark)">
-<title>Ahmed — I build business software, solo</title>
+<title>Ahmed: I build business software, solo</title>
 <meta name="description" content="Solo developer with a business brain. CRMs, booking platforms, AI assistants, and sales websites, built end to end at the lowest running cost.">
-<meta property="og:title" content="Ahmed — systems builder">
+<meta property="og:title" content="Ahmed: systems builder">
 <meta property="og:description" content="CRMs, automation, dashboards and sales websites. Built solo, end to end, cheap to run.">
 <meta property="og:type" content="website">
 <!-- TODO before launch: set absolute URLs once the domain is live.
@@ -50,7 +50,9 @@
 
   /* ── Reset / base ────────────────────────────────────────── */
   * { box-sizing: border-box }
-  html { scroll-behavior: smooth }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth }
+  }
 
   body {
     margin: 0;
@@ -244,7 +246,7 @@
     color: inherit;
     letter-spacing: -.02em;
   }
-  .close p { color: rgba(247, 250, 248, .72); text-wrap: pretty }
+  .close p { color: rgba(247, 250, 248, .80); text-wrap: pretty }
   @media (prefers-color-scheme: dark) {
     .close p { color: rgba(226, 237, 229, .65) }
   }
@@ -262,14 +264,14 @@
     padding: .65em 1.4em;
     border-radius: 6px;
     text-decoration: none;
+    white-space: nowrap;
     margin-top: .7rem;
-    transition: background .2s, color .2s, transform .18s cubic-bezier(.16,1,.3,1), box-shadow .18s;
+    transition: background .2s, color .2s, transform .18s cubic-bezier(.16,1,.3,1);
   }
   .cta-link:hover {
     background: var(--green);
     color: #f7faf8 !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(26,107,60,.4);
   }
   @media (prefers-color-scheme: dark) {
     .cta-link {
@@ -279,7 +281,6 @@
     .cta-link:hover {
       background: #f7faf8;
       color: #080e0a !important;
-      box-shadow: 0 6px 20px rgba(77,184,114,.35);
     }
   }
   .cta-arrow {
@@ -287,6 +288,16 @@
     transition: transform .25s cubic-bezier(.16,1,.3,1);
   }
   .cta-link:hover .cta-arrow { transform: translateX(6px) }
+  .cta-handle {
+    display: block;
+    margin-top: .4rem;
+    font-size: .85rem;
+    font-weight: 500;
+    color: rgba(247, 250, 248, .55);
+  }
+  @media (prefers-color-scheme: dark) {
+    .cta-handle { color: rgba(226, 237, 229, .45) }
+  }
 
   /* ── Footer ─────────────────────────────────────────────── */
   footer {
@@ -328,8 +339,8 @@
     color: #f7faf8 !important;
   }
   @media (max-width: 30rem) {
-    .float-cta span { display: none }
-    .float-cta { padding: .75em }
+    .float-cta span { font-size: .72rem; letter-spacing: 0 }
+    .float-cta { padding: .6em .9em }
   }
 
   ::selection     { background: var(--green); color: #f7faf8 }
@@ -391,7 +402,7 @@
       transform: translateY(40px) scale(.96);
       transition:
         opacity   .48s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s),
-        transform .48s cubic-bezier(.34, 1.35, .64, 1) var(--stagger, 0s);
+        transform .48s cubic-bezier(.16, 1, .3, 1) var(--stagger, 0s);
     }
     .snap-up.is-visible {
       opacity: 1;
@@ -404,7 +415,7 @@
       transform: translateY(48px) translateX(-16px) scale(.96);
       transition:
         opacity   .52s cubic-bezier(.16, 1, .3, 1),
-        transform .52s cubic-bezier(.34, 1.2, .64, 1);
+        transform .52s cubic-bezier(.16, 1, .3, 1);
     }
     .card-in.is-visible {
       opacity: 1;
@@ -480,12 +491,16 @@
 <header>
   <div class="topline load-fade" style="--d:.38s">
     <span class="wordmark">Ahmed</span>
-    <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio">Telegram: @BuildwithAhmed</a>
+    <nav style="display:flex;align-items:center;gap:1.4rem">
+      <a href="#work" style="font-size:.88rem;font-weight:500">Work</a>
+      <a href="#contact" style="font-size:.88rem;font-weight:500">Contact</a>
+      <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" style="font-size:.88rem;font-weight:500">@BuildwithAhmed</a>
+    </nav>
   </div>
-  <h1>I build the software that runs your sales — solo, end to end.</h1>
+  <h1>I build the software that runs your sales: solo, end to end.</h1>
   <div class="intro">
     <p class="load-fade" style="--d:.52s">I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
-    <p class="load-fade" style="--d:.66s">Before software I was a licensed pharmacist, and I still run an export business on the side — so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
+    <p class="load-fade" style="--d:.66s">Before software I was a licensed pharmacist, and I still run an export business on the side, so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
   </div>
 </header>
 
@@ -496,11 +511,11 @@
     <dt class="snap-up">Landing pages built to close</dt>
     <dd class="snap-up">Conversion copy, waitlist funnels, payment-ready checkout. A page with one job: turn a visitor into a lead or a sale.</dd>
     <dt class="snap-up">CRMs shaped around your sales process</dt>
-    <dd class="snap-up">Pipeline boards, call logging, lead scoring, WhatsApp outreach. Not a generic CRM you fight with — a tool that matches how your team actually sells.</dd>
+    <dd class="snap-up">Pipeline boards, call logging, lead scoring, WhatsApp outreach. Not a generic CRM you fight with: a tool built around how your team actually sells.</dd>
     <dt class="snap-up">Automation that removes manual work</dt>
     <dd class="snap-up">Intake forms that fill themselves into profiles, AI that drafts the documents you write by hand today, Telegram and WhatsApp bots that answer while you sleep.</dd>
     <dt class="snap-up">Dashboards with live numbers</dt>
-    <dd class="snap-up">Calls made, deals moved, revenue in — on a screen that updates as it happens, not in next week's spreadsheet.</dd>
+    <dd class="snap-up">Calls made, deals moved, revenue in: on a screen that updates as it happens, not in next week's spreadsheet.</dd>
   </dl>
 </section>
 
@@ -509,14 +524,14 @@
   <span class="subtitle fade-in" style="--d:.1s">Real systems, in production or pilot use</span>
 
   <div class="note note-in">
-    <span class="stamp">Built solo</span>
-    <b>Why no names or screenshots?</b> My clients' tools are their competitive edge, and my own products are my business. I keep both private. Every system below is real — I walk serious clients through live demos in a private call.
+    <span class="stamp" aria-hidden="true">Built solo</span>
+    <b>Why no names or screenshots?</b> My clients' tools are their competitive edge, and my own products are my business. I keep both private. Every system below is real. Just ask and I'll show you the live system on a private call.
   </div>
 
   <article class="file card-in">
     <h3>A CRM for an export trade team cold-calling Gulf markets</h3>
     <p><b>The problem:</b> an outbound team selling container loads by phone and WhatsApp. Leads lived in spreadsheets, follow-ups got lost, nobody knew which lead deserved the next call.</p>
-    <p><b>What I built:</b> a vertical CRM with a pipeline board, call logging, scored lead import from CSV, and assisted WhatsApp outreach — plus secure login and subscription billing. One tool replaced the spreadsheet-and-chat chaos.</p>
+    <p><b>What I built:</b> a vertical CRM with a pipeline board, call logging, scored lead import from CSV, and assisted WhatsApp outreach, plus secure login and subscription billing. One tool replaced the spreadsheet-and-chat chaos.</p>
     <div class="stack">
       <span class="tag">TypeScript</span>
       <span class="tag">Next.js</span>
@@ -541,6 +556,7 @@
 
   <article class="file card-in">
     <h3>A sports platform with ID cards, bookings and card payments</h3>
+    <p><b>The problem:</b> a sports club managing bookings, memberships, and player identity across paper forms and phone calls, with no digital record for parents or staff.</p>
     <p><b>What I built:</b> digital player ID cards, court booking paid by card online, community matches, and parent-managed profiles for kids. Arabic-first, with a full right-to-left interface.</p>
     <p>End to end: identity, scheduling, and a payment gateway in one product.</p>
     <div class="stack">
@@ -566,7 +582,7 @@
   <article class="file card-in">
     <h3>An AI compliance assistant for pharmaceutical drug safety</h3>
     <p><b>What I built:</b> AI-powered search across safety case data and regulations, with compliance dashboards for the responsible officer. Built for an industry where a wrong answer is not acceptable.</p>
-    <p>I'm a licensed pharmacist — I understand drug safety compliance from the inside, not just the code.</p>
+    <p>I'm a licensed pharmacist; I understand drug safety compliance from the inside, not just the code.</p>
     <div class="stack">
       <span class="tag">Python</span>
       <span class="tag">FastAPI</span>
@@ -596,24 +612,24 @@
   <p class="snap-up" style="margin-top:1.2rem"><b>One person, full stack.</b> No agency overhead, no handoffs, no account managers. You talk to the person writing the code.</p>
   <p class="snap-up"><b>Free-tier infrastructure.</b> I architect systems to run on infrastructure that costs nothing until you grow. Your monthly bill starts near zero.</p>
   <p class="snap-up"><b>A business brain.</b> I run my own SaaS products. I build for revenue and ask about your numbers before I ask about features.</p>
-  <p class="snap-up"><b>A modern, fast stack.</b> TypeScript, Next.js, Python, AI APIs — the same tools running my own production SaaS, applied to your tool.</p>
+  <p class="snap-up"><b>A modern, fast stack.</b> TypeScript, Next.js, Python, AI APIs: the same tools running my own production SaaS, applied to your tool.</p>
 </section>
 
-<section class="close close-in">
+<section class="close close-in" id="contact" aria-label="Contact">
   <h2>Tell me what is slowing your sales.</h2>
   <p>Describe the manual work, the lost leads, or the missing page. I'll tell you what I would build, how long it takes, and what it costs.</p>
   <p>
     <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" class="cta-link">
       Message me on Telegram
       <span class="cta-arrow" aria-hidden="true">→</span>
-      @BuildwithAhmed
     </a>
+    <span class="cta-handle">@BuildwithAhmed</span>
   </p>
 </section>
 
 <footer>
-  <span>Ahmed — websites, CRMs, automation, dashboards</span>
-  <span>built solo, including this page</span>
+  <span>Ahmed · websites, CRMs, automation, dashboards</span>
+  <span>built solo, including this page · <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" style="color:inherit">@BuildwithAhmed</a></span>
 </footer>
 
 </main>
