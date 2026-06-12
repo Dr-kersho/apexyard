@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4efe3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
+<title>Ahmed — I build business software, solo</title>
+<meta name="description" content="Solo developer with a business brain. CRMs, booking platforms, AI assistants, and sales websites, built end to end at the lowest running cost.">
+<meta property="og:title" content="Ahmed — systems builder">
+<meta property="og:description" content="CRMs, automation, dashboards and sales websites. Built solo, end to end, cheap to run.">
+<meta property="og:type" content="website">
+<!-- TODO before launch: set absolute URLs once the domain is live.
+     Telegram previews REQUIRE og:image with a full https:// URL (1200×630).
+<meta property="og:url" content="https://yourdomain.com/">
+<meta property="og:image" content="https://yourdomain.com/og.png">
+-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f4efe3'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23221f19' text-anchor='middle'%3EA.%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:       #f4efe3;
+    --ink:         #221f19;
+    --ink-soft:    #564f43;
+    --pen:         #1d3fa8;
+    --stamp:       #b13620;
+    --rule:        #d9d0bb;
+    --rule-strong: #bfb295;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:       #1c1915;
+      --ink:         #ede8dd;
+      --ink-soft:    #9e9383;
+      --pen:         #7ab0f5;
+      --stamp:       #e85a3e;
+      --rule:        #3a342c;
+      --rule-strong: #564e44;
+    }
+  }
+
+  * { box-sizing: border-box }
+
+  html { scroll-behavior: smooth }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Charter, "Bitstream Charter", Georgia, "Times New Roman", serif;
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 41rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem }
+
+  a {
+    color: var(--pen);
+    text-decoration-thickness: 1px;
+    text-underline-offset: .18em;
+    transition: color .18s ease-out, text-decoration-color .18s ease-out;
+  }
+  a:hover { color: var(--ink); text-decoration-color: var(--stamp) }
+
+  .label {
+    font-size: .74rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  /* ── Header ─────────────────────────────────────────────────── */
+  header { margin-bottom: 3rem }
+
+  header .topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    border-bottom: 2px solid var(--rule-strong);
+    padding-bottom: .9rem;
+    margin-bottom: 2.6rem;
+  }
+  header .topline a { font-size: .92rem }
+
+  h1 {
+    font-size: clamp(2rem, 5.8vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -.015em;
+    margin: 0 0 1.1rem;
+    font-variation-settings: "opsz" 60;
+    text-wrap: balance;
+  }
+
+  .intro p { margin: 0 0 1rem; color: var(--ink-soft); text-wrap: pretty }
+  .intro p:first-of-type { color: var(--ink) }
+
+  /* ── Section headings ────────────────────────────────────────── */
+  h2 {
+    font-size: 1.4rem;
+    margin: 3.2rem 0 .4rem;
+    letter-spacing: -.008em;
+    font-variation-settings: "opsz" 40;
+    text-wrap: balance;
+  }
+  h2 + .label { display: block; margin-bottom: 1.4rem }
+
+  /* ── Service list ────────────────────────────────────────────── */
+  dl { margin: 1.4rem 0 0 }
+  dt { font-weight: 700 }
+  dd { margin: 0 0 1.1rem; color: var(--ink-soft); text-wrap: pretty }
+
+  /* ── Case file articles ──────────────────────────────────────── */
+  .file { border-top: 1px solid var(--rule); padding: 1.5rem 0 1.7rem }
+  .file:last-of-type { border-bottom: 1px solid var(--rule) }
+  .file h3 { font-size: 1.12rem; margin: 0 0 .55rem; text-wrap: balance }
+  .file p  { margin: 0 0 .55rem; color: var(--ink-soft); text-wrap: pretty }
+  .file p b { color: var(--ink); font-weight: 700 }
+  .file .stack {
+    font-size: .88rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-top: .7rem;
+  }
+  .file .stack::before {
+    content: "Stack: ";
+    color: var(--ink);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* ── Disclaimer note ─────────────────────────────────────────── */
+  .note {
+    border: 1px solid var(--rule);
+    padding: 1.1rem 1.3rem;
+    margin: 1.6rem 0 2rem;
+    color: var(--ink-soft);
+    font-size: .97rem;
+    position: relative;
+  }
+  .note b { color: var(--ink) }
+
+  /* the one flourish: a rubber stamp */
+  .stamp {
+    position: absolute;
+    top: -1.05rem;
+    right: .9rem;
+    transform: rotate(-5deg);
+    font-family: system-ui, sans-serif;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--stamp);
+    border: 2px solid var(--stamp);
+    border-radius: 3px;
+    padding: .28rem .6rem;
+    background: var(--paper);
+    opacity: .85;
+  }
+
+  /* ── Why section ─────────────────────────────────────────────── */
+  .why p   { margin: 0 0 1rem; color: var(--ink-soft); text-wrap: pretty }
+  .why p b { color: var(--ink) }
+
+  /* ── Close / CTA ─────────────────────────────────────────────── */
+  .close {
+    margin-top: 3.4rem;
+    border-top: 2px solid var(--rule-strong);
+    padding-top: 2rem;
+  }
+  .close p { color: var(--ink-soft); text-wrap: pretty }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .3em;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .cta-arrow {
+    display: inline-block;
+    transition: transform .2s cubic-bezier(.16, 1, .3, 1);
+  }
+  .cta-link:hover .cta-arrow { transform: translateX(5px) }
+
+  /* ── Footer ──────────────────────────────────────────────────── */
+  footer {
+    margin-top: 3.5rem;
+    color: var(--ink-soft);
+    font-size: .85rem;
+    display: flex;
+    justify-content: space-between;
+    gap: .8rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+  }
+
+  /* ── Global affordances ──────────────────────────────────────── */
+  ::selection     { background: var(--pen); color: var(--paper) }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px }
+
+  /* ── Scroll reveal ───────────────────────────────────────────── */
+  /* Scoped inside no-preference so content stays visible for reduced-motion
+     users without any JS involvement — no opacity:0 flash risk. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity   .58s cubic-bezier(.16, 1, .3, 1),
+        transform .58s cubic-bezier(.16, 1, .3, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+<header>
+  <div class="topline">
+    <span class="label">Ahmed · Alexandria, Egypt</span>
+    <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio">Telegram: @BuildwithAhmed</a>
+  </div>
+  <h1>I build the software that runs your sales — solo, end to end.</h1>
+  <div class="intro">
+    <p>I'm a one-person development shop. I've shipped CRMs, booking platforms, AI assistants and sales websites: design, code, payments, deployment, all of it. You bring the problem, I build the tool.</p>
+    <p>Before software I was a licensed pharmacist, and I still run an export business on the side — so I've sat on the client's side of the table. I build for revenue, and I'll ask about your numbers before I ask about features.</p>
+  </div>
+</header>
+
+<section class="reveal">
+  <h2>What I build</h2>
+  <span class="label">For sales and operations people</span>
+  <dl>
+    <dt>Landing pages built to close</dt>
+    <dd>Conversion copy, waitlist funnels, payment-ready checkout. A page with one job: turn a visitor into a lead or a sale.</dd>
+    <dt>CRMs shaped around your sales process</dt>
+    <dd>Pipeline boards, call logging, lead scoring, WhatsApp outreach. Not a generic CRM you fight with — a tool that matches how your team actually sells.</dd>
+    <dt>Automation that removes manual work</dt>
+    <dd>Intake forms that fill themselves into profiles, AI that drafts the documents you write by hand today, Telegram and WhatsApp bots that answer while you sleep.</dd>
+    <dt>Dashboards with live numbers</dt>
+    <dd>Calls made, deals moved, revenue in — on a screen that updates as it happens, not in next week's spreadsheet.</dd>
+  </dl>
+</section>
+
+<section id="work">
+  <h2>Case files</h2>
+  <span class="label">Real systems, in production or pilot use</span>
+
+  <div class="note reveal">
+    <span class="stamp">Built solo</span>
+    <b>Why no names or screenshots?</b> My clients' tools are their competitive edge, and my own products are my business. I keep both private. Every system below is real — I walk serious clients through live demos in a private call.
+  </div>
+
+  <article class="file reveal">
+    <h3>A CRM for an export trade team cold-calling Gulf markets</h3>
+    <p><b>The problem:</b> an outbound team selling container loads by phone and WhatsApp. Leads lived in spreadsheets, follow-ups got lost, nobody knew which lead deserved the next call.</p>
+    <p><b>What I built:</b> a vertical CRM with a pipeline board, call logging, scored lead import from CSV, and assisted WhatsApp outreach — plus secure login and subscription billing. One tool replaced the spreadsheet-and-chat chaos.</p>
+    <p class="stack">TypeScript, Next.js, WhatsApp, Stripe billing, cloud DB</p>
+  </article>
+
+  <article class="file reveal">
+    <h3>A booking marketplace for clinics and their patients</h3>
+    <p><b>The problem:</b> clinics taking bookings by phone calls and paper, patients with no way to see availability.</p>
+    <p><b>What I built:</b> a progressive web app where patients log in with a one-time phone code and book treatments, while each clinic runs its own schedule and admin panel. One deployment serves both sides.</p>
+    <p class="stack">TypeScript, Next.js, PostgreSQL, OTP login, PWA</p>
+  </article>
+
+  <article class="file reveal">
+    <h3>A sports platform with ID cards, bookings and card payments</h3>
+    <p><b>What I built:</b> digital player ID cards, court booking paid by card online, community matches, and parent-managed profiles for kids. Arabic-first, with a full right-to-left interface.</p>
+    <p>End to end: identity, scheduling, and a payment gateway in one product.</p>
+    <p class="stack">TypeScript, Next.js, card payments, Arabic RTL</p>
+  </article>
+
+  <article class="file reveal">
+    <h3>An AI portal that turns intake forms into personalized plans</h3>
+    <p><b>The problem:</b> a coach spending hours per client writing plans by hand.</p>
+    <p><b>What I built:</b> the client fills an intake form, the system builds a profile and drafts a personalized plan, the coach reviews and approves. Hours of writing became a review step.</p>
+    <p class="stack">Python, FastAPI, Next.js, AI drafting</p>
+  </article>
+
+  <article class="file reveal">
+    <h3>An AI compliance assistant for pharmaceutical drug safety</h3>
+    <p><b>What I built:</b> AI-powered search across safety case data and regulations, with compliance dashboards for the responsible officer. Built for an industry where a wrong answer is not acceptable.</p>
+    <p>I'm a licensed pharmacist — I understand drug safety compliance from the inside, not just the code.</p>
+    <p class="stack">Python, FastAPI, vector search, LLM, PostgreSQL</p>
+  </article>
+
+  <article class="file reveal">
+    <h3>A direct-to-consumer brand site built to convert</h3>
+    <p><b>What I built:</b> a product website with a waitlist funnel, trust copy backed by published evidence, and product pages designed around one action: join or buy.</p>
+    <p class="stack">HTML/CSS, waitlist funnel, conversion copy, SEO-ready</p>
+  </article>
+
+  <p class="reveal" style="color:var(--ink-soft);font-size:.95rem;margin-top:1.4rem">Also built: Telegram bots, an operations system for a currency-exchange desk, an AI WhatsApp assistant for small businesses, and marketing sites. Ask me about your industry.</p>
+</section>
+
+<section class="why reveal">
+  <h2>Why my prices work</h2>
+  <span class="label">Lowest running cost is a design decision, not a discount</span>
+  <p style="margin-top:1.2rem"><b>One person, full stack.</b> No agency overhead, no handoffs, no account managers. You talk to the person writing the code.</p>
+  <p><b>Free-tier infrastructure.</b> I architect systems to run on infrastructure that costs nothing until you grow. Your monthly bill starts near zero.</p>
+  <p><b>A business brain.</b> I run my own SaaS products. I build for revenue and ask about your numbers before I ask about features.</p>
+  <p><b>A modern, fast stack.</b> TypeScript, Next.js, Python, AI APIs — the same tools running my own production SaaS, applied to your tool.</p>
+</section>
+
+<section class="close reveal">
+  <h2>Tell me what is slowing your sales.</h2>
+  <p>Describe the manual work, the lost leads, or the missing page. I'll tell you what I would build, how long it takes, and what it costs.</p>
+  <p>
+    <a href="https://t.me/BuildwithAhmed?text=Hi%20Ahmed%2C%20I%20saw%20your%20portfolio" class="cta-link">
+      Message me on Telegram
+      <span class="cta-arrow" aria-hidden="true">→</span>
+      @BuildwithAhmed
+    </a>
+  </p>
+</section>
+
+<footer>
+  <span>Ahmed — websites, CRMs, automation, dashboards</span>
+  <span>built solo, including this page</span>
+</footer>
+
+</main>
+<script>
+/* Scroll reveal — runs only when reduced motion is not preferred */
+(function () {
+  if (!window.IntersectionObserver) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    io.observe(el);
+  });
+}());
+</script>
+</body>
+</html>
