@@ -386,21 +386,21 @@
     }
 
     /* ── Scroll: clip-path wipe for h2s ───────────────────────*/
-    .wipe {
+    html.js .wipe {
       clip-path: inset(0 0 100% 0);
       transition: clip-path .5s cubic-bezier(.22, 1, .36, 1);
     }
     .wipe.is-visible { clip-path: inset(0 0 0% 0) }
 
     /* ── Scroll: subtitle / label fade ───────────────────────*/
-    .fade-in {
+    html.js .fade-in {
       opacity: 0;
       transition: opacity .45s ease-out var(--d, 0s);
     }
     .fade-in.is-visible { opacity: 1 }
 
     /* ── Scroll: snap-up ────────────────────────────────────*/
-    .snap-up {
+    html.js .snap-up {
       opacity: 0;
       transform: translateY(40px) scale(.96);
       transition:
@@ -413,7 +413,7 @@
     }
 
     /* ── Scroll: card-in — diagonal snap ──────────────────────*/
-    .card-in {
+    html.js .card-in {
       opacity: 0;
       transform: translateY(48px) translateX(-16px) scale(.96);
       transition:
@@ -426,7 +426,7 @@
     }
 
     /* ── Scroll: note box ─────────────────────────────────────*/
-    .note-in {
+    html.js .note-in {
       opacity: 0;
       transform: translateY(32px) scale(.97);
       transition:
@@ -439,7 +439,7 @@
     }
 
     /* ── Scroll: close section ────────────────────────────────*/
-    .close-in {
+    html.js .close-in {
       opacity: 0;
       transform: translateY(36px);
       transition:
@@ -474,6 +474,7 @@
 <!-- Word-split: runs before first paint to avoid FOUT -->
 <script>
 (function () {
+  document.documentElement.classList.add('js');
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   function splitWords(el, startDelay) {
     if (!el) return;
