@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F5A"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+    <linearGradient id="arc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF8C00;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#FF6B00"/>
+      <stop offset="100%" style="stop-color:#FFB800"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="clip">
+      <polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/>
+    </clipPath>
+  </defs>
+  <polygon points="100,7 168,7 186,100 168,193 100,193 82,100" fill="none" stroke="#1B6FEB" stroke-width="1.5" opacity="0.35"/>
+  <polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="url(#bg)" stroke="#1B6FEB" stroke-width="2.5"/>
+  <rect x="86" y="30" width="92" height="140" fill="#0B1F42" rx="1" clip-path="url(#clip)"/>
+  <g clip-path="url(#clip)" opacity="0.75">
+    <rect x="94" y="40" width="76" height="120" fill="none" stroke="#1B6FEB" stroke-width="1.5"/>
+    <line x1="94" y1="100" x2="170" y2="100" stroke="#1B6FEB" stroke-width="1.2"/>
+    <circle cx="132" cy="100" r="18" fill="none" stroke="#1B6FEB" stroke-width="1.2"/>
+    <circle cx="132" cy="100" r="2.5" fill="#1B6FEB"/>
+    <rect x="110" y="40" width="44" height="28" fill="none" stroke="#1B6FEB" stroke-width="1"/>
+    <rect x="119" y="40" width="26" height="14" fill="none" stroke="#1B6FEB" stroke-width="0.8"/>
+    <rect x="110" y="132" width="44" height="28" fill="none" stroke="#1B6FEB" stroke-width="1"/>
+    <rect x="119" y="146" width="26" height="14" fill="none" stroke="#1B6FEB" stroke-width="0.8"/>
+  </g>
+  <g clip-path="url(#clip)">
+    <path d="M111,148 Q125,106 155,68" stroke="url(#arc)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="124" cy="124" r="2" fill="#FF6B00" opacity="0.5"/>
+    <circle cx="136" cy="102" r="2" fill="#FF6B00" opacity="0.7"/>
+    <circle cx="147" cy="83" r="2" fill="#FF6B00" opacity="0.9"/>
+    <circle cx="111" cy="148" r="4" fill="#1B6FEB"/>
+    <circle cx="155" cy="68" r="7" fill="#FF6B00" filter="url(#glow)"/>
+    <circle cx="155" cy="68" r="3" fill="#FFB800"/>
+  </g>
+  <polygon points="100,14 162,14 170,30 92,30" fill="none" stroke="#FF6B00" stroke-width="2" opacity="0.6"/>
+</svg>
