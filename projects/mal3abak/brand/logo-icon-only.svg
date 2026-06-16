@@ -17,6 +17,7 @@
       <polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/>
     </clipPath>
   </defs>
+  <g transform="translate(-34, 0)">
   <polygon points="100,7 168,7 186,100 168,193 100,193 82,100" fill="none" stroke="#1B6FEB" stroke-width="1.5" opacity="0.35"/>
   <polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="url(#bg)" stroke="#1B6FEB" stroke-width="2.5"/>
   <rect x="86" y="30" width="92" height="140" fill="#0B1F42" rx="1" clip-path="url(#clip)"/>
@@ -40,4 +41,5 @@
     <circle cx="155" cy="68" r="3" fill="#FFB800"/>
   </g>
   <polygon points="100,14 162,14 170,30 92,30" fill="none" stroke="#FF6B00" stroke-width="2" opacity="0.6"/>
+  </g>
 </svg>
