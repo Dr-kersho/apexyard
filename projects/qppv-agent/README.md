@@ -23,3 +23,16 @@ Next.js 15 PWA · FastAPI · PostgreSQL · Qdrant · Claude / OpenAI / Perplexit
 | Frontend | 3010 |
 | Backend | 8010 |
 | Postgres | 5433 |
+
+## Pilot sellability (#107)
+
+Production demo must stay on **Render Starter (always-on)**, not free tier.
+
+- Health proxy returns JSON only (`ok` | `warming` | `suspended` | `unavailable`)
+- Login disables sign-in when suspended (EN + AR copy)
+- Runbook: `docs/PILOT-DEPLOY.md` + `docs/RENDER-DEPLOY.md` in app repo
+- Verify: `./scripts/verify-pilot-health.sh`
+
+Patch ready to apply (ops cannot push to app repo from this agent):
+
+`projects/qppv-agent/QPPV-107-pilot-sellable.patch` — branch `fix/QPPV-107-pilot-stack-sellable`
