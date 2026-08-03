@@ -3,6 +3,7 @@
 **Repo:** [Dr-kersho/QPPV-Agent](https://github.com/Dr-kersho/QPPV-Agent)  
 **Domain glossary:** `CONTEXT.md` in app repo (101 grill decisions)  
 **Build order:** `docs/MVP-ROADMAP.md` in app repo  
+**Go-live:** [MVP-GO-LIVE.md](./MVP-GO-LIVE.md) — checklist to run as full MVP (not pitch-only)
 
 ## Active slice
 
