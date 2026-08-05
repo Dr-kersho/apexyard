@@ -24,7 +24,7 @@ Defaults match today's single-fork layout (`./apexyard.projects.yaml`, `./projec
 
 ## When this runs
 
-The `onboarding-check.sh` SessionStart hook detects that `onboarding.yaml` still has placeholder values (e.g. `company.name: "Your Company Name"`) and prompts the user to run `/setup`. After `/setup` fills in real values and commits, the hook goes silent forever — even on fresh clones, because `onboarding.yaml` is committed.
+The `onboarding-check.sh` SessionStart hook prompts the user to run `/setup` when the fork isn't configured — either there's no real `onboarding.yaml` yet (a fresh clone ships only the tracked `onboarding.example.yaml` placeholder), or `onboarding.yaml` still has the `company.name: "Your Company Name"` placeholder. After `/setup` fills in real values, the hook goes silent on this machine. Note (#517): in single-fork mode `onboarding.yaml` is GITIGNORED — real config stays local — so each fresh clone runs `/setup` once (it copies the example and fills it in). In split-portfolio v2 mode the real config is committed in the private sibling repo, so it carries across clones.
 
 Re-running `/setup` on an already-configured fork shows the current config and asks what to update. Use `--reset` to clear everything and start from scratch.
 
@@ -71,16 +71,26 @@ The marker is cleared in Step 8 below (and on the next SessionStart by `clear-bo
 
 See AgDR-0011 + me2resh/apexyard#150 for the design rationale.
 
+### Step 0.5: Install the tracked git hooks (REQUIRED)
+
+`core.hooksPath` is a **per-clone** git config value — it lives in `.git/config`, never committed, so every fresh clone of the ops fork starts unset regardless of how many sibling clones already have it configured. Left unset, `.githooks/pre-push` (tracked, but inert without this) never runs on a terminal `git push` — only Claude-Code-driven pushes go through the equivalent `pre-push-gate.sh` PreToolUse hook. Run the installer once per fork, here, so a fresh `/setup` always leaves the clone protected on both paths:
+
+```bash
+bash bin/install-git-hooks.sh
+```
+
+Idempotent — a re-run on an already-configured clone reports "no change" and exits 0. If it exits 1 (a real, different `core.hooksPath` the operator configured on purpose), report that plainly and move on without `--force` — overriding a deliberate adopter choice isn't this step's call to make silently. **If it exits 4, treat this as a hard failure of the step, not a warning**: exit 4 means the `git config core.hooksPath` write did not take effect (a stale `.git/config.lock`, a multi-valued key) and the installer is refusing to report success on an unverified write — this clone is **NOT** protected. Show the operator the installer's own error output verbatim and ask them to retry (`bash bin/install-git-hooks.sh`) before continuing `/setup`; do not silently proceed as if the clone were covered. See `bin/install-git-hooks.sh --help` and me2resh/apexyard#1086 for the full state machine (fresh / idempotent / stale-repair / deliberate-third-party / write-failed).
+
 ### Step 1: Check current state
 
 Read `onboarding.yaml`. Four modes:
 
-- **First run** (placeholder values detected): proceed to Step 2.
+- **First run** (`onboarding.yaml` absent, or placeholder values detected): proceed to Step 2. The real file is gitignored (#517), so an absent `onboarding.yaml` with a present `onboarding.example.yaml` is the normal fresh-fork state — Step 6 copies the example before editing.
 - **Already configured** (real values): show a summary of the current config and ask "What would you like to update?" — then jump to the specific section. Don't re-ask everything.
-- **`--reset` flag**: clear `onboarding.yaml` back to the template defaults (copy from the upstream example or regenerate) and proceed as first run.
+- **`--reset` flag**: restore `onboarding.yaml` to the template defaults (`cp onboarding.example.yaml onboarding.yaml`) and proceed as first run.
 - **`--enable-lsp` flag** (retrofit mode): skip Steps 2 / 2a / 2b / 3-7 entirely and jump straight to Step 2c (LSP enablement). Use this when an existing adopter has a fully-configured fork and only wants to turn on LSP without re-running the whole bootstrap. The flag honours the same idempotence rules as a first-run pass through Step 2c — if LSP is already enabled, the step reports "already enabled" and exits cleanly. Step 0 (bootstrap marker) and Step 8 (clear marker) still run so the ticket gate stays coherent.
 
-Detection: `grep -q '"Your Company Name"' onboarding.yaml` — if found, it's still a template.
+Detection: `[ ! -f onboarding.yaml ]` (fresh fork — only the example is present) OR `grep -q '"Your Company Name"' onboarding.yaml` (file present but still a template) → treat as first run.
 
 ### Step 2: One question — describe your world
 
@@ -175,7 +185,7 @@ The full setup lives in `docs/multi-project.md` § "Split-portfolio mode — pub
      # touch .apexyard-fork
      ```
 
-   - Stage `.gitignore`, `.claude/project-config.json`, and `.apexyard-fork` for commit. All three are per-fork, not per-machine.
+   - Stage `.gitignore` and `.apexyard-fork` for commit — both are per-fork, not per-machine. **Do NOT stage `.claude/project-config.json`** (me2resh/apexyard#1031): it is gitignored and untracked upstream, so `git add` on it exits 1 and the commit step that follows never runs. It is also the wrong thing to commit — in split-portfolio mode its `portfolio` block names the private sibling repo's path, and the ops fork may be public. Do not reach for `git add -f`; that recreates the exact bug #1031 fixed, where a tracked copy is overwritten by any later `git checkout` and the adopter's private config is lost with no way to restore it.
    - **Legacy fallback (framework-version < #145)**: if the adopter's framework predates the `portfolio:` config block, fall back to creating symlinks pointing at `../<sibling-dir>/apexyard.projects.yaml` and `../<sibling-dir>/projects`. The helper resolves either way. v2 (`onboarding` / `workspace_dir` / `.apexyard-fork`) requires framework ≥ #242 — older forks should run `/update` first to pick up the v2 plumbing before going through this branch.
 7. **Verify**: source `.claude/hooks/_lib-portfolio-paths.sh` and call `portfolio_validate`. Skill MUST refuse to declare success if validate fails — surface the specific failure and ask the operator to fix it before re-running.
 
@@ -455,6 +465,45 @@ The "plugin-install commands printed" wording is accurate even after the empiric
 
 Pick the line that matches the actual outcome. Don't claim "enabled" if any of (b)–(d) failed.
 
+### Step 2d: Harness selection (skippable)
+
+Background. As of 2026-07-09 the framework's mechanical gates (merge gate, ticket-first, secrets scanning, red-CI block) reach beyond Claude Code through thin per-harness adapters — see `docs/harnesses/README.md`, the single source of truth for the support matrix. This step surfaces that matrix at onboarding time so a non-Claude-Code adopter doesn't have to discover `docs/harnesses/` on their own. It is deliberately light: Claude Code adopters (the default) answer one question and move on.
+
+Ask:
+
+```
+Which harness(es) do you run ApexYard with?
+  [1] Claude Code (default — the native, full experience)
+  [2] opencode
+  [3] pi (pi.dev)
+  [4] Codex
+  [5] Cursor
+  [6] Other / not sure
+
+[1-6, comma-separated for more than one — default 1]
+```
+
+**Branch on the answer:**
+
+- **1 / default / empty** → print nothing further, continue straight to Step 3. This is the zero-friction path — most adopters are on Claude Code and shouldn't see any more text.
+- **6** → print one line — *"No adapter for that harness yet. The mechanical gates (`.claude/hooks/*.sh`) are portable bash; see `docs/harnesses/README.md` § 'Adapter-authoring pattern for future harnesses' if you want to write one."* — then continue to Step 3.
+- **2 / 3 / 4 / 5 (one or more)** → for each selected harness, print its install command + its one precondition, sourced from `docs/harnesses/README.md` (read it fresh rather than hardcoding — the matrix is the single source of truth and does change). As of the 2026-07-09 matrix:
+
+  | Harness | Install | Precondition | Tier |
+  |---------|---------|---------------|------|
+  | opencode | `bash bin/install-opencode-adapter.sh` | run opencode headless with `--auto` | ✅ live-proven |
+  | pi | `bash bin/install-pi-adapter.sh` | run pi headless with `-a` / `--approve` | ✅ live-proven |
+  | Codex | `bash bin/sync-codex-adapter.sh` | grant hook-trust — `/hooks` interactively, `--dangerously-bypass-hook-trust` for a one-off headless run, or a user-level `~/.codex/hooks.json` | ✅ live-proven |
+  | Cursor | `bin/install-cursor-adapter.sh` | installs to **user-level** `~/.cursor/hooks.json` | 🟡 **failClosed-only** — not live-proven; the `cursor-agent` CLI ignores hooks entirely |
+
+  **Honesty is load-bearing here — never round Cursor up.** Say it exactly the way `docs/harnesses/README.md` says it: opencode, pi, and Codex are live-proven (a real credentialed model turn was actually blocked by the delegated gate); Cursor blocks only by *failing closed* on a hook-runner error, which is a materially weaker guarantee than verified delegated execution. Reuse the tier wording verbatim rather than paraphrasing it into something that sounds stronger.
+
+  For each selected harness, link the per-harness page for the full workflow: `docs/harnesses/<harness>.md` (e.g. `docs/harnesses/opencode.md`).
+
+**Don't run the install command yourself.** This step is informational — print the command and the precondition, don't execute `bin/install-*-adapter.sh` on the operator's behalf. They run it when they're ready; onboarding shouldn't silently mutate a harness config the operator hasn't confirmed they want touched.
+
+Record the pick (comma-separated list, or `claude-code` if 1/default) as `$SELECTED_HARNESSES` for the Step 4 summary line.
+
 ### Step 3: Parse and map to defaults
 
 From the user's description, extract:
@@ -499,9 +548,12 @@ Design review gate: ON (React = UI work)
 AgDR gate: ON (default architecture paths)
 Commit types: framework defaults (feat, fix, refactor, test, docs, chore, style, perf, build, ci, revert)
 LSP: enabled (typescript via typescript-language-server, env var in ~/.zshrc, plugin: manual)
+Harness: Claude Code (native — no adapter needed)
 
 Use these defaults, or customize?
 ```
+
+The Harness line reflects `$SELECTED_HARNESSES` from Step 2d — for a non-Claude-Code pick it reads e.g. `Harness: opencode (adapter install command printed above — see docs/harnesses/opencode.md)`.
 
 Include the Step 2c.7 status line verbatim if Step 2c ran. If `/setup --enable-lsp` was invoked (retrofit mode), the summary is just the single LSP status line — no other proposed-config fields, since those are already configured.
 
@@ -515,7 +567,15 @@ Don't loop more than twice. If the user keeps correcting, switch to "tell me exa
 
 ### Step 6: Write onboarding.yaml + the .apexyard-fork marker
 
-Read the current `onboarding.yaml` template (in single-fork mode this is at the fork root; in v2 split-portfolio mode it lives in the private sibling repo, resolved via `portfolio_onboarding_path`), replace placeholder values with the confirmed config, and write back. Preserve the file's structure and comments — the comments are documentation for future readers.
+**First, ensure a real `onboarding.yaml` exists to edit (#517).** The real config is now GITIGNORED; a fresh fork ships only the tracked `onboarding.example.yaml` placeholder template. So if `onboarding.yaml` is absent, copy the example to it before editing:
+
+```bash
+ONBOARDING=$(portfolio_onboarding_path)
+EXAMPLE="$(dirname "$ONBOARDING")/onboarding.example.yaml"
+[ -f "$ONBOARDING" ] || cp "$EXAMPLE" "$ONBOARDING"
+```
+
+Then read `onboarding.yaml` (single-fork: fork root; v2 split-portfolio: the private sibling repo, resolved via `portfolio_onboarding_path`), replace placeholder values with the confirmed config, and write back. Preserve the file's structure and comments — the comments are documentation for future readers.
 
 **Important:** use `Edit` tool to modify in-place, not `Write` to overwrite — this preserves comments and structure that the user didn't touch.
 
@@ -535,15 +595,17 @@ In **split-portfolio v2 mode** the marker was already written in Step 2b — ski
 After writing:
 
 ```bash
-# In single-fork mode: stage the in-fork onboarding.yaml.
-# In v2 mode: stage the SIBLING repo's onboarding.yaml.
+# #517: onboarding.yaml is GITIGNORED in single-fork mode — it stays LOCAL and
+# must NOT be staged/committed (the block-onboarding-in-git.sh guard backstops
+# this). In v2 mode the real config lives in the PRIVATE sibling repo, where it
+# is committed (the sibling is private), so staging there is fine.
 ONBOARDING=$(portfolio_onboarding_path)
 case "$ONBOARDING" in
   "$(git rev-parse --show-toplevel)"/*)
-    git add onboarding.yaml
+    : # single-fork — do NOT stage onboarding.yaml; it's gitignored, kept local
     ;;
   *)
-    # v2 mode — onboarding lives in the sibling repo. Stage it there
+    # v2 mode — onboarding lives in the PRIVATE sibling repo. Stage it there
     # so the user can `git -C ../<sibling> diff --cached` before committing.
     sibling_root=$(git -C "$(dirname "$ONBOARDING")" rev-parse --show-toplevel 2>/dev/null)
     if [ -n "$sibling_root" ]; then
@@ -553,14 +615,21 @@ case "$ONBOARDING" in
 esac
 ```
 
-Stage but do NOT commit — let the user review the diff and commit when ready. Tell them:
+In **single-fork mode** the config is intentionally NOT committed — tell the user:
 
 ```
-onboarding.yaml updated and staged. Review with `git diff --cached` and
-commit when you're happy: git commit -m "chore: configure apexyard for <company>"
+onboarding.yaml written locally (it's gitignored — your real config stays on
+this machine and is never published to the public fork or an upstream PR).
+Nothing to commit. If a teammate needs the config SHAPE, edit and commit
+onboarding.example.yaml instead.
 ```
 
-(In v2 mode point them at the sibling repo for the diff + commit.)
+In **v2 split-portfolio mode** the real config is committed in the private sibling repo — point the user there for the diff + commit:
+
+```
+onboarding.yaml updated and staged in the private portfolio repo. Review with
+`git -C ../<sibling> diff --cached` and commit when you're happy.
+```
 
 ### Step 7: Optionally seed the project registry
 
@@ -597,6 +666,34 @@ session start. See docs/multi-project.md § "Centralised agent routing".
 
 No file writes here — purely informational. Added in #351 PR 3.
 
+### Step 7b: Check GitHub Issues is enabled (github tracker only — #653)
+
+GitHub disables **Issues on forks by default**, so a fresh fork that tracks via GitHub Issues will fail every issue-creating skill (`/feature`, `/bug`, `/task`, `/tickets-batch`, `/idea`, `/migration`, …) with a cryptic `the '<owner>/<repo>' repository has disabled issues` error. Catch it here, at first-run, instead.
+
+This step is **gated on `tracker.kind`** — for `linear` / `jira` / `none` adopters, GitHub Issues being off is correct, so the probe is a silent no-op. Source the tracker lib and probe the ops fork's repo:
+
+```bash
+source "$(git rev-parse --show-toplevel)/.claude/hooks/_lib-read-config.sh"
+source "$(git rev-parse --show-toplevel)/.claude/hooks/_lib-tracker.sh"
+FORK_REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
+# tracker_check_issues prints a warning + the enable hint to stderr and returns
+# 1 ONLY when this is a github tracker AND issues are confirmed disabled.
+if [ -n "$FORK_REPO" ] && ! tracker_check_issues "$FORK_REPO"; then
+  : # warning already shown — offer to enable below
+fi
+```
+
+If `tracker_check_issues` reported disabled, **offer** (do not auto-run) to enable it:
+
+```
+GitHub Issues is off on <owner/repo> and your tracker is GitHub Issues.
+Enable it now? (needs admin on the repo)
+  [y] run: gh repo edit <owner/repo> --enable-issues
+  [n] skip — I'll print the command for later
+```
+
+On **y**, run `gh repo edit <FORK_REPO> --enable-issues` and confirm. On **n**, print the one-liner and move on. Never enable silently — it's an externally-visible repo-settings change requiring admin scope, and the adopter may intend to track elsewhere. (In split-portfolio mode, the issue-hosting repo is the **public fork**, not the private portfolio — probe the fork, which is what `gh repo view` returns here.)
+
 ### Step 8: Clear the bootstrap marker (REQUIRED)
 
 ```bash
@@ -615,6 +712,7 @@ Always remove the marker on a clean exit so subsequent edits in the same session
 6. **No project-config.json.** `/setup` configures the FRAMEWORK (onboarding.yaml). Per-project config is handled by `/handover` and `/idea` when projects enter the portfolio.
 7. **Never auto-install language runtimes.** Step 2c installs LSP servers (e.g. `typescript-language-server`, `pyright`, `gopls`, `rust-analyzer`) but never the underlying runtime (`node`, `python`, `go`, `rustup`). If a runtime is missing, refuse the LSP install gracefully and tell the operator what to install.
 8. **Print plugin-install commands; never invoke them.** The Claude Code plugin marketplace command shape (`/plugin marketplace add`, `/plugin install`, `/reload-plugins`) is empirically stable — Step 2c.5(d) prints a copy-paste block for the operator. But `/plugin` is a Claude Code UI built-in, not a shell command, so the skill never runs the commands itself — it prints them. Always emit the `marketplace add` line; it's idempotent and recovers the case where the docs' auto-load claim doesn't fire on a fresh install.
+9. **`docs/harnesses/README.md` is the single source of truth for harness support.** Step 2d summarises and links it — it never copies the capability matrix inline as a maintained duplicate. When printing a harness's install command / precondition / tier, read the doc fresh rather than trusting a stale table baked into this skill; the matrix changes as adapters move through live-verification. Never round a harness's tier up (Cursor is failClosed-only, not live-proven — say so).
 
 ---
 
