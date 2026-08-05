@@ -1,0 +1,11 @@
+{
+  "ignores": [
+    "**/graphify-out/**",
+    "**/.agents/skills/graphify/**",
+    "**/.claude/skills/impeccable/**",
+    "**/.cursor/skills/impeccable/**",
+    "**/.github/skills/impeccable/**",
+    "projects/smartmomlabs/website/meta-trials/**",
+    "projects/luma-pwa/meta-trials/**"
+  ]
+}

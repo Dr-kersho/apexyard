@@ -1,0 +1,122 @@
+# =============================================================================
+# ApexYard Onboarding Configuration
+# =============================================================================
+#
+# Fill in this file to customize ApexYard for your team.
+# Claude Code reads this file to understand your company context.
+#
+# After editing, commit this file to your repo. Claude Code will use it
+# to tailor its behavior to your team's structure and processes.
+#
+
+# -----------------------------------------------------------------------------
+# ApexYard Setup
+# -----------------------------------------------------------------------------
+# ApexYard governs a PORTFOLIO of repos as one organisation. The repo this
+# file lives in is your "ops repo" — ApexYard itself, forked from
+# me2resh/apexyard. A registry file (apexyard.projects.yaml) lists every
+# managed project. Skills like /projects, /inbox, /status, /tasks aggregate
+# across the registry. Per-project docs live in projects/<name>/, and live
+# working copies (optional) live in workspace/<name>/.
+#
+# Built for CTOs, engineering leads, and Chief-of-Staff roles managing a
+# portfolio of 2+ repos. If you have exactly one repo, you can still fork
+# apexyard and register a single project — the skills work the same way.
+#
+# See docs/setup.md for the full guide.
+#
+# Portfolio focus: KoraID, XPORT CRM (P0 active), QPPV, Training Command Center; LUMA PWA (paused).
+
+# -----------------------------------------------------------------------------
+# Company Information
+# -----------------------------------------------------------------------------
+company:
+  name: "Dr-kersho"
+  mission: "Ship credible football identity and booking products for underserved Egyptian players and clinics"
+  vision: "Portfolio of focused PWAs governed by one SDLC-as-code ops repo"
+  website: "https://github.com/Dr-kersho"
+
+  values:
+    - "Quality over speed"
+    - "Ship and learn"
+    - "Keep it simple"
+    - "Domain language before code"
+    - "Drill-verified truth over self-reported stats"
+
+  products:
+    - name: "KoraID"
+      description: "Grassroots football PWA — FIFA-style cards, court booking, community"
+      type: "web-app"
+    - name: "LUMA PWA"
+      description: "Aesthetic clinic booking marketplace PWA"
+      type: "web-app"
+    - name: "QPPV AI Assistant"
+      description: "Egyptian pharmacovigilance assistant for QPPVs — ICSR, signals, PSUR, RAG, training"
+      type: "web-app"
+    - name: "Training Command Center"
+      description: "AI-driven personal training command center — coach portal and internal tooling"
+      type: "web-app"
+    - name: "XPORT CRM"
+      description: "Gulf export sales CRM — pipeline, auto-leads, assisted WhatsApp, consent-gated outreach"
+      type: "web-app"
+
+team:
+  - name: "Ahmed"
+    role: "tech-lead"
+    department: "engineering"
+
+tech_stack:
+  note: "Per-project stack — see apexyard.projects.yaml and each repo CLAUDE.md"
+  koraid:
+    language: "TypeScript"
+    runtime: "Node.js"
+    framework: "Next.js 14 (App Router)"
+    backend: "Next.js Route Handlers; DynamoDB (AWS) or in-memory dev store"
+    database: "DynamoDB single-table (prod); memory store (dev)"
+    hosting: "Vercel / AWS (per project)"
+    ci_cd: "GitHub Actions"
+    testing: "npm run typecheck; eslint; add Vitest/Playwright as coverage grows"
+    e2e_testing: "Playwright (optional); gstack /qa"
+    state_management: "React server + client components"
+    styling: "Tailwind CSS — see each project's DESIGN.md"
+    api_style: "REST"
+  luma_pwa:
+    language: "TypeScript"
+    framework: "Next.js 14 (App Router)"
+    database: "PostgreSQL (Neon)"
+    orm: "Prisma 7"
+  qppv_agent:
+    language: "TypeScript + Python 3.11"
+    framework: "Next.js 15 PWA + FastAPI"
+    database: "PostgreSQL 16 + Qdrant"
+    orm: "SQLAlchemy 2 async"
+    ai: "Claude, OpenAI embeddings, Perplexity"
+
+project_management:
+  tool: "GitHub Issues"
+  sprint_duration: "1 week"
+  branching_strategy: "feature-branch"
+  ticket_prefix: "Per project registry (Koraid, LUM, QPPV, GH)"
+
+quality:
+  test_coverage_target: 80
+  required_reviews: 1
+  required_checks:
+    - lint
+    - typecheck
+    - test
+    - build
+  review_style: "thorough"
+
+workflows:
+  require_prd: true
+  require_technical_design: true
+  require_qa_signoff: false
+  require_security_review: false
+  use_feature_flags: false
+  use_agent_decision_records: true
+
+communication:
+  primary: "GitHub"
+  documentation: "Repo docs + projects/<name>/ in ops repo; GitHub Wiki where used"
+  design: "DESIGN.md per app repo; Figma where applicable"
