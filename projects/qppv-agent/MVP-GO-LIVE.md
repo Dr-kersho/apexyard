@@ -13,6 +13,16 @@
 - [ ] Name design partner(s) (target: 1 paid or LOI, up to 3)
 - [ ] Keep `demo@qppv.eg` as **sales sandbox** only — not the production tenant
 - [ ] Accept: app **does not** submit to EDA; disclaimer stays visible
+- [ ] Until reopen: keep public login **closed** via `LOGIN_ENABLED=false` ([#109](https://github.com/Dr-kersho/QPPV-Agent/issues/109))
+
+### Login kill switch (public site)
+
+| Action | Vercel + Render env |
+|--------|---------------------|
+| **Close** all sign-in | `LOGIN_ENABLED=false` (then redeploy frontend) |
+| **Reopen** | `LOGIN_ENABLED=true` or remove the var |
+
+Patch: `projects/qppv-agent/QPPV-109-login-kill-switch.patch`
 
 ---
 
