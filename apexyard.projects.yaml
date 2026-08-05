@@ -1,0 +1,184 @@
+version: 1
+
+projects:
+  - name: koraid
+    repo: Dr-kersho/koraid
+    workspace: workspace/koraid
+    docs: projects/koraid
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+      - qa-engineer
+    tags:
+      - customer-facing
+      - revenue
+      - pwa
+    ticket_prefix: GH
+
+  - name: luma-pwa
+    repo: Dr-kersho/luma-pwa
+    workspace: workspace/luma-pwa
+    docs: projects/luma-pwa
+    status: paused
+    tier: P1
+    roles:
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+    tags:
+      - customer-facing
+      - marketplace
+    ticket_prefix: LUM
+
+  - name: qppv-agent
+    repo: Dr-kersho/QPPV-Agent
+    workspace: workspace/qppv-agent
+    docs: projects/qppv-agent
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+    tags:
+      - pharmacovigilance
+      - regulated
+      - ai
+    ticket_prefix: QPPV
+
+  - name: training-command-center
+    repo: Dr-kersho/AI-Driven-Personal-Training-Command-Center-
+    workspace: workspace/training-command-center
+    docs: projects/training-command-center
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+    tags:
+      - internal-tool
+      - coach-portal
+    ticket_prefix: GH
+
+  - name: xport-crm
+    repo: Dr-kersho/XPORT-CRM
+    workspace: workspace/xport-crm
+    docs: projects/xport-crm
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+      - qa-engineer
+    tags:
+      - customer-facing
+      - crm
+      - revenue
+    ticket_prefix: GH
+
+  - name: elite-telegram
+    repo: Dr-kersho/elite-telegram
+    workspace: workspace/elite-telegram
+    docs: projects/elite-telegram
+    status: active
+    tier: P1
+    roles:
+      - tech-lead
+      - product-manager
+      - backend-engineer
+      - frontend-engineer
+    tags:
+      - new-product
+      - planning
+      - telegram
+    ticket_prefix: GH
+
+  - name: inlinead-website
+    repo: Dr-kersho/inlinead-website
+    workspace: workspace/inlinead-website
+    docs: projects/inlinead-website
+    status: active
+    tier: P2
+    roles:
+      - tech-lead
+      - frontend-engineer
+    tags:
+      - marketing
+      - website
+    ticket_prefix: GH
+
+  - name: impeccable
+    repo: Dr-kersho/impeccable
+    workspace: workspace/impeccable
+    docs: projects/impeccable
+    status: active
+    tier: P1
+    roles:
+      - tech-lead
+      - ui-designer
+      - frontend-engineer
+    tags:
+      - design-system
+      - ai-tools
+      - internal-tool
+    ticket_prefix: GH
+
+  - name: smartmomlabs
+    repo: Dr-kersho/apexyard
+    workspace: projects/smartmomlabs/website
+    docs: projects/smartmomlabs
+    status: active
+    tier: P0
+    roles:
+      - tech-lead
+      - frontend-engineer
+      - product-manager
+    tags:
+      - customer-facing
+      - dtc
+      - website
+      - impeccable-consumer
+    ticket_prefix: GH
+
+  - name: graphify
+    repo: safishamsi/graphify
+    workspace: workspace/graphify
+    docs: projects/graphify
+    status: active
+    tier: P1
+    roles:
+      - tech-lead
+      - backend-engineer
+      - platform-engineer
+    tags:
+      - tool-only
+      - dev-productivity
+    ticket_prefix: GH
+
+  - name: ponytail
+    repo: Dr-kersho/ponytail
+    workspace: workspace/ponytail
+    docs: projects/ponytail
+    status: handover
+    tier: P1
+    roles:
+      - tech-lead
+      - platform-engineer
+      - backend-engineer
+    tags:
+      - tool-only
+      - ai-tools
+      - dev-productivity
+    ticket_prefix: GH
+
+defaults:
+  status: active
+  tier: P1
+  ticket_prefix: GH
+  roles:
+    - tech-lead
