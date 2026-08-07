@@ -1,0 +1,313 @@
+From 09e801050b45b91d220929e2544ba485fddbc79c Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Wed, 5 Aug 2026 13:46:06 +0000
+Subject: [PATCH 1/2] chore: add LOGIN_ENABLED kill switch to close public
+ login
+
+Blocks the whole login UI (EN/AR) and rejects /auth/login with 403 when
+LOGIN_ENABLED=false. Reopen by setting true on Vercel + Render.
+
+Closes #109
+---
+ .env.example                               |  1 +
+ backend/app/core/config.py                 |  2 +
+ backend/app/routers/auth.py                |  5 ++
+ docs/PILOT-DEPLOY.md                       | 16 ++++++
+ frontend/scripts/check-login-enabled.sh    | 21 ++++++++
+ frontend/src/app/(auth)/login/page.tsx     | 57 +++++++++++++++++++++-
+ frontend/src/app/api/login-status/route.ts | 22 +++++++++
+ 7 files changed, 123 insertions(+), 1 deletion(-)
+ create mode 100755 frontend/scripts/check-login-enabled.sh
+ create mode 100644 frontend/src/app/api/login-status/route.ts
+
+diff --git a/.env.example b/.env.example
+index 5dc98ec..8dc5d04 100644
+--- a/.env.example
++++ b/.env.example
+@@ -28,6 +28,7 @@ ENVIRONMENT=development               # development | production
+ E2B_EXPORT_VERSION=r3                 # r3 (default) | r2 legacy XML
+ E2B_R3_ENCODING=hl7                   # hl7 ISO/HL7 v3 (default) | pilot ichicsr envelope
+ ALLOW_REGISTRATION=false              # true only for local dev; funding demo uses seed_demo login
++LOGIN_ENABLED=true                    # false = close ALL public login (UI + API) until you reopen
+ ADMIN_API_KEY=dev-admin-change-me     # X-Admin-Key for /api/v1/admin/*; also used by /ops proxy (server-side)
+ OPS_CONSOLE_ENABLED=true              # false in production — enables http://localhost:3010/ops tenant list
+ BACKEND_CORS_ORIGINS=["http://localhost:3010","http://localhost:3011"]
+diff --git a/backend/app/core/config.py b/backend/app/core/config.py
+index 19d739f..b5f9d2f 100644
+--- a/backend/app/core/config.py
++++ b/backend/app/core/config.py
+@@ -109,6 +109,8 @@ class Settings(BaseSettings):
+     KB_INDEXED_AT: str = "2026-05-20"  # ISO YYYY-MM-DD; override via env after seed_rag
+     ENVIRONMENT: str = "development"
+     ALLOW_REGISTRATION: bool = False
++    # Public login kill switch. Set false on Render/Vercel to close the site until reopen.
++    LOGIN_ENABLED: bool = True
+     ADMIN_API_KEY: str = ""
+     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:3010"]
+ 
+diff --git a/backend/app/routers/auth.py b/backend/app/routers/auth.py
+index df65a2f..1b29478 100644
+--- a/backend/app/routers/auth.py
++++ b/backend/app/routers/auth.py
+@@ -40,6 +40,11 @@ async def register(payload: UserCreate, db: AsyncSession = Depends(get_db)) -> U
+ 
+ @router.post("/login", response_model=Token)
+ async def login(payload: LoginRequest, db: AsyncSession = Depends(get_db)) -> dict:
++    if not settings.LOGIN_ENABLED:
++        raise HTTPException(
++            status_code=403,
++            detail="Login is temporarily closed. Contact the operator to reopen access.",
++        )
+     user = await db.scalar(select(User).where(User.email == payload.email))
+     if not user or not verify_password(payload.password, user.hashed_password):
+         raise HTTPException(status_code=401, detail="Invalid credentials")
+diff --git a/docs/PILOT-DEPLOY.md b/docs/PILOT-DEPLOY.md
+index 90ef405..ea8cc8c 100644
+--- a/docs/PILOT-DEPLOY.md
++++ b/docs/PILOT-DEPLOY.md
+@@ -72,3 +72,19 @@ curl -X POST https://qppv-agent.vercel.app/api/v1/auth/login \
+ ## Legacy: Fly.io
+ 
+ `./scripts/setup-pilot-cloud.sh` and `backend/fly.toml` remain for teams still on Fly. Not recommended for new pilots.
++
++## Public login kill switch (#109)
++
++Close **all** sign-in (demo + provisioned) until you reopen:
++
++| Where | Variable | Closed | Open |
++|-------|----------|--------|------|
++| Vercel (frontend) | `LOGIN_ENABLED` | `false` | `true` or unset |
++| Render (API) | `LOGIN_ENABLED` | `false` | `true` or unset |
++
++After changing Vercel env, redeploy the frontend. Render picks up env on restart/redeploy.
++
++```bash
++# Closed: login page shows EN/AR closed state; POST /api/v1/auth/login → 403
++# Open: set LOGIN_ENABLED=true (or remove) on both hosts
++```
+diff --git a/frontend/scripts/check-login-enabled.sh b/frontend/scripts/check-login-enabled.sh
+new file mode 100755
+index 0000000..e085b55
+--- /dev/null
++++ b/frontend/scripts/check-login-enabled.sh
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++# Self-check for LOGIN_ENABLED parsing (frontend kill switch).
++set -euo pipefail
++ROOT="$(cd "$(dirname "$0")/.." && pwd)"
++cd "$ROOT"
++
++node --experimental-strip-types --input-type=module -e "
++import { isLoginEnabled } from 'file://${ROOT}/src/app/api/login-status/route.ts';
++
++function assert(cond, msg) {
++  if (!cond) { console.error('FAIL:', msg); process.exit(1); }
++}
++
++assert(isLoginEnabled(undefined) === true, 'unset => open (local default)');
++assert(isLoginEnabled('') === true, 'empty => open');
++assert(isLoginEnabled('false') === false, 'false => closed');
++assert(isLoginEnabled('0') === false, '0 => closed');
++assert(isLoginEnabled('off') === false, 'off => closed');
++assert(isLoginEnabled('true') === true, 'true => open');
++console.log('PASS: login-status kill switch');
++"
+diff --git a/frontend/src/app/(auth)/login/page.tsx b/frontend/src/app/(auth)/login/page.tsx
+index c3ebdf1..41608d0 100644
+--- a/frontend/src/app/(auth)/login/page.tsx
++++ b/frontend/src/app/(auth)/login/page.tsx
+@@ -11,6 +11,7 @@ const DEMO_EMAIL = "demo@qppv.eg";
+ const DEMO_PASSWORD = "demo1234";
+ 
+ type WarmState = "checking" | "warming" | "ready" | "degraded";
++type GateState = "loading" | "open" | "closed";
+ 
+ export default function LoginPage() {
+   const router = useRouter();
+@@ -19,8 +20,24 @@ export default function LoginPage() {
+   const [loading, setLoading] = useState(false);
+   const [error, setError] = useState("");
+   const [warmState, setWarmState] = useState<WarmState>("checking");
++  const [gate, setGate] = useState<GateState>("loading");
+ 
+   useEffect(() => {
++    const ctrl = new AbortController();
++    fetch("/api/login-status", { cache: "no-store", signal: ctrl.signal })
++      .then(async (res) => {
++        const json = (await res.json()) as { login_enabled?: boolean };
++        setGate(json.login_enabled === false ? "closed" : "open");
++      })
++      .catch(() => {
++        // Fail closed: if we cannot read the kill switch, do not offer login.
++        setGate("closed");
++      });
++    return () => ctrl.abort();
++  }, []);
++
++  useEffect(() => {
++    if (gate !== "open") return;
+     const ctrl = new AbortController();
+     const slowTimer = window.setTimeout(() => {
+       setWarmState((s) => (s === "checking" ? "warming" : s));
+@@ -35,7 +52,7 @@ export default function LoginPage() {
+       ctrl.abort();
+       window.clearTimeout(slowTimer);
+     };
+-  }, []);
++  }, [gate]);
+ 
+   const signIn = useCallback(
+     async (loginEmail: string, loginPassword: string) => {
+@@ -57,10 +74,12 @@ export default function LoginPage() {
+ 
+   const submit = async (e: React.FormEvent) => {
+     e.preventDefault();
++    if (gate !== "open") return;
+     await signIn(email, password);
+   };
+ 
+   const openDemo = async () => {
++    if (gate !== "open") return;
+     setEmail(DEMO_EMAIL);
+     setPassword(DEMO_PASSWORD);
+     if (warmState !== "ready") {
+@@ -90,6 +109,42 @@ export default function LoginPage() {
+       </p>
+     ) : null;
+ 
++  if (gate === "loading") {
++    return (
++      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
++        <p className="flex items-center gap-2 text-sm text-slate-600">
++          <Loader2 className="h-4 w-4 animate-spin" />
++          Checking access…
++        </p>
++      </div>
++    );
++  }
++
++  if (gate === "closed") {
++    return (
++      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
++        <div className="w-full max-w-sm text-center">
++          <Shield className="mx-auto h-10 w-10 text-slate-400 mb-3" />
++          <h1 className="text-2xl font-bold text-slate-900">QPPV AI Assistant</h1>
++          <div
++            className="mt-6 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700 space-y-2"
++            role="status"
++          >
++            <p className="font-medium">
++              Access is temporarily closed. Sign-in will reopen when the operator enables it.
++            </p>
++            <p className="font-medium" lang="ar" dir="rtl">
++              الوصول مغلق مؤقتاً. سيُعاد فتح تسجيل الدخول عندما يفعّله المشغّل.
++            </p>
++          </div>
++          <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-left">
++            <ComplianceDisclaimer />
++          </div>
++        </div>
++      </div>
++    );
++  }
++
+   return (
+     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+       <div className="w-full max-w-sm">
+diff --git a/frontend/src/app/api/login-status/route.ts b/frontend/src/app/api/login-status/route.ts
+new file mode 100644
+index 0000000..0e7f426
+--- /dev/null
++++ b/frontend/src/app/api/login-status/route.ts
+@@ -0,0 +1,22 @@
++import { NextResponse } from "next/server";
++
++export const dynamic = "force-dynamic";
++
++/** Parse LOGIN_ENABLED env (Vercel + local). Default true so local/dev keeps working. */
++export function isLoginEnabled(raw: string | undefined): boolean {
++  if (raw === undefined || raw === "") return true;
++  const v = raw.trim().toLowerCase();
++  if (["0", "false", "no", "off"].includes(v)) return false;
++  if (["1", "true", "yes", "on"].includes(v)) return true;
++  return true;
++}
++
++export async function GET(): Promise<NextResponse> {
++  const enabled = isLoginEnabled(process.env.LOGIN_ENABLED);
++  return NextResponse.json({
++    login_enabled: enabled,
++    detail: enabled
++      ? "Login open"
++      : "Login is temporarily closed by the operator.",
++  });
++}
+-- 
+2.43.0
+
+
+From ef34861bc005bd1270bf5c5f1d6405d55f96bcfc Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Wed, 5 Aug 2026 13:46:25 +0000
+Subject: [PATCH 2/2] chore: extract login-enabled helper for kill-switch check
+
+Refs #109
+---
+ frontend/scripts/check-login-enabled.sh    |  2 +-
+ frontend/src/app/api/login-status/route.ts | 10 +---------
+ frontend/src/lib/login-enabled.ts          |  8 ++++++++
+ 3 files changed, 10 insertions(+), 10 deletions(-)
+ create mode 100644 frontend/src/lib/login-enabled.ts
+
+diff --git a/frontend/scripts/check-login-enabled.sh b/frontend/scripts/check-login-enabled.sh
+index e085b55..c0e7466 100755
+--- a/frontend/scripts/check-login-enabled.sh
++++ b/frontend/scripts/check-login-enabled.sh
+@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ cd "$ROOT"
+ 
+ node --experimental-strip-types --input-type=module -e "
+-import { isLoginEnabled } from 'file://${ROOT}/src/app/api/login-status/route.ts';
++import { isLoginEnabled } from 'file://${ROOT}/src/lib/login-enabled.ts';
+ 
+ function assert(cond, msg) {
+   if (!cond) { console.error('FAIL:', msg); process.exit(1); }
+diff --git a/frontend/src/app/api/login-status/route.ts b/frontend/src/app/api/login-status/route.ts
+index 0e7f426..93782ad 100644
+--- a/frontend/src/app/api/login-status/route.ts
++++ b/frontend/src/app/api/login-status/route.ts
+@@ -1,16 +1,8 @@
+ import { NextResponse } from "next/server";
++import { isLoginEnabled } from "@/lib/login-enabled";
+ 
+ export const dynamic = "force-dynamic";
+ 
+-/** Parse LOGIN_ENABLED env (Vercel + local). Default true so local/dev keeps working. */
+-export function isLoginEnabled(raw: string | undefined): boolean {
+-  if (raw === undefined || raw === "") return true;
+-  const v = raw.trim().toLowerCase();
+-  if (["0", "false", "no", "off"].includes(v)) return false;
+-  if (["1", "true", "yes", "on"].includes(v)) return true;
+-  return true;
+-}
+-
+ export async function GET(): Promise<NextResponse> {
+   const enabled = isLoginEnabled(process.env.LOGIN_ENABLED);
+   return NextResponse.json({
+diff --git a/frontend/src/lib/login-enabled.ts b/frontend/src/lib/login-enabled.ts
+new file mode 100644
+index 0000000..4ecbf55
+--- /dev/null
++++ b/frontend/src/lib/login-enabled.ts
+@@ -0,0 +1,8 @@
++/** Parse LOGIN_ENABLED env (Vercel + local). Default true so local/dev keeps working. */
++export function isLoginEnabled(raw: string | undefined): boolean {
++  if (raw === undefined || raw === "") return true;
++  const v = raw.trim().toLowerCase();
++  if (["0", "false", "no", "off"].includes(v)) return false;
++  if (["1", "true", "yes", "on"].includes(v)) return true;
++  return true;
++}
+-- 
+2.43.0
+

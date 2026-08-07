@@ -1,0 +1,734 @@
+From 4cc450eadbc6776da3d5c9954fe3117bd32e2618 Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Mon, 3 Aug 2026 20:24:34 +0000
+Subject: [PATCH] fix: make pilot stack sellable for suspended Render
+
+- Return JSON-only /api/health with distinct suspended vs cold-start states
+- Disable login + EN/AR offline copy when the API is administratively down
+- Keepalive fails with an actionable suspend message
+- Add render.yaml (Starter), RENDER-DEPLOY runbook, verify-pilot-health.sh
+
+Closes #107
+---
+ .github/workflows/render-keepalive.yml    |  38 +++++++-
+ docs/MARKETING-PITCH.html                 |   2 +-
+ docs/PILOT-DEPLOY.md                      |  46 +++++++---
+ docs/RENDER-DEPLOY.md                     |  60 ++++++++++++
+ frontend/scripts/check-upstream-health.sh |  64 +++++++++++++
+ frontend/src/app/(auth)/login/page.tsx    |  72 ++++++++++++---
+ frontend/src/app/api/health/route.ts      |  15 ++-
+ frontend/src/lib/upstream-health.ts       | 107 ++++++++++++++++++++++
+ render.yaml                               |  41 +++++++++
+ scripts/verify-pilot-health.sh            |  59 ++++++++++++
+ 10 files changed, 471 insertions(+), 33 deletions(-)
+ create mode 100644 docs/RENDER-DEPLOY.md
+ create mode 100755 frontend/scripts/check-upstream-health.sh
+ create mode 100644 frontend/src/lib/upstream-health.ts
+ create mode 100644 render.yaml
+ create mode 100755 scripts/verify-pilot-health.sh
+
+diff --git a/.github/workflows/render-keepalive.yml b/.github/workflows/render-keepalive.yml
+index db882fa..f1cdb7e 100644
+--- a/.github/workflows/render-keepalive.yml
++++ b/.github/workflows/render-keepalive.yml
+@@ -1,5 +1,6 @@
+-# Render free tier sleeps after ~15 minutes idle. Cold start is 30–60s and breaks
+-# marketing demos. Ping every 14 minutes so the API stays warm for qppv-agent.vercel.app.
++# Keep the pilot API warm on Render free tier (sleeps ~15 min idle).
++# Sellable pilots should use Render Starter (always-on) — see docs/PILOT-DEPLOY.md.
++# This workflow only helps against cold starts; it cannot resume a *suspended* service.
+ name: Render keep-alive
+ 
+ on:
+@@ -13,5 +14,34 @@ jobs:
+     steps:
+       - name: Wake qppv-api
+         run: |
+-          curl -fsS --max-time 120 https://qppv-api.onrender.com/health
+-          echo " ok"
++          set -euo pipefail
++          URL="${PILOT_API_HEALTH_URL:-https://qppv-api.onrender.com/health}"
++          HDR=$(mktemp)
++          BODY=$(mktemp)
++          trap 'rm -f "$HDR" "$BODY"' EXIT
++
++          CODE=$(curl -sS -D "$HDR" -o "$BODY" --max-time 120 -w "%{http_code}" "$URL" || true)
++
++          if grep -qiE '^x-render-routing:[[:space:]]*suspend' "$HDR"; then
++            echo "::error::Render service is SUSPENDED (x-render-routing: suspend)."
++            echo "Keep-alive cannot wake a suspended service. Resume it in the Render dashboard,"
++            echo "then re-run this workflow. See docs/PILOT-DEPLOY.md § Suspended service runbook."
++            head -c 400 "$BODY" || true
++            exit 1
++          fi
++
++          if grep -qi 'Service Suspended' "$BODY"; then
++            echo "::error::Render returned Service Suspended HTML. Resume the service in Render."
++            exit 1
++          fi
++
++          if [ "$CODE" != "200" ]; then
++            echo "::error::Health check failed with HTTP $CODE (not a confirmed suspend)."
++            echo "Headers:"
++            head -n 20 "$HDR" || true
++            echo "Body:"
++            head -c 400 "$BODY" || true
++            exit 1
++          fi
++
++          echo "ok (HTTP $CODE)"
+diff --git a/docs/MARKETING-PITCH.html b/docs/MARKETING-PITCH.html
+index 0046569..aee8ad4 100644
+--- a/docs/MARKETING-PITCH.html
++++ b/docs/MARKETING-PITCH.html
+@@ -40,7 +40,7 @@
+ 
+     <p class="note">
+       Demo: <code>demo@qppv.eg</code> / <code>demo1234</code>.
+-      First visit after idle may take up to ~60s while the API wakes (Render free tier) — the login page shows a warm-up banner.
++      Sellable pilot runs on always-on Render Starter — if the login page shows API offline (EN/AR), the operator must resume the service (not a cold start).
+     </p>
+ 
+     <section>
+diff --git a/docs/PILOT-DEPLOY.md b/docs/PILOT-DEPLOY.md
+index 90ef405..a3440c4 100644
+--- a/docs/PILOT-DEPLOY.md
++++ b/docs/PILOT-DEPLOY.md
+@@ -1,15 +1,17 @@
+ # Pilot deployment (Vercel + Render)
+ 
+-**Primary backend host:** [Render](https://render.com) — see **[RENDER-DEPLOY.md](./RENDER-DEPLOY.md)** for step-by-step setup.
++**Sellable pilot = always-on API.** Use Render **Starter** (see [`RENDER-DEPLOY.md`](./RENDER-DEPLOY.md)). Free tier sleep/suspend is for internal experiments only.
+ 
+-Fly.io is **deprecated** for this pilot (trial ended; `qppv-api.fly.dev` offline). Use `render.yaml` instead.
++**Primary backend host:** [Render](https://render.com) — Blueprint: [`render.yaml`](../render.yaml).
++
++Fly.io is **deprecated** for this pilot (trial ended; `qppv-api.fly.dev` offline).
+ 
+ ## Live URLs
+ 
+ | Service | URL |
+ |---------|-----|
+ | Frontend (Vercel) | https://qppv-agent.vercel.app |
+-| Backend API (Render) | `https://qppv-api.onrender.com` (after Blueprint deploy) |
++| Backend API (Render) | `https://qppv-api.onrender.com` |
+ | Demo login | `demo@qppv.eg` / `demo1234` |
+ 
+ ## Architecture
+@@ -21,15 +23,16 @@ Browser → qppv-agent.vercel.app
+                     └── Qdrant Cloud (Regulatory Q&A)
+ ```
+ 
+-## Quick start
++## Quick start (sellable)
+ 
+-1. Render → **New Blueprint** → repo [`render.yaml`](../render.yaml).
+-2. Set AI + Qdrant secrets when prompted.
+-3. Render Shell: `python -m app.scripts.seed_demo` (+ `seed_rag` for Q&A).
++1. Render → **New Blueprint** → repo [`render.yaml`](../render.yaml) (plan: **starter**).
++2. Set AI + Qdrant + `DATABASE_URL` secrets when prompted.
++3. Render Shell: `python -m app.scripts.seed_demo` (+ `seed_rag` / `seed_training` for full demo).
+ 4. Vercel Production: `BACKEND_URL` = your Render API URL → redeploy.
++5. Verify:
+ 
+ ```bash
+-./scripts/setup-pilot-render.sh
++./scripts/verify-pilot-health.sh
+ ```
+ 
+ ## Vercel env (Production)
+@@ -40,7 +43,7 @@ Browser → qppv-agent.vercel.app
+ | `NEXT_PUBLIC_API_URL` | **unset** in Production (browser uses same-origin proxy) |
+ | `OPS_CONSOLE_ENABLED` | `false` |
+ 
+-**Demo login:** Do not set `NEXT_PUBLIC_API_URL` on Vercel (it bakes Render into the client and exposes 30–60s cold starts). Enable GitHub Actions workflow `render-keepalive.yml` so Render stays warm.
++**Demo login:** Do not set `NEXT_PUBLIC_API_URL` on Vercel (it bakes Render into the client). Keep-alive (`render-keepalive.yml`) is optional on Starter; required only if you temporarily stay on free tier.
+ 
+ After changing env vars:
+ 
+@@ -59,16 +62,37 @@ cd frontend && npx vercel --prod --yes
+ | `ANTHROPIC_API_KEY` | Chat + PSUR/RMP |
+ | `QDRANT_URL` + `QDRANT_API_KEY` | Qdrant Cloud |
+ | `PERPLEXITY_API_KEY` | Optional |
++| `ADMIN_API_KEY` | Ops / admin provisioning |
+ 
+ ## Health checks
+ 
+ ```bash
+-curl https://qppv-api.onrender.com/health
++./scripts/verify-pilot-health.sh
++./scripts/verify-pilot-health.sh https://qppv-api.onrender.com/health
+ curl -X POST https://qppv-agent.vercel.app/api/v1/auth/login \
+   -H 'Content-Type: application/json' \
+   -d '{"email":"demo@qppv.eg","password":"demo1234"}'
+ ```
+ 
++The Vercel `/api/health` proxy **always returns JSON** (`ok` | `warming` | `suspended` | `unavailable`). It never forwards Render HTML.
++
++## Suspended service runbook
++
++**Suspended ≠ cold start.** Suspend is an administrative stop (`x-render-routing: suspend`). Waiting does not wake the API.
++
++1. Confirm:
++
++```bash
++curl -sS -D- -o /tmp/body --max-time 30 https://qppv-api.onrender.com/health | head
++# Look for: x-render-routing: suspend
++```
++
++2. Render Dashboard → `qppv-api` → **Resume** (or fix billing / move to Starter).
++3. Re-check: `./scripts/verify-pilot-health.sh`
++4. Login page should show green path (no red offline banner); Open demo works.
++
++If the API is suspended, the login UI shows EN+AR offline copy and **disables** sign-in (does not claim “waking up”).
++
+ ## Legacy: Fly.io
+ 
+-`./scripts/setup-pilot-cloud.sh` and `backend/fly.toml` remain for teams still on Fly. Not recommended for new pilots.
++`backend/fly.toml` may remain for teams still on Fly. Not recommended for new pilots.
+diff --git a/docs/RENDER-DEPLOY.md b/docs/RENDER-DEPLOY.md
+new file mode 100644
+index 0000000..8a84869
+--- /dev/null
++++ b/docs/RENDER-DEPLOY.md
+@@ -0,0 +1,60 @@
++# Render deploy (QPPV API)
++
++Companion to [`PILOT-DEPLOY.md`](./PILOT-DEPLOY.md). Use this for a **sellable** pilot (always-on API).
++
++## Why not free tier
++
++| Mode | What happens | Sellable? |
++|------|----------------|-----------|
++| Free | Sleeps ~15 min idle; cold start 30–60s; can be **suspended** for billing/quota | No |
++| **Starter** (recommended) | Always on; health stays green for demos | Yes |
++
++`render-keepalive.yml` only fights free-tier sleep. It **cannot** resume a suspended service.
++
++## Blueprint deploy
++
++1. Open [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint**.
++2. Connect `Dr-kersho/QPPV-Agent` and select root [`render.yaml`](../render.yaml).
++3. Set secrets when prompted (`DATABASE_URL`, AI keys, Qdrant, `ADMIN_API_KEY`).
++4. Confirm plan is **Starter** (Blueprint sets `plan: starter`).
++5. Deploy. Note the service URL, e.g. `https://qppv-api.onrender.com`.
++
++### Manual Web Service (no Blueprint)
++
++- **Root / Docker context:** `backend`
++- **Dockerfile:** `backend/Dockerfile`
++- **Health check path:** `/health`
++- **Plan:** Starter
++- Env vars: see [`.env.example`](../.env.example) + `BACKEND_CORS_ORIGINS=["https://qppv-agent.vercel.app"]`
++
++## After first deploy
++
++In Render Shell (or one-off job):
++
++```bash
++alembic upgrade head   # entrypoint already runs this on boot
++python -m app.scripts.seed_demo
++python -m app.scripts.seed_rag --docs-dir ./regulatory_docs
++python -m app.scripts.seed_training
++```
++
++Point Vercel `BACKEND_URL` at the Render URL and redeploy the frontend.
++
++## Suspended service runbook
++
++**Symptom:** `curl -D- https://qppv-api.onrender.com/health` returns HTTP 503 with `x-render-routing: suspend` and HTML titled "Service Suspended". Login shows offline (not “waking up”).
++
++**Fix (operator only):**
++
++1. Render Dashboard → service `qppv-api` → **Resume** (or clear billing hold / upgrade off free).
++2. Wait until the service is **Live**.
++3. Run:
++
++```bash
++./scripts/verify-pilot-health.sh
++./scripts/verify-pilot-health.sh https://qppv-api.onrender.com/health
++```
++
++4. Confirm demo login: `demo@qppv.eg` / `demo1234` on https://qppv-agent.vercel.app/login
++
++Keep-alive failures that print `SUSPENDED` mean the same runbook — do not wait for a cold start.
+diff --git a/frontend/scripts/check-upstream-health.sh b/frontend/scripts/check-upstream-health.sh
+new file mode 100755
+index 0000000..c624ef5
+--- /dev/null
++++ b/frontend/scripts/check-upstream-health.sh
+@@ -0,0 +1,64 @@
++#!/usr/bin/env bash
++# Self-check: suspended must never be classified as cold-start warming.
++# Uses Node 22+ type stripping — no test framework.
++set -euo pipefail
++ROOT="$(cd "$(dirname "$0")/.." && pwd)"
++cd "$ROOT"
++
++node --experimental-strip-types --input-type=module -e "
++import {
++  classifyUpstreamHealth,
++  isRenderSuspended,
++} from 'file://${ROOT}/src/lib/upstream-health.ts';
++
++function assert(cond, msg) {
++  if (!cond) {
++    console.error('FAIL:', msg);
++    process.exit(1);
++  }
++}
++
++assert(
++  isRenderSuspended({ 'x-render-routing': 'suspend' }, ''),
++  'header suspend detection'
++);
++assert(
++  isRenderSuspended({}, '<title>Service Suspended</title>'),
++  'HTML suspend detection'
++);
++
++let r = classifyUpstreamHealth({
++  ok: false,
++  status: 503,
++  headers: { 'x-render-routing': 'suspend' },
++  bodyText: '<html><title>Service Suspended</title></html>',
++});
++assert(r.payload.status === 'suspended', 'suspended must not be warming');
++assert(r.httpStatus === 503, 'suspended http 503');
++
++r = classifyUpstreamHealth({
++  ok: false,
++  status: 503,
++  headers: {},
++  bodyText: 'Gateway Timeout',
++});
++assert(r.payload.status === 'warming', 'plain 503 without suspend => warming');
++
++r = classifyUpstreamHealth({
++  ok: true,
++  status: 200,
++  headers: { 'content-type': 'application/json' },
++  bodyText: JSON.stringify({ status: 'ok', version: '0.1.0' }),
++});
++assert(r.payload.status === 'ok' && r.payload.version === '0.1.0', 'ok path');
++
++r = classifyUpstreamHealth({
++  ok: false,
++  status: 503,
++  headers: {},
++  bodyText: '<html>Service Suspended</html>',
++});
++assert(r.payload.status === 'suspended', 'body Service Suspended => suspended');
++
++console.log('PASS: upstream-health classification');
++"
+diff --git a/frontend/src/app/(auth)/login/page.tsx b/frontend/src/app/(auth)/login/page.tsx
+index c3ebdf1..9bec140 100644
+--- a/frontend/src/app/(auth)/login/page.tsx
++++ b/frontend/src/app/(auth)/login/page.tsx
+@@ -6,11 +6,36 @@ import { useRouter } from "next/navigation";
+ import { Loader2, Shield } from "lucide-react";
+ import { authApi, formatApiError } from "@/lib/api";
+ import { ComplianceDisclaimer } from "@/components/ComplianceDisclaimer";
++import type { UpstreamHealthStatus } from "@/lib/upstream-health";
+ 
+ const DEMO_EMAIL = "demo@qppv.eg";
+ const DEMO_PASSWORD = "demo1234";
+ 
+-type WarmState = "checking" | "warming" | "ready" | "degraded";
++type WarmState = "checking" | "warming" | "ready" | "degraded" | "offline";
++
++function mapHealthToWarmState(status: UpstreamHealthStatus | undefined, ok: boolean): WarmState {
++  if (ok && status === "ok") return "ready";
++  if (status === "suspended" || status === "unavailable") return "offline";
++  if (status === "warming") return "warming";
++  return "degraded";
++}
++
++async function probeHealth(signal?: AbortSignal): Promise<WarmState> {
++  try {
++    const res = await fetch("/api/health", { cache: "no-store", signal });
++    let status: UpstreamHealthStatus | undefined;
++    try {
++      const json = (await res.json()) as { status?: UpstreamHealthStatus };
++      status = json.status;
++    } catch {
++      // Non-JSON health response is treated as offline (never invite dead sign-in).
++      return "offline";
++    }
++    return mapHealthToWarmState(status, res.ok);
++  } catch {
++    return "offline";
++  }
++}
+ 
+ export default function LoginPage() {
+   const router = useRouter();
+@@ -26,9 +51,8 @@ export default function LoginPage() {
+       setWarmState((s) => (s === "checking" ? "warming" : s));
+     }, 2500);
+ 
+-    fetch("/api/health", { cache: "no-store", signal: ctrl.signal })
+-      .then((res) => setWarmState(res.ok ? "ready" : "degraded"))
+-      .catch(() => setWarmState("degraded"))
++    probeHealth(ctrl.signal)
++      .then((next) => setWarmState(next))
+       .finally(() => window.clearTimeout(slowTimer));
+ 
+     return () => {
+@@ -57,25 +81,27 @@ export default function LoginPage() {
+ 
+   const submit = async (e: React.FormEvent) => {
+     e.preventDefault();
++    if (warmState === "offline") return;
+     await signIn(email, password);
+   };
+ 
+   const openDemo = async () => {
++    if (warmState === "offline") return;
+     setEmail(DEMO_EMAIL);
+     setPassword(DEMO_PASSWORD);
+     if (warmState !== "ready") {
+       setWarmState("warming");
+-      try {
+-        const res = await fetch("/api/health", { cache: "no-store" });
+-        setWarmState(res.ok ? "ready" : "degraded");
+-      } catch {
+-        setWarmState("degraded");
+-      }
++      const next = await probeHealth();
++      setWarmState(next);
++      if (next === "offline") return;
+     }
+     await signIn(DEMO_EMAIL, DEMO_PASSWORD);
+   };
+ 
+   const apiBusy = warmState === "checking" || warmState === "warming";
++  const apiOffline = warmState === "offline";
++  const signInBlocked = loading || apiBusy || apiOffline;
++
+   const warmBanner =
+     warmState === "checking" || warmState === "warming" ? (
+       <p className="flex items-center justify-center gap-2 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+@@ -84,6 +110,18 @@ export default function LoginPage() {
+           ? "Connecting to demo…"
+           : "Starting demo server (first visit after idle can take up to a minute)…"}
+       </p>
++    ) : warmState === "offline" ? (
++      <div
++        className="text-sm text-red-900 bg-red-50 border border-red-200 rounded-lg px-3 py-2 space-y-1"
++        role="alert"
++      >
++        <p className="font-medium">
++          Demo API is offline — an operator must resume the Render service. Sign-in is disabled.
++        </p>
++        <p className="font-medium" lang="ar" dir="rtl">
++          واجهة البرمجة متوقفة — يجب على المشغّل استئناف الخدمة على Render. تسجيل الدخول معطّل.
++        </p>
++      </div>
+     ) : warmState === "degraded" ? (
+       <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+         Demo API is slow or waking up — you can still try sign-in; wait if it fails once.
+@@ -111,6 +149,7 @@ export default function LoginPage() {
+               onChange={(e) => setEmail(e.target.value)}
+               required
+               autoComplete="email"
++              disabled={apiOffline}
+             />
+           </div>
+           <div>
+@@ -122,20 +161,27 @@ export default function LoginPage() {
+               onChange={(e) => setPassword(e.target.value)}
+               required
+               autoComplete="current-password"
++              disabled={apiOffline}
+             />
+           </div>
+           {error && <p className="text-sm text-red-600">{error}</p>}
+           <button
+             type="button"
+             onClick={() => void openDemo()}
+-            disabled={loading || apiBusy}
++            disabled={signInBlocked}
+             className="btn-primary w-full"
+           >
+-            {loading ? "Signing in…" : apiBusy ? "Preparing demo…" : "Open demo (one click)"}
++            {loading
++              ? "Signing in…"
++              : apiOffline
++                ? "Demo unavailable"
++                : apiBusy
++                  ? "Preparing demo…"
++                  : "Open demo (one click)"}
+           </button>
+           <button
+             type="submit"
+-            disabled={loading || apiBusy}
++            disabled={signInBlocked}
+             className="btn-secondary w-full text-sm"
+           >
+             Sign in with entered credentials
+diff --git a/frontend/src/app/api/health/route.ts b/frontend/src/app/api/health/route.ts
+index f16f7e9..7de7717 100644
+--- a/frontend/src/app/api/health/route.ts
++++ b/frontend/src/app/api/health/route.ts
+@@ -1,5 +1,6 @@
+ import { NextResponse } from "next/server";
+ import { serverBackendOrigin } from "@/lib/backend-url";
++import { classifyUpstreamHealth } from "@/lib/upstream-health";
+ 
+ /** Allow cold-start on Render during demo warm-up (Hobby caps at 10s; Pro up to 60s). */
+ export const maxDuration = 60;
+@@ -9,14 +10,20 @@ export async function GET(): Promise<NextResponse> {
+   const upstream = `${serverBackendOrigin()}/health`;
+   try {
+     const res = await fetch(upstream, { cache: "no-store" });
+-    const body = await res.text();
+-    return new NextResponse(body, {
++    const bodyText = await res.text();
++    const { payload, httpStatus } = classifyUpstreamHealth({
++      ok: res.ok,
+       status: res.status,
+-      headers: { "content-type": res.headers.get("content-type") ?? "application/json" },
++      headers: res.headers,
++      bodyText,
+     });
++    return NextResponse.json(payload, { status: httpStatus });
+   } catch {
+     return NextResponse.json(
+-      { status: "unavailable", detail: "Backend unreachable — retry in a moment." },
++      {
++        status: "unavailable",
++        detail: "Backend unreachable — retry in a moment.",
++      },
+       { status: 503 }
+     );
+   }
+diff --git a/frontend/src/lib/upstream-health.ts b/frontend/src/lib/upstream-health.ts
+new file mode 100644
+index 0000000..e48564a
+--- /dev/null
++++ b/frontend/src/lib/upstream-health.ts
+@@ -0,0 +1,107 @@
++/**
++ * Classify Render (or other upstream) health for the Vercel /api/health proxy.
++ * Always map to JSON statuses — never pass HTML through to the client.
++ */
++
++export type UpstreamHealthStatus = "ok" | "warming" | "suspended" | "unavailable";
++
++export type UpstreamHealthPayload = {
++  status: UpstreamHealthStatus;
++  detail: string;
++  version?: string;
++};
++
++function headerGet(
++  headers: Headers | Record<string, string | null | undefined>,
++  name: string
++): string | null {
++  const lower = name.toLowerCase();
++  if (typeof (headers as Headers).get === "function") {
++    return (headers as Headers).get(name) ?? (headers as Headers).get(lower);
++  }
++  const rec = headers as Record<string, string | null | undefined>;
++  for (const [k, v] of Object.entries(rec)) {
++    if (k.toLowerCase() === lower) return v ?? null;
++  }
++  return null;
++}
++
++/** Detect Render administrative suspend (not free-tier sleep). */
++export function isRenderSuspended(
++  headers: Headers | Record<string, string | null | undefined>,
++  bodyText: string
++): boolean {
++  const routing = headerGet(headers, "x-render-routing");
++  if (routing?.toLowerCase() === "suspend") return true;
++  if (/service\s+suspended/i.test(bodyText)) return true;
++  if (/<title>\s*Service Suspended\s*<\/title>/i.test(bodyText)) return true;
++  return false;
++}
++
++/**
++ * Build a JSON health payload from an upstream response.
++ * `httpStatus` is the status code the proxy should return to the browser.
++ */
++export function classifyUpstreamHealth(input: {
++  ok: boolean;
++  status: number;
++  headers: Headers | Record<string, string | null | undefined>;
++  bodyText: string;
++}): { payload: UpstreamHealthPayload; httpStatus: number } {
++  const { ok, status, headers, bodyText } = input;
++
++  if (isRenderSuspended(headers, bodyText)) {
++    return {
++      httpStatus: 503,
++      payload: {
++        status: "suspended",
++        detail:
++          "Demo API is suspended on Render. An operator must resume the service — waiting will not wake it.",
++      },
++    };
++  }
++
++  if (ok) {
++    let version: string | undefined;
++    try {
++      const parsed = JSON.parse(bodyText) as { status?: string; version?: string };
++      if (parsed.version) version = parsed.version;
++      if (parsed.status && parsed.status !== "ok") {
++        return {
++          httpStatus: 503,
++          payload: {
++            status: "unavailable",
++            detail: `Upstream reported status=${parsed.status}`,
++            version,
++          },
++        };
++      }
++    } catch {
++      // Non-JSON 2xx still counts as up for liveness.
++    }
++    return {
++      httpStatus: 200,
++      payload: { status: "ok", detail: "ok", version },
++    };
++  }
++
++  // Free-tier cold start / gateway errors — retry may help.
++  if (status === 502 || status === 503 || status === 504 || status === 0) {
++    return {
++      httpStatus: 503,
++      payload: {
++        status: "warming",
++        detail:
++          "Demo API is slow or waking up (cold start). Retry in up to about a minute.",
++      },
++    };
++  }
++
++  return {
++    httpStatus: 503,
++    payload: {
++      status: "unavailable",
++      detail: `Backend unreachable (HTTP ${status}).`,
++    },
++  };
++}
+diff --git a/render.yaml b/render.yaml
+new file mode 100644
+index 0000000..eed8439
+--- /dev/null
++++ b/render.yaml
+@@ -0,0 +1,41 @@
++# Sellable pilot Blueprint — Render Starter (always-on), not free tier.
++# Free tier sleeps + can be administratively suspended; both break demos.
++#
++# Deploy: Render Dashboard → New → Blueprint → this repo → render.yaml
++# Docs: docs/RENDER-DEPLOY.md · docs/PILOT-DEPLOY.md
++
++services:
++  - type: web
++    name: qppv-api
++    runtime: docker
++    plan: starter
++    region: frankfurt
++    dockerfilePath: ./Dockerfile
++    dockerContext: ./backend
++    healthCheckPath: /health
++    autoDeploy: true
++    envVars:
++      - key: SECRET_KEY
++        generateValue: true
++      - key: ENVIRONMENT
++        value: production
++      - key: ALLOW_REGISTRATION
++        value: "false"
++      - key: OPS_CONSOLE_ENABLED
++        value: "false"
++      - key: BACKEND_CORS_ORIGINS
++        value: '["https://qppv-agent.vercel.app"]'
++      - key: DATABASE_URL
++        sync: false
++      - key: OPENAI_API_KEY
++        sync: false
++      - key: ANTHROPIC_API_KEY
++        sync: false
++      - key: QDRANT_URL
++        sync: false
++      - key: QDRANT_API_KEY
++        sync: false
++      - key: PERPLEXITY_API_KEY
++        sync: false
++      - key: ADMIN_API_KEY
++        sync: false
+diff --git a/scripts/verify-pilot-health.sh b/scripts/verify-pilot-health.sh
+new file mode 100755
+index 0000000..8aa1d34
+--- /dev/null
++++ b/scripts/verify-pilot-health.sh
+@@ -0,0 +1,59 @@
++#!/usr/bin/env bash
++# Dependency-free post-resume / sellable-pilot check.
++# Verifies the Vercel health proxy returns JSON with status "ok".
++#
++# Usage:
++#   ./scripts/verify-pilot-health.sh
++#   PILOT_HEALTH_URL=https://qppv-agent.vercel.app/api/health ./scripts/verify-pilot-health.sh
++#   ./scripts/verify-pilot-health.sh https://qppv-api.onrender.com/health
++set -euo pipefail
++
++URL="${1:-${PILOT_HEALTH_URL:-https://qppv-agent.vercel.app/api/health}}"
++HDR=$(mktemp)
++BODY=$(mktemp)
++trap 'rm -f "$HDR" "$BODY"' EXIT
++
++echo "GET $URL"
++CODE=$(curl -sS -D "$HDR" -o "$BODY" --max-time 90 -w "%{http_code}" "$URL" || true)
++
++CT=$(grep -iE '^content-type:' "$HDR" | head -1 | tr -d '\r' || true)
++echo "HTTP $CODE  $CT"
++
++if grep -qiE '^x-render-routing:[[:space:]]*suspend' "$HDR"; then
++  echo "FAIL: upstream is SUSPENDED on Render (x-render-routing: suspend)."
++  echo "Resume the web service in the Render dashboard, then re-run this script."
++  exit 2
++fi
++
++if grep -qi 'Service Suspended' "$BODY"; then
++  echo "FAIL: body looks like Render Service Suspended HTML (proxy should not pass this through)."
++  head -c 300 "$BODY"
++  echo
++  exit 2
++fi
++
++if ! grep -qi 'application/json' <<<"$CT"; then
++  echo "FAIL: expected application/json Content-Type, got: ${CT:-<missing>}"
++  head -c 300 "$BODY"
++  echo
++  exit 1
++fi
++
++if ! grep -q '"status"[[:space:]]*:[[:space:]]*"ok"' "$BODY"; then
++  echo "FAIL: JSON missing status=ok"
++  cat "$BODY"
++  echo
++  if grep -q '"status"[[:space:]]*:[[:space:]]*"suspended"' "$BODY"; then
++    exit 2
++  fi
++  exit 1
++fi
++
++if [ "$CODE" != "200" ]; then
++  echo "FAIL: expected HTTP 200 with status ok, got $CODE"
++  cat "$BODY"
++  echo
++  exit 1
++fi
++
++echo "PASS: pilot health is sellable (JSON status=ok)."
+-- 
+2.43.0
+
