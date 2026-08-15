@@ -1,0 +1,33 @@
+<!--
+  MAL3ABAK - T-SHIRT PRINT VARIANT
+  Single-colour-safe (works as 1-colour screen print or heat transfer)
+  Use on dark fabric: print in white
+  Use on light fabric: print in #0A1628 (deep navy)
+  Recommended size: 280mm wide chest print
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320">
+  <g transform="translate(190, 10)">
+    <polygon points="50,4 82,4 90,50 82,96 50,96 42,50" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+    <rect x="47" y="12" width="46" height="72" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
+    <line x1="47" y1="48" x2="93" y2="48" stroke="#FFFFFF" stroke-width="1"/>
+    <circle cx="70" cy="48" r="10" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+    <rect x="56" y="12" width="28" height="16" fill="none" stroke="#FFFFFF" stroke-width="0.9"/>
+    <rect x="56" y="68" width="28" height="16" fill="none" stroke="#FFFFFF" stroke-width="0.9"/>
+    <path d="M56,74 Q64,52 78,32" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="78" cy="32" r="4.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="74" r="3" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="162" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="78" letter-spacing="-2" fill="#FFFFFF" text-anchor="middle">MAL3ABAK</text>
+  <rect x="96" y="171" width="288" height="4" fill="#FFFFFF" rx="2"/>
+  <text x="240" y="210" font-family="Geeza Pro, Tahoma, Arial Unicode MS, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">ملعبك</text>
+  <text x="240" y="244" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" letter-spacing="5" fill="#FFFFFF" text-anchor="middle" opacity="0.75">SCOUT · DISCOVER · DOMINATE</text>
+  <circle cx="158" cy="265" r="2.5" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="176" cy="265" r="2.5" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="194" cy="265" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="212" cy="265" r="2.5" fill="#FFFFFF" opacity="1"/>
+  <circle cx="240" cy="265" r="4" fill="#FFFFFF"/>
+  <circle cx="268" cy="265" r="2.5" fill="#FFFFFF" opacity="1"/>
+  <circle cx="286" cy="265" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="304" cy="265" r="2.5" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="322" cy="265" r="2.5" fill="#FFFFFF" opacity="0.4"/>
+</svg>

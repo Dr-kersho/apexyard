@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mal3abak — Corporate Brand Identity</title>
+  <style>
+    :root {
+      --navy: #0A1628; --navy-mid: #1A2F5A; --blue: #1B6FEB;
+      --blue-light: #4D9FFF; --orange: #FF6B00; --amber: #FFB800;
+      --white: #FFFFFF; --grey-light: #8AADDB; --grey-mid: #5A7A99;
+      --font-en: 'Arial Black', Impact, Arial, sans-serif;
+      --font-body: 'Helvetica Neue', Arial, sans-serif;
+      --font-ar: 'Geeza Pro', Tahoma, 'Arial Unicode MS', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--navy); color: var(--white); font-family: var(--font-body); line-height: 1.6; }
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 32px 80px; }
+    section { padding: 72px 0 0; border-top: 1px solid rgba(27,111,235,0.2); margin-top: 72px; }
+    h2.section-title { font-family: var(--font-en); font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--orange); margin-bottom: 28px; }
+    h3.subsection { font-family: var(--font-en); font-size: 22px; font-weight: 900; color: var(--white); margin-bottom: 12px; }
+    p { color: var(--grey-light); font-size: 15px; max-width: 640px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+    .hero { padding: 80px 0 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .hero-meta { font-size: 11px; letter-spacing: 4px; color: var(--orange); text-transform: uppercase; margin-bottom: 20px; }
+    .hero-desc { margin-top: 24px; color: var(--grey-light); font-size: 16px; max-width: 440px; }
+    .hero-logo-display { background: var(--navy-mid); border: 1px solid rgba(27,111,235,0.25); border-radius: 16px; padding: 48px 32px; display: flex; flex-direction: column; gap: 32px; align-items: center; }
+    .brand-title { font-family: var(--font-en); font-size: clamp(48px, 8vw, 88px); font-weight: 900; letter-spacing: -2px; line-height: 1; }
+    .brand-title .accent { color: var(--orange); }
+    .brand-title .arabic { font-family: var(--font-ar); font-size: 0.55em; color: var(--blue-light); display: block; margin-top: 8px; letter-spacing: 2px; }
+    .logo-card { border-radius: 12px; padding: 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .logo-card--dark { background: #0A1628; border: 1px solid rgba(27,111,235,0.3); }
+    .logo-card--mid { background: #1A2F5A; border: 1px solid rgba(27,111,235,0.3); }
+    .logo-card--white { background: #FFFFFF; }
+    .logo-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-mid); }
+    .swatch-group { display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+    .swatch { height: 80px; display: flex; align-items: flex-end; padding: 10px 14px; }
+    .swatch-name { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .swatch-hex { font-family: 'Courier New', monospace; font-size: 12px; opacity: 0.7; }
+    .palette-card { background: rgba(27,111,235,0.07); border: 1px solid rgba(27,111,235,0.2); border-radius: 12px; overflow: hidden; }
+    .palette-card-header { padding: 20px; border-bottom: 1px solid rgba(27,111,235,0.15); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-mid); }
+    .palette-card-body { padding: 20px; }
+    .type-sample { background: rgba(27,111,235,0.07); border: 1px solid rgba(27,111,235,0.15); border-radius: 12px; padding: 32px; margin-bottom: 20px; }
+    .type-meta { font-size: 10px; letter-spacing: 3px; color: var(--grey-mid); text-transform: uppercase; margin-bottom: 12px; }
+    .voice-card { background: rgba(27,111,235,0.06); border: 1px solid rgba(27,111,235,0.2); border-radius: 12px; padding: 28px; }
+    .voice-tag { display: inline-block; background: rgba(255,107,0,0.15); border: 1px solid rgba(255,107,0,0.35); color: var(--orange); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+    .voice-example { font-size: 18px; font-weight: 700; color: var(--white); font-style: italic; margin-top: 8px; }
+    .voice-example-ar { font-family: var(--font-ar); font-size: 20px; color: var(--blue-light); margin-top: 6px; }
+    .rule-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .rule-icon { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; }
+    .rule-icon--do { background: rgba(27,111,235,0.25); color: #4D9FFF; }
+    .rule-icon--dont { background: rgba(255,50,50,0.2); color: #FF5050; }
+    .rule-text { font-size: 14px; color: var(--grey-light); }
+    .tshirt-section { background: linear-gradient(135deg, #111 0%, #1a1a2e 100%); border-radius: 20px; padding: 48px; text-align: center; border: 1px solid rgba(255,107,0,0.2); }
+    .tshirt-callout { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 32px; }
+    .print-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; text-align: left; }
+    .spec-item { padding: 20px; background: rgba(255,255,255,0.04); border-radius: 10px; }
+    .spec-label { font-size: 9px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 6px; }
+    .spec-value { font-size: 15px; color: var(--white); font-weight: 600; }
+    .spec-sub { font-size: 12px; color: var(--grey-mid); margin-top: 2px; }
+    .brand-footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid rgba(27,111,235,0.15); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .brand-footer-name { font-family: var(--font-en); font-weight: 900; font-size: 20px; }
+    .brand-footer-name span { color: var(--orange); }
+    .brand-footer-meta { font-size: 11px; letter-spacing: 2px; color: var(--grey-mid); }
+    .divider { display: flex; align-items: center; gap: 16px; margin: 40px 0 32px; }
+    .divider-line { flex: 1; height: 1px; background: rgba(27,111,235,0.15); }
+    .divider-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
+    @media (max-width: 768px) { .hero { grid-template-columns: 1fr; } .print-specs { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div>
+      <div class="hero-meta">Corporate Brand Identity · 2026</div>
+      <h1 class="brand-title">MAL<span class="accent">3</span>ABAK<span class="arabic">ملعبك — Your Field</span></h1>
+      <p class="hero-desc">The visual identity for Mal3abak — a sports AI scouting platform built to discover the next generation of athletes. Every design decision communicates: raw youth energy, data-forward technology, and Arabic cultural pride.</p>
+    </div>
+    <div class="hero-logo-display">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" style="max-width:480px">
+        <defs>
+          <linearGradient id="hbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1A2F5A"/><stop offset="100%" style="stop-color:#0A1628"/></linearGradient>
+          <linearGradient id="harc" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#FF8C00;stop-opacity:0"/><stop offset="50%" style="stop-color:#FF6B00"/><stop offset="100%" style="stop-color:#FFB800"/></linearGradient>
+          <filter id="hglow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <clipPath id="hclip"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/></clipPath>
+        </defs>
+        <polygon points="100,7 167,7 185,100 167,193 100,193 82,100" fill="none" stroke="#1B6FEB" stroke-width="1.5" opacity="0.35"/>
+        <polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="url(#hbg)" stroke="#1B6FEB" stroke-width="2"/>
+        <rect x="86" y="30" width="92" height="140" fill="#0B1F42" rx="1" clip-path="url(#hclip)"/>
+        <g clip-path="url(#hclip)" opacity="0.75">
+          <rect x="94" y="40" width="76" height="120" fill="none" stroke="#1B6FEB" stroke-width="1.2"/>
+          <line x1="94" y1="100" x2="170" y2="100" stroke="#1B6FEB" stroke-width="1"/>
+          <circle cx="132" cy="100" r="17" fill="none" stroke="#1B6FEB" stroke-width="1"/>
+          <circle cx="132" cy="100" r="2" fill="#1B6FEB"/>
+          <rect x="110" y="40" width="44" height="26" fill="none" stroke="#1B6FEB" stroke-width="0.9"/>
+          <rect x="110" y="134" width="44" height="26" fill="none" stroke="#1B6FEB" stroke-width="0.9"/>
+        </g>
+        <g clip-path="url(#hclip)">
+          <path d="M110,148 Q124,106 153,70" stroke="url(#harc)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="110" cy="148" r="3.5" fill="#1B6FEB"/>
+          <circle cx="153" cy="70" r="5.5" fill="#FF6B00" filter="url(#hglow)"/>
+          <circle cx="153" cy="70" r="2.5" fill="#FFB800"/>
+        </g>
+        <text x="203" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#FFFFFF">MAL</text>
+        <text x="340" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" fill="#FF6B00">3</text>
+        <text x="367" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#FFFFFF">ABAK</text>
+        <rect x="203" y="116" width="380" height="4" fill="#FF6B00" rx="2"/>
+        <text x="583" y="150" font-family="Tahoma,sans-serif" font-size="20" font-weight="700" fill="#4D9FFF" text-anchor="end">ملعبك</text>
+        <text x="203" y="172" font-family="Arial,sans-serif" font-size="10.5" letter-spacing="4.5" fill="#6A9BC4">SCOUT · DISCOVER · DOMINATE</text>
+      </svg>
+      <div style="font-size:10px;letter-spacing:3px;color:#5A7A99;text-transform:uppercase">Primary Lockup — Full Colour</div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">01 — Logo System</h2>
+    <h3 class="subsection">Four lockups. Every context covered.</h3>
+    <p style="margin-bottom:40px">Each variant is purpose-built: full colour for digital, white-on-navy for merchandise and dark environments, reversed on white for print, icon-only for small formats (app icon, favicon, sticker).</p>
+    <div class="grid-2" style="gap:24px">
+      <div class="logo-card logo-card--dark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" style="max-width:420px">
+          <defs>
+            <linearGradient id="lbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1A2F5A"/><stop offset="100%" style="stop-color:#0A1628"/></linearGradient>
+            <linearGradient id="larc" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#FF8C00;stop-opacity:0"/><stop offset="50%" style="stop-color:#FF6B00"/><stop offset="100%" style="stop-color:#FFB800"/></linearGradient>
+            <filter id="lglow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <clipPath id="lclip"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/></clipPath>
+          </defs>
+          <polygon points="100,7 167,7 185,100 167,193 100,193 82,100" fill="none" stroke="#1B6FEB" stroke-width="1.5" opacity="0.35"/>
+          <polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="url(#lbg)" stroke="#1B6FEB" stroke-width="2"/>
+          <rect x="86" y="30" width="92" height="140" fill="#0B1F42" rx="1" clip-path="url(#lclip)"/>
+          <g clip-path="url(#lclip)" opacity="0.75"><rect x="94" y="40" width="76" height="120" fill="none" stroke="#1B6FEB" stroke-width="1.2"/><line x1="94" y1="100" x2="170" y2="100" stroke="#1B6FEB" stroke-width="1"/><circle cx="132" cy="100" r="17" fill="none" stroke="#1B6FEB" stroke-width="1"/><circle cx="132" cy="100" r="2" fill="#1B6FEB"/><rect x="110" y="40" width="44" height="26" fill="none" stroke="#1B6FEB" stroke-width="0.9"/><rect x="110" y="134" width="44" height="26" fill="none" stroke="#1B6FEB" stroke-width="0.9"/></g>
+          <g clip-path="url(#lclip)"><path d="M110,148 Q124,106 153,70" stroke="url(#larc)" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="110" cy="148" r="3.5" fill="#1B6FEB"/><circle cx="153" cy="70" r="5.5" fill="#FF6B00" filter="url(#lglow)"/><circle cx="153" cy="70" r="2.5" fill="#FFB800"/></g>
+          <text x="203" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#FFFFFF">MAL</text>
+          <text x="340" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" fill="#FF6B00">3</text>
+          <text x="367" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#FFFFFF">ABAK</text>
+          <rect x="203" y="116" width="380" height="4" fill="#FF6B00" rx="2"/>
+          <text x="583" y="150" font-family="Tahoma,sans-serif" font-size="20" font-weight="700" fill="#4D9FFF" text-anchor="end">ملعبك</text>
+          <text x="203" y="172" font-family="Arial,sans-serif" font-size="10.5" letter-spacing="4.5" fill="#6A9BC4">SCOUT · DISCOVER · DOMINATE</text>
+        </svg>
+        <div class="logo-label">Full Colour — On Deep Navy</div>
+      </div>
+      <div class="logo-card logo-card--mid">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" style="max-width:420px">
+          <defs><clipPath id="wclip"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/></clipPath></defs>
+          <polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+          <g clip-path="url(#wclip)" opacity="0.5"><rect x="94" y="40" width="76" height="120" fill="none" stroke="#fff" stroke-width="1.2"/><line x1="94" y1="100" x2="170" y2="100" stroke="#fff" stroke-width="1"/><circle cx="132" cy="100" r="17" fill="none" stroke="#fff" stroke-width="1"/><rect x="110" y="40" width="44" height="26" fill="none" stroke="#fff" stroke-width="0.9"/><rect x="110" y="134" width="44" height="26" fill="none" stroke="#fff" stroke-width="0.9"/></g>
+          <g clip-path="url(#wclip)"><path d="M110,148 Q124,106 153,70" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="110" cy="148" r="3.5" fill="#fff"/><circle cx="153" cy="70" r="7" fill="#fff"/></g>
+          <text x="203" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#FFFFFF">MAL</text>
+          <text x="340" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" fill="#FFFFFF">3</text>
+          <text x="367" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#FFFFFF">ABAK</text>
+          <rect x="203" y="116" width="380" height="4" fill="#FFFFFF" rx="2" opacity="0.8"/>
+          <text x="583" y="150" font-family="Tahoma,sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="end" opacity="0.7">ملعبك</text>
+          <text x="203" y="172" font-family="Arial,sans-serif" font-size="10.5" letter-spacing="4.5" fill="rgba(255,255,255,0.5)">SCOUT · DISCOVER · DOMINATE</text>
+        </svg>
+        <div class="logo-label" style="color:#8AADDB">All White — On Navy / Merchandise</div>
+      </div>
+      <div class="logo-card logo-card--white">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" style="max-width:420px">
+          <defs><clipPath id="rclip"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/></clipPath></defs>
+          <polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="#0A1628" stroke="#0A1628" stroke-width="2"/>
+          <g clip-path="url(#rclip)" opacity="0.4"><rect x="94" y="40" width="76" height="120" fill="none" stroke="#1B6FEB" stroke-width="1.2"/><line x1="94" y1="100" x2="170" y2="100" stroke="#1B6FEB" stroke-width="1"/><circle cx="132" cy="100" r="17" fill="none" stroke="#1B6FEB" stroke-width="1"/><rect x="110" y="40" width="44" height="26" fill="none" stroke="#1B6FEB" stroke-width="0.9"/><rect x="110" y="134" width="44" height="26" fill="none" stroke="#1B6FEB" stroke-width="0.9"/></g>
+          <g clip-path="url(#rclip)"><path d="M110,148 Q124,106 153,70" stroke="#FF6B00" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="110" cy="148" r="3.5" fill="#1B6FEB"/><circle cx="153" cy="70" r="5.5" fill="#FF6B00"/></g>
+          <text x="203" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#0A1628">MAL</text>
+          <text x="340" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" fill="#FF6B00">3</text>
+          <text x="367" y="108" font-family="Arial Black,sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#0A1628">ABAK</text>
+          <rect x="203" y="116" width="380" height="4" fill="#FF6B00" rx="2"/>
+          <text x="583" y="150" font-family="Tahoma,sans-serif" font-size="20" font-weight="700" fill="#1B6FEB" text-anchor="end">ملعبك</text>
+          <text x="203" y="172" font-family="Arial,sans-serif" font-size="10.5" letter-spacing="4.5" fill="#5A7A99">SCOUT · DISCOVER · DOMINATE</text>
+        </svg>
+        <div class="logo-label" style="color:#999">Reversed — On White / Light Print</div>
+      </div>
+      <div class="logo-card logo-card--dark" style="justify-content:center">
+        <div style="display:flex;gap:32px;align-items:flex-end">
+          <div style="text-align:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="90" height="90"><defs><linearGradient id="ibg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1A2F5A"/><stop offset="100%" style="stop-color:#0A1628"/></linearGradient><linearGradient id="iarc" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#FF8C00;stop-opacity:0"/><stop offset="50%" style="stop-color:#FF6B00"/><stop offset="100%" style="stop-color:#FFB800"/></linearGradient><filter id="ig"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><clipPath id="ic"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100"/></clipPath></defs><polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="url(#ibg)" stroke="#1B6FEB" stroke-width="2.5"/><rect x="86" y="30" width="92" height="140" fill="#0B1F42" rx="1" clip-path="url(#ic)"/><g clip-path="url(#ic)" opacity="0.75"><rect x="94" y="40" width="76" height="120" fill="none" stroke="#1B6FEB" stroke-width="1.5"/><line x1="94" y1="100" x2="170" y2="100" stroke="#1B6FEB" stroke-width="1.2"/><circle cx="132" cy="100" r="18" fill="none" stroke="#1B6FEB" stroke-width="1.2"/></g><g clip-path="url(#ic)"><path d="M111,148 Q125,106 155,68" stroke="url(#iarc)" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="111" cy="148" r="4" fill="#1B6FEB"/><circle cx="155" cy="68" r="7" fill="#FF6B00" filter="url(#ig)"/><circle cx="155" cy="68" r="3" fill="#FFB800"/></g></svg><div class="logo-label" style="margin-top:8px">90px</div></div>
+          <div style="text-align:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="56" height="56"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="#1A2F5A" stroke="#1B6FEB" stroke-width="3"/><g opacity="0.7"><rect x="94" y="40" width="76" height="120" fill="none" stroke="#1B6FEB" stroke-width="2"/><circle cx="132" cy="100" r="18" fill="none" stroke="#1B6FEB" stroke-width="1.5"/></g><path d="M111,148 Q125,106 155,68" stroke="#FF6B00" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="155" cy="68" r="10" fill="#FF6B00"/></svg><div class="logo-label" style="margin-top:8px">56px</div></div>
+          <div style="text-align:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="32" height="32"><polygon points="100,14 162,14 178,100 162,186 100,186 84,100" fill="#1A2F5A" stroke="#1B6FEB" stroke-width="5"/><path d="M115,152 Q128,110 158,65" stroke="#FF6B00" stroke-width="8" fill="none" stroke-linecap="round"/><circle cx="158" cy="65" r="14" fill="#FF6B00"/></svg><div class="logo-label" style="margin-top:8px">32px</div></div>
+        </div>
+        <div class="logo-label">Icon Only — App / Favicon / Sticker</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">02 — Colour Palette</h2>
+    <h3 class="subsection">Four functional roles. Two accent families.</h3>
+    <p style="margin-bottom:40px">The palette is built around the night sky of a floodlit pitch — deep navy grounds everything, electric blue drives the data layer, and the orange-to-amber range marks every high-value moment.</p>
+    <div class="swatch-group">
+      <div class="swatch" style="background:#0A1628;color:#4D9FFF"><div><div class="swatch-name">Deep Navy</div><div class="swatch-hex">#0A1628</div></div></div>
+      <div class="swatch" style="background:#1A2F5A;color:#4D9FFF"><div><div class="swatch-name">Navy Mid</div><div class="swatch-hex">#1A2F5A</div></div></div>
+      <div class="swatch" style="background:#1B6FEB;color:#fff"><div><div class="swatch-name">Electric Blue</div><div class="swatch-hex">#1B6FEB</div></div></div>
+      <div class="swatch" style="background:#4D9FFF;color:#0A1628"><div><div class="swatch-name">Sky Blue</div><div class="swatch-hex">#4D9FFF</div></div></div>
+      <div class="swatch" style="background:#FF6B00;color:#fff"><div><div class="swatch-name">Signal Orange</div><div class="swatch-hex">#FF6B00</div></div></div>
+      <div class="swatch" style="background:#FFB800;color:#0A1628"><div><div class="swatch-name">Amber</div><div class="swatch-hex">#FFB800</div></div></div>
+    </div>
+    <div class="grid-3">
+      <div class="palette-card">
+        <div class="palette-card-header">Primary Actions</div>
+        <div class="palette-card-body">
+          <div style="display:flex;gap:10px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:8px;background:#FF6B00"></div>
+            <div style="width:40px;height:40px;border-radius:8px;background:#FFB800"></div>
+          </div>
+          <p style="font-size:13px">CTAs, highlights, key data points. Orange commands attention; amber softens for secondary emphasis.</p>
+        </div>
+      </div>
+      <div class="palette-card">
+        <div class="palette-card-header">AI / Data Layer</div>
+        <div class="palette-card-body">
+          <div style="display:flex;gap:10px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:8px;background:#1B6FEB"></div>
+            <div style="width:40px;height:40px;border-radius:8px;background:#4D9FFF"></div>
+          </div>
+          <p style="font-size:13px">Pitch lines, trajectories, data overlays, secondary text. Blue signals precision and intelligence.</p>
+        </div>
+      </div>
+      <div class="palette-card">
+        <div class="palette-card-header">Backgrounds</div>
+        <div class="palette-card-body">
+          <div style="display:flex;gap:10px;margin-bottom:16px">
+            <div style="width:40px;height:40px;border-radius:8px;background:#0A1628;border:1px solid rgba(27,111,235,0.3)"></div>
+            <div style="width:40px;height:40px;border-radius:8px;background:#1A2F5A"></div>
+          </div>
+          <p style="font-size:13px">Deep Navy for page ground, Navy Mid for elevated surfaces, cards, and hero displays.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">03 — Typography</h2>
+    <h3 class="subsection">Two families. One personality.</h3>
+    <p style="margin-bottom:40px">Arial Black drives the wordmark and display headlines — compressed, aggressive, zero compromise. Helvetica Neue / system sans handles body and UI. Arabic text uses Geeza Pro on Apple, Tahoma everywhere else.</p>
+    <div class="type-sample">
+      <div class="type-meta">Display — Arial Black 900</div>
+      <div style="font-family:'Arial Black',Impact,sans-serif;font-size:clamp(36px,6vw,72px);font-weight:900;letter-spacing:-2px;line-height:1;color:#fff">MAL<span style="color:#FF6B00">3</span>ABAK</div>
+      <div style="font-family:'Arial Black',Impact,sans-serif;font-size:14px;font-weight:900;letter-spacing:6px;text-transform:uppercase;color:#5A7A99;margin-top:12px">SCOUT · DISCOVER · DOMINATE</div>
+    </div>
+    <div class="grid-2">
+      <div class="type-sample">
+        <div class="type-meta">Heading 1 — Arial Black 900 · 32px</div>
+        <div style="font-family:'Arial Black',sans-serif;font-size:32px;font-weight:900;color:#fff;line-height:1.1">Next-Gen Scout Reports</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta">Tagline — Uppercase · 11px · ls:5</div>
+        <div style="font-family:'Arial Black',sans-serif;font-size:11px;font-weight:900;letter-spacing:5px;text-transform:uppercase;color:#FF6B00">Real-Time AI Scouting</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta">Body — Helvetica Neue · 15px</div>
+        <div style="font-size:15px;color:#8AADDB;line-height:1.7;max-width:340px">Our AI analyses movement patterns, positioning data, and match statistics to surface talent that traditional scouts miss.</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta">Arabic — Geeza Pro / Tahoma · 700</div>
+        <div style="font-family:'Geeza Pro',Tahoma,sans-serif;font-size:28px;font-weight:700;color:#4D9FFF;direction:rtl;text-align:right">ملعبك — اكتشف المواهب</div>
+        <div style="font-family:'Geeza Pro',Tahoma,sans-serif;font-size:16px;color:#5A7A99;direction:rtl;text-align:right;margin-top:8px">منصة الاستكشاف الذكي للكرة</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">04 — Brand Voice</h2>
+    <h3 class="subsection">Confident. Precise. Motivating.</h3>
+    <p style="margin-bottom:40px">We speak like a coach who has the data — direct, no fluff. We believe in the athlete before the world does. We never condescend; we never oversell.</p>
+    <div class="grid-3">
+      <div class="voice-card">
+        <div class="voice-tag">Confident</div>
+        <div class="voice-example">"Your next signing is already on the pitch."</div>
+        <div class="voice-example-ar">"توقيعك القادم موجود بالفعل في الملعب"</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-tag">Precise</div>
+        <div class="voice-example">"94th-percentile pressing rate. Age 14."</div>
+        <div class="voice-example-ar">"معدل ضغط في الشريحة 94. عمره 14 سنة"</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-tag">Motivating</div>
+        <div class="voice-example">"Every field is a scouting ground."</div>
+        <div class="voice-example-ar">"كل ملعب هو فرصة اكتشاف"</div>
+      </div>
+    </div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+    <div class="grid-2">
+      <div>
+        <h3 class="subsection" style="margin-bottom:16px">We say</h3>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">"Scout smarter" — action-led, implies edge</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">"Discover talent before the crowd" — aspirational, specific</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">"Your field, your data" — ownership, empowerment</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">"Built for the next generation" — forward, inclusive</div></div>
+      </div>
+      <div>
+        <h3 class="subsection" style="margin-bottom:16px">We never say</h3>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">"Leverage synergies" — corporate filler</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">"AI-powered solution" — vague, overused</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">"Disrupting the industry" — empty</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">"World-class" without evidence — claim without proof</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">05 — Logo Usage Rules</h2>
+    <h3 class="subsection">What to do — and what never to do.</h3>
+    <div class="grid-2" style="margin-top:32px">
+      <div>
+        <h3 class="subsection" style="font-size:16px;margin-bottom:16px;color:#4D9FFF">Always</h3>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">Use the provided SVG files — never redraw from memory</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">Maintain minimum clear space: half the badge height on all sides</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">Use full-colour on dark grounds, reversed on white grounds</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">At sizes below 48px wide, use the icon-only mark</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--do">✓</div><div class="rule-text">Keep the "3" in Signal Orange (#FF6B00) at all times</div></div>
+      </div>
+      <div>
+        <h3 class="subsection" style="font-size:16px;margin-bottom:16px;color:#FF5050">Never</h3>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">Stretch, squash, or rotate the mark</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">Place on a busy photographic background without a safe zone</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">Change any colour in the full-colour version</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">Add drop shadows, gradients, or effects to the wordmark</div></div>
+        <div class="rule-row"><div class="rule-icon rule-icon--dont">✕</div><div class="rule-text">Use the wordmark at sizes below 120px wide</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">06 — T-Shirt Print</h2>
+    <h3 class="subsection">The field-ready version.</h3>
+    <p style="margin-bottom:40px">Designed for DTG and screen print on dark fabric. Single-colour white. Kids sizes XS to XL (ages 6–16). The centre-chest placement and 28cm width give maximum visibility at camera distance for social content.</p>
+    <div class="tshirt-section">
+      <div class="tshirt-callout">T-Shirt Print Variant — White on Dark</div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="100%" style="max-width:500px;margin:0 auto;display:block">
+        <g transform="translate(190, 10)">
+          <polygon points="50,4 82,4 90,50 82,96 50,96 42,50" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+          <rect x="47" y="12" width="46" height="72" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
+          <line x1="47" y1="48" x2="93" y2="48" stroke="#FFFFFF" stroke-width="1"/>
+          <circle cx="70" cy="48" r="10" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+          <rect x="56" y="12" width="28" height="16" fill="none" stroke="#FFFFFF" stroke-width="0.9"/>
+          <rect x="56" y="68" width="28" height="16" fill="none" stroke="#FFFFFF" stroke-width="0.9"/>
+          <path d="M56,74 Q64,52 78,32" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="78" cy="32" r="4.5" fill="#FFFFFF"/>
+          <circle cx="56" cy="74" r="3" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+        </g>
+        <text x="240" y="162" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="78" letter-spacing="-2" fill="#FFFFFF" text-anchor="middle">MAL3ABAK</text>
+        <rect x="96" y="171" width="288" height="4" fill="#FFFFFF" rx="2"/>
+        <text x="240" y="210" font-family="Geeza Pro, Tahoma, Arial Unicode MS, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">ملعبك</text>
+        <text x="240" y="244" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="400" letter-spacing="5" fill="#FFFFFF" text-anchor="middle" opacity="0.75">SCOUT · DISCOVER · DOMINATE</text>
+        <circle cx="158" cy="265" r="2.5" fill="#FFFFFF" opacity="0.4"/>
+        <circle cx="176" cy="265" r="2.5" fill="#FFFFFF" opacity="0.6"/>
+        <circle cx="194" cy="265" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+        <circle cx="212" cy="265" r="2.5" fill="#FFFFFF" opacity="1"/>
+        <circle cx="240" cy="265" r="4" fill="#FFFFFF"/>
+        <circle cx="268" cy="265" r="2.5" fill="#FFFFFF" opacity="1"/>
+        <circle cx="286" cy="265" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+        <circle cx="304" cy="265" r="2.5" fill="#FFFFFF" opacity="0.6"/>
+        <circle cx="322" cy="265" r="2.5" fill="#FFFFFF" opacity="0.4"/>
+      </svg>
+      <div class="print-specs">
+        <div class="spec-item"><div class="spec-label">Print Size</div><div class="spec-value">28 × 16 cm</div><div class="spec-sub">Centre chest placement</div></div>
+        <div class="spec-item"><div class="spec-label">Technique</div><div class="spec-value">DTG / Screen</div><div class="spec-sub">1-colour process</div></div>
+        <div class="spec-item"><div class="spec-label">Fabric</div><div class="spec-value">Navy #0A1628</div><div class="spec-sub">Or any dark ground</div></div>
+        <div class="spec-item"><div class="spec-label">Ink</div><div class="spec-value">White</div><div class="spec-sub">100% opacity</div></div>
+        <div class="spec-item"><div class="spec-label">File Format</div><div class="spec-value">SVG + PDF</div><div class="spec-sub">Vector, print-ready</div></div>
+        <div class="spec-item"><div class="spec-label">Kids Sizes</div><div class="spec-value">XS → XL</div><div class="spec-sub">Ages 6 – 16</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="brand-footer">
+    <div class="brand-footer-name">MAL<span>3</span>ABAK<span style="font-family:'Geeza Pro',Tahoma,sans-serif;font-weight:700;font-size:14px;color:#4D9FFF;margin-left:12px">ملعبك</span></div>
+    <div class="brand-footer-meta">Brand Identity System · 2026 · All variants included</div>
+  </div>
+
+</div>
+</body>
+</html>
