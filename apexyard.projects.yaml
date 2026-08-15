@@ -176,6 +176,25 @@ projects:
       - dev-productivity
     ticket_prefix: GH
 
+  - name: obsidian
+    repo: Dr-kersho/obsidian
+    workspace: workspace/obsidian
+    docs: projects/obsidian
+    status: active
+    tier: P1
+    roles:
+      - product-manager
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+      - ui-designer
+    tags:
+      - new-product
+      - planning
+      - mobile
+      - freelancer-tools
+    ticket_prefix: GH
+
 defaults:
   status: active
   tier: P1
