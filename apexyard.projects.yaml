@@ -95,6 +95,27 @@ projects:
       - telegram
     ticket_prefix: GH
 
+  - name: still-us
+    repo: Dr-kersho/still-us
+    workspace: workspace/still-us
+    docs: projects/still-us
+    status: planning
+    tier: P1
+    roles:
+      - product-manager
+      - tech-lead
+      - backend-engineer
+      - frontend-engineer
+      - ux-designer
+      - ui-designer
+      - security-auditor
+    tags:
+      - new-product
+      - mobile
+      - ai
+      - planning
+    ticket_prefix: GH
+
 defaults:
   status: active
   tier: P1

@@ -7,8 +7,8 @@
 **Created**: 2026-06-03
 **Last Updated**: 2026-08-17
 **IDEA ref**: IDEA-002
-**Validation**: GREEN — `projects/_inbox/validation/IDEA-002-validation.md`
-**Market research**: `projects/_inbox/IDEA-002-market-research.md`
+**Validation**: GREEN — `projects/still-us/validation/IDEA-002-validation.md`
+**Market research**: `projects/still-us/market-research.md`
 
 > **v2 revision note.** Market research (2026-08-17) confirmed the need but relocated the moat. The AI baby avatar is commodity — six-plus apps ship it for under $20 — and AI parenting advice is contested by better-funded incumbents (Nanit raised $50M in Dec 2025 explicitly for "Parenting Intelligence"). The uncontested ground is the **couple-relationship layer**, which no parenting app addresses despite 67–90% of couples reporting relationship decline in exactly this window. This revision reorders the product narrative accordingly, repositions the avatar, adds a competitive-response section, and switches to per-family pricing.
 

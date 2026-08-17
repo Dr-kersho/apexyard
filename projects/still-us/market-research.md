@@ -3,7 +3,7 @@
 **Date**: 2026-08-17
 **Analyst**: Hanan (Product Analyst)
 **Source idea**: IDEA-002
-**Related**: `projects/_inbox/validation/IDEA-002-validation.md`, `projects/_inbox/IDEA-002-prd.md`
+**Related**: `projects/still-us/validation/IDEA-002-validation.md`, `projects/still-us/prd.md`
 **Verdict**: **Real market need — but the moat is not where the PRD assumed it was.**
 
 ---

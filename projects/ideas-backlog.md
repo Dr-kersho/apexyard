@@ -6,4 +6,4 @@ Use `/idea` to add a new entry. Triage moves entries into `/write-spec`, then in
 | ID | Title | Category | Submitter | Date | Status | Description |
 |----|-------|----------|-----------|------|--------|-----------|
 | IDEA-001 | Elite Telegram | New Product | Portfolio | 2026-05-24 | NEW | Telegram-native product (elite tier / community); source PRD in `projects/elite-telegram/` — import from Downloads, then normalize `prd.md`. |
-| IDEA-002 | AI Parental Co-Presence — Mum, Dad & Baby Interfaces | New Product | Cursor | 2026-06-03 | NEW | A co-parenting app with AI personas for mum, dad, and baby — syncing parenting tasks, milestone advice, and live child-care updates between parents in real time, so wherever either parent is, both feel present. |
+| IDEA-002 | AI Parental Co-Presence — Mum, Dad & Baby Interfaces | New Product | Cursor | 2026-06-03 | SPECCED | Now the **still-us** project (`Dr-kersho/still-us`). Validated GREEN, market research complete, PRD v2 written — repositioned around the couple-relationship layer as the strategic wedge. Docs: `projects/still-us/`. |
