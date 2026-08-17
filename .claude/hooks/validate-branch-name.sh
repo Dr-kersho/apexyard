@@ -234,6 +234,24 @@ if echo "$TRUNK_BRANCHES" | grep -qxF "$CURRENT_BRANCH"; then
   exit 0
 fi
 
+# Allow adopter-configured exempt prefixes (e.g. claude/ for session-assigned
+# branches from Claude Code on the Web). Read from .branch.exempt_prefixes in
+# project-config.json. These branches bypass the ticket-ID requirement because
+# they are system-generated, not developer-created.
+REPO_ROOT_EARLY=$(git rev-parse --show-toplevel 2>/dev/null)
+if [ -n "$REPO_ROOT_EARLY" ] && [ -f "$REPO_ROOT_EARLY/.claude/hooks/_lib-read-config.sh" ]; then
+  # shellcheck disable=SC1090,SC1091
+  . "$REPO_ROOT_EARLY/.claude/hooks/_lib-read-config.sh"
+  EXEMPT_PREFIXES=$(config_get '.branch.exempt_prefixes[]' 2>/dev/null)
+  if [ -n "$EXEMPT_PREFIXES" ]; then
+    while IFS= read -r prefix; do
+      if [ -n "$prefix" ] && echo "$CURRENT_BRANCH" | grep -q "^${prefix}"; then
+        exit 0
+      fi
+    done <<< "$EXEMPT_PREFIXES"
+  fi
+fi
+
 # Allow release-cut branches (apexyard#116, AgDR-0007). The /release skill
 # prescribes `release/vN.N.N` (and optionally a `-rcN` suffix) as the
 # canonical name for the dev → main release PR's source branch. This is
